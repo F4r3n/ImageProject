@@ -7,12 +7,50 @@ LabelImage::LabelImage(QWidget *parent) :
     setMouseTracking(true);
     w = parent->width();
     h = parent->height();
+    onDrawingRect = false;
+    setMouseTracking(true);
 }
 
 void LabelImage::mouseMoveEvent(QMouseEvent *event){
     x = event->pos().x();
     y = event->pos().y();
+    if(onDrawingRect) repaint();
     //QRgb rgb = this->pixmap()->toImage().pixel(x,y);
+}
+
+void LabelImage::mousePressEvent(QMouseEvent *event) {
+    if(!onDrawingRect) {
+        onDrawingRect = true;
+        pos1 = event->pos();
+        std::cout << "pos1 " << pos1.x()<<std::endl;
+    }else {
+        std::cout << "pos2 " << pos2.x()<<std::endl;
+
+        pos2 = event->pos();
+    }
+    repaint();
+
+}
+
+void LabelImage::mouseReleaseEvent(QMouseEvent *event) {
+    if(onDrawingRect) {
+        onDrawingRect = false;
+        pos1 = QPoint(0,0);
+        pos2 = QPoint(0,0);
+
+    }
+}
+
+
+void LabelImage::paintEvent(QPaintEvent *) {
+    QPainter painter(this);
+    painter.setPen(QPen(Qt::blue,1));
+    painter.drawImage(1,1,img);
+
+    if(onDrawingRect) {
+        qDebug() << "inside";
+        painter.drawRect(QRect(pos1,QPoint(x,y)));
+    }
 }
 
 QPoint LabelImage::getPos() {
@@ -20,7 +58,9 @@ QPoint LabelImage::getPos() {
 }
 
 QRgb LabelImage::getRgb() {
-    return img.pixel(x,y);
+    if(x!=-1)
+        return img.pixel(x,y);
+    else return 0;
 }
 
 void LabelImage::setImage(QImage *img) {

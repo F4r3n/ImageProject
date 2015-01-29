@@ -6,6 +6,8 @@
 #include <QImage>
 #include <QPoint>
 #include <QRgb>
+#include <QPainter>
+#include <QDebug>
 
 class LabelImage : public QLabel
 {
@@ -13,7 +15,10 @@ class LabelImage : public QLabel
 public:
     explicit LabelImage(QWidget *parent = 0);
     void mouseMoveEvent(QMouseEvent *event);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
     void drawImage();
+    void paintEvent(QPaintEvent *p);
     void setImage(QImage *img);
     void resizeImage(int w, int h);
     QPoint getPos();
@@ -30,6 +35,8 @@ private:
     int y;
     QImage img;
     int w,h;
+    QPoint pos1,pos2;
+    bool onDrawingRect;
 
 };
 

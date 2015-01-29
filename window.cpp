@@ -26,7 +26,13 @@ Window::Window(QWidget *parent) :QMainWindow(parent)
     panel->setLayout(mainLayout);
     up = new Updater(render,info);
     up->start();
+    connect(qApp,SIGNAL(aboutToQuit()),this,SLOT(quitMyApp()));
 
+}
+
+void Window::quitMyApp() {
+    up->terminate(); //Thread didn't exit in time, probably deadlocked, terminate it!
+     up->wait(); //   up->
 }
 
 void Window::loadFile() {

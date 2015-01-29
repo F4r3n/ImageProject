@@ -11,6 +11,7 @@
 #include <QMenuBar>
 #include <QFileDialog>
 #include <QImage>
+#include <QApplication>
 #include "updater.h"
 #include "renderarea.h"
 
@@ -31,6 +32,7 @@ public:
 
 public slots:
     void loadFile();
+    void quitMyApp();
 
 private:
     RenderArea *render;
