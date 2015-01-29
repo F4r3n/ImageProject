@@ -11,6 +11,7 @@
 #include <QMenuBar>
 #include <QFileDialog>
 #include <QImage>
+#include "updater.h"
 #include "renderarea.h"
 
 namespace Ui {
@@ -42,6 +43,7 @@ private:
     QMenu *helpMenu;
     QAction *loadAct;
     QAction *saveAct;
+    Updater *up;
 };
 
 #endif // WINDOW_H

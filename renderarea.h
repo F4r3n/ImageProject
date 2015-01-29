@@ -6,6 +6,10 @@
 #include <QLabel>
 #include <QString>
 #include <QGridLayout>
+#include <QRgb>
+#include <QPoint>
+#include <QTextStream>
+
 #include "labelimage.h"
 
 class RenderArea : public QWidget
@@ -14,6 +18,8 @@ class RenderArea : public QWidget
 public:
     explicit RenderArea(QWidget *parent = 0);
     void setImage(QImage *img);
+    QString getInfo();
+
 
 
 signals:
@@ -24,6 +30,7 @@ private:
     QImage img;
     LabelImage *labelImage;
     QString *info;
+    QRgb rgb;
 
 };
 

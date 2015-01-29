@@ -24,6 +24,9 @@ Window::Window(QWidget *parent) :QMainWindow(parent)
     createAction();
     createMenu();
     panel->setLayout(mainLayout);
+    up = new Updater(render,info);
+    up->start();
+
 }
 
 void Window::loadFile() {
@@ -35,6 +38,7 @@ void Window::loadFile() {
     render->setImage(&img);
 
 }
+
 
 void Window::createAction(){
     loadAct = new QAction("Load",this);

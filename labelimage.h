@@ -4,6 +4,8 @@
 #include <QLabel>
 #include <QMouseEvent>
 #include <QImage>
+#include <QPoint>
+#include <QRgb>
 
 class LabelImage : public QLabel
 {
@@ -14,6 +16,9 @@ public:
     void drawImage();
     void setImage(QImage *img);
     void resizeImage(int w, int h);
+    QPoint getPos();
+    QRgb getRgb();
+
 
 
 signals:

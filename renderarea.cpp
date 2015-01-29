@@ -24,7 +24,18 @@ RenderArea::RenderArea(QWidget *parent) :
 }
 
 void RenderArea::setImage(QImage *img) {
-   labelImage->setImage(img);
+    labelImage->setImage(img);
+}
+
+QString RenderArea::getInfo() {
+    rgb = labelImage->getRgb();
+    QPoint point = labelImage->getPos();
+    QString info;
+    QColor c(rgb);
+    QTextStream s(&info);
+
+    s << point.x() << ", " << point.y() << " " << c.red() << " " << c.green() <<" " << c.blue();
+    return info;
 }
 
 

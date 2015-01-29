@@ -15,10 +15,12 @@ TEMPLATE = app
 SOURCES += main.cpp\
         window.cpp \
     renderarea.cpp \
-    labelimage.cpp
+    labelimage.cpp \
+    updater.cpp
 
 HEADERS  += window.h \
     renderarea.h \
-    labelimage.h
+    labelimage.h \
+    updater.h
 
 FORMS    +=
