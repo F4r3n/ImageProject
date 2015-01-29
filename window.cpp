@@ -31,8 +31,12 @@ Window::Window(QWidget *parent) :QMainWindow(parent)
 }
 
 void Window::quitMyApp() {
-    up->terminate(); //Thread didn't exit in time, probably deadlocked, terminate it!
-     up->wait(); //   up->
+    up->running = false;
+
+    up->terminate();
+    up->wait();
+
+
 }
 
 void Window::loadFile() {

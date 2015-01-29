@@ -13,6 +13,7 @@ class Updater : public QThread
 public:
     Updater(RenderArea *img,QLabel *inf);
     void run();
+    bool running;
 
 signals:
 
