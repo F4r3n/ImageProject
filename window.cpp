@@ -26,18 +26,13 @@ Window::Window(QWidget *parent) :QMainWindow(parent)
     panel->setLayout(mainLayout);
     up = new Updater(render,info);
     up->start();
-    connect(qApp,SIGNAL(aboutToQuit()),this,SLOT(quitMyApp()));
+   connect(qApp,SIGNAL(aboutToQuit()),this,SLOT(quitMyApp()));
 
 }
 
 void Window::quitMyApp() {
-    up->running = false;
 
-    up->terminate();
-    up->wait();
     delete up;
-
-
 }
 
 void Window::loadFile() {

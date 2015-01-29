@@ -22,10 +22,7 @@ void LabelImage::mousePressEvent(QMouseEvent *event) {
     if(!onDrawingRect) {
         onDrawingRect = true;
         pos1 = event->pos();
-        std::cout << "pos1 " << pos1.x()<<std::endl;
     }else {
-        std::cout << "pos2 " << pos2.x()<<std::endl;
-
         pos2 = event->pos();
     }
     repaint();
@@ -48,7 +45,6 @@ void LabelImage::paintEvent(QPaintEvent *) {
     painter.drawImage(1,1,img);
 
     if(onDrawingRect) {
-        qDebug() << "inside";
         painter.drawRect(QRect(pos1,QPoint(x,y)));
     }
 }
