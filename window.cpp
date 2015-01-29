@@ -35,6 +35,7 @@ void Window::quitMyApp() {
 
     up->terminate();
     up->wait();
+    delete up;
 
 
 }
