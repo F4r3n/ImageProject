@@ -4,6 +4,8 @@
 RenderArea::RenderArea(QWidget *parent) :
     QWidget(parent)
 {
+    resize(600,400);
+
     QGridLayout *grid = new QGridLayout();
     setLayout(grid);
     img.load("visage.jpg");
@@ -13,25 +15,16 @@ RenderArea::RenderArea(QWidget *parent) :
         std::cout << "Pas d'image";
     }
 
-    labelImage = new QLabel();
+    labelImage = new LabelImage(this);
     setStyleSheet("background-color:black;");
-    labelImage->setPixmap(QPixmap::fromImage(img));
+    labelImage->setImage(&img);
     grid->addWidget(labelImage);
-    resize(800,500);
 
 
 }
 
 void RenderArea::setImage(QImage *img) {
-    this->img = *img;
-    labelImage->setPixmap(QPixmap::fromImage(this->img));
-    if(this->img.width() > this->width() ) {
-        resizeImage(this->width(),this->height());
-    }
+   labelImage->setImage(img);
 }
 
-void RenderArea::resizeImage(int w, int h) {
-    QPixmap pixmap;
-    pixmap = pixmap.fromImage(img.scaled(w,h,Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
-    labelImage->setPixmap(pixmap);
-}
+

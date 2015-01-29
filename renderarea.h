@@ -6,6 +6,7 @@
 #include <QLabel>
 #include <QString>
 #include <QGridLayout>
+#include "labelimage.h"
 
 class RenderArea : public QWidget
 {
@@ -13,9 +14,6 @@ class RenderArea : public QWidget
 public:
     explicit RenderArea(QWidget *parent = 0);
     void setImage(QImage *img);
-    void resizeImage(int w, int h);
-
-
 
 
 signals:
@@ -24,7 +22,7 @@ public slots:
 
 private:
     QImage img;
-    QLabel *labelImage;
+    LabelImage *labelImage;
     QString *info;
 
 };

@@ -25,6 +25,7 @@ public:
     explicit Window(QWidget *parent = 0);
     void createMenu();
     void createAction();
+    void setInfoPixel(QString string);
     ~Window();
 
 public slots:
@@ -34,6 +35,7 @@ private:
     RenderArea *render;
     QPushButton *changeSpaceColor;
     QComboBox *spaceColorList;
+    QLabel *info;
     QMenu *fileMenu;
     QMenu *editMenu;
     QMenu *formatMenu;

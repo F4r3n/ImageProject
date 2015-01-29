@@ -8,6 +8,7 @@ Window::Window(QWidget *parent) :QMainWindow(parent)
     setCentralWidget(panel);
     changeSpaceColor = new QPushButton("Change Color");
     spaceColorList = new QComboBox();
+    info =new QLabel("Info");
     spaceColorList->addItem("RGB");
     spaceColorList->addItem("YUV");
 
@@ -18,6 +19,8 @@ Window::Window(QWidget *parent) :QMainWindow(parent)
     mainLayout->addWidget(render,0,0,1,4);
     mainLayout->addWidget(changeSpaceColor,2,0,Qt::AlignRight);
     mainLayout->addWidget(spaceColorList,2,1,Qt::AlignRight);
+    mainLayout->addWidget(info,2,2,Qt::AlignRight);
+
     createAction();
     createMenu();
     panel->setLayout(mainLayout);
@@ -43,7 +46,6 @@ void Window::createMenu() {
     fileMenu = menuBar()->addMenu("File");
     fileMenu->addAction(loadAct);
     //fileMenu->addAction(saveAct);
-
 }
 
 Window::~Window()
