@@ -12,6 +12,8 @@
 #include <QFileDialog>
 #include <QImage>
 #include <QApplication>
+#include <QUrl>
+#include <vector>
 #include "updater.h"
 #include "spc.h"
 #include "renderarea.h"
@@ -51,6 +53,7 @@ private:
     QAction *loadAct;
     QAction *saveAct;
     Updater *up;
+    std::vector<QImage> images;
     int type;
 };
 

@@ -7,7 +7,7 @@ RenderArea::RenderArea(QWidget *parent) :
     resize(600,400);
     QGridLayout *grid = new QGridLayout();
     setLayout(grid);
-    img.load("visage3.jpg");
+  //  img.load("visage3.jpg");
     info = new QString();
     if(img.isNull()){
         info->append("Image Nulle");
@@ -16,16 +16,16 @@ RenderArea::RenderArea(QWidget *parent) :
     calc = new CalcWidget(labelImage);
 
     //setStyleSheet("background-color:black;");
-    labelImage->setImage(&img);
+    //labelImage->setImage(&img);
 
     grid->addWidget(labelImage);
     grid->addWidget(calc,0,1);
 
 }
 
-void RenderArea::setImage(QImage *img) {
-    this->img = *img;
-    labelImage->setImage(img);
+void RenderArea::setImages(std::vector<QImage> *img) {
+    this->images = *img;
+    labelImage->setImage(&images[0]);
 }
 
 QString RenderArea::getInfo(int type) {

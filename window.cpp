@@ -45,12 +45,25 @@ void Window::changeColor() {
 }
 
 void Window::loadFile() {
-    QString str = QFileDialog::getOpenFileName(this, tr("Open File"),
-                                 "",
-                                 tr("Files (*.*)"));
-    QImage img;
-    img.load(str.toUtf8().constData());
-    render->setImage(&img);
+    QString str = QFileDialog::getExistingDirectory(this, tr("Open File"));
+
+
+
+    QDir export_folder(str);
+    export_folder.setNameFilters(QStringList()<<"*.jpeg");
+    export_folder.setSorting(QDir::LocaleAware|QDir::Reversed);
+    QStringList fileList = export_folder.entryList();
+
+
+    for(QString l : fileList){
+        QImage img;
+        qDebug() << l;
+        img.load(str+"/"+l);
+        images.push_back(img);
+    }
+
+  //  img.load(str.toUtf8().constData());
+    render->setImages(&images);
 
 }
 

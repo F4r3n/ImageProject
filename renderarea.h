@@ -10,9 +10,9 @@
 #include <QPoint>
 #include <QTextStream>
 #include <QPushButton>
+#include <vector>
 #include "calcwidget.h"
 #include "spc.h"
-
 #include "labelimage.h"
 
 class RenderArea : public QWidget
@@ -20,7 +20,7 @@ class RenderArea : public QWidget
 
 public:
     explicit RenderArea(QWidget *parent = 0);
-    void setImage(QImage *img);
+    void setImages(std::vector<QImage> *img);
     QString getInfo(int type);
 
 signals:
@@ -32,6 +32,7 @@ private:
     LabelImage *labelImage;
     QString *info;
     QRgb rgb;
+    std::vector<QImage> images;
     CalcWidget *calc;
 
 };
