@@ -11,11 +11,19 @@ LabelImage::LabelImage(QWidget *parent) :
     y=-1;
     onDrawingRect = false;
     inside  = false;
+    rectDone = false;
     setMouseTracking(true);
 }
 
 void LabelImage::enterEvent(QEvent *) {
     inside = true;
+}
+
+QRect* LabelImage::getRect() {
+    if(rectDone) {
+        return new QRect(pos1,pos2);
+    }
+    else return 0;
 }
 
 void LabelImage::leaveEvent(QEvent *) {
@@ -32,6 +40,7 @@ void LabelImage::mouseMoveEvent(QMouseEvent *event){
 }
 
 void LabelImage::mousePressEvent(QMouseEvent *event) {
+    rectDone = false;
     if(!onDrawingRect) {
         time.start();
         onDrawingRect = true;
@@ -43,13 +52,16 @@ void LabelImage::mousePressEvent(QMouseEvent *event) {
 
 }
 
-void LabelImage::mouseReleaseEvent(QMouseEvent *event) {
+void LabelImage::mouseReleaseEvent(QMouseEvent *e) {
     if(onDrawingRect) {
         onDrawingRect = false;
-        pos1 = QPoint(0,0);
-        pos2 = QPoint(0,0);
-
+        rectDone = true;
+        pos2 = e->pos();
     }
+}
+
+QImage LabelImage::getImg() {
+    return img;
 }
 
 
