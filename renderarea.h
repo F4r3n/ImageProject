@@ -18,7 +18,7 @@ class RenderArea : public QWidget
 public:
     explicit RenderArea(QWidget *parent = 0);
     void setImage(QImage *img);
-    QString getInfo();
+    QString getInfo(int type);
 
 
 

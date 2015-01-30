@@ -13,6 +13,7 @@
 #include <QImage>
 #include <QApplication>
 #include "updater.h"
+#include "spc.h"
 #include "renderarea.h"
 
 namespace Ui {
@@ -30,9 +31,13 @@ public:
     void setInfoPixel(QString string);
     ~Window();
 
+signals:
+    void clicked(int a);
+
 public slots:
     void loadFile();
     void quitMyApp();
+    void changeColor();
 
 private:
     RenderArea *render;
@@ -46,6 +51,7 @@ private:
     QAction *loadAct;
     QAction *saveAct;
     Updater *up;
+    int type;
 };
 
 #endif // WINDOW_H

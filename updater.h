@@ -10,6 +10,7 @@
 class Updater : public QThread
 {
     Q_OBJECT
+
 public:
     Updater(RenderArea *img,QLabel *inf);
     void run();
@@ -19,10 +20,12 @@ public:
 signals:
 
 public slots:
+    void color(int t);
 
 private:
     QLabel *inf;
     RenderArea *img;
+    int type;
 };
 
 #endif // UPDATER_H

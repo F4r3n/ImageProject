@@ -8,6 +8,7 @@
 #include <QRgb>
 #include <QPainter>
 #include <QDebug>
+#include <QTime>
 
 class LabelImage : public QLabel
 {
@@ -21,6 +22,9 @@ public:
     void paintEvent(QPaintEvent *p);
     void setImage(QImage *img);
     void resizeImage(int w, int h);
+    void enterEvent(QEvent *);
+    void leaveEvent(QEvent *);
+
     QPoint getPos();
     QRgb getRgb();
 
@@ -37,6 +41,8 @@ private:
     int w,h;
     QPoint pos1,pos2;
     bool onDrawingRect;
+    bool inside;
+    QTime time;
 
 };
 

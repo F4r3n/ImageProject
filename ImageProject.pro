@@ -21,6 +21,7 @@ SOURCES += main.cpp\
 HEADERS  += window.h \
     renderarea.h \
     labelimage.h \
-    updater.h
+    updater.h \
+    spc.h
 
 FORMS    +=

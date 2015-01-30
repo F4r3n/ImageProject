@@ -8,11 +8,10 @@ RenderArea::RenderArea(QWidget *parent) :
 
     QGridLayout *grid = new QGridLayout();
     setLayout(grid);
-    img.load("visage.jpg");
+    img.load("visage3.jpg");
     info = new QString();
     if(img.isNull()){
         info->append("Image Nulle");
-        std::cout << "Pas d'image";
     }
 
     labelImage = new LabelImage(this);
@@ -27,14 +26,22 @@ void RenderArea::setImage(QImage *img) {
     labelImage->setImage(img);
 }
 
-QString RenderArea::getInfo() {
+QString RenderArea::getInfo(int type) {
     rgb = labelImage->getRgb();
     QPoint point = labelImage->getPos();
     QString info;
     QColor c(rgb);
     QTextStream s(&info);
+    if(type ==1) {
+        c.toHsl();
+        s << point.x() << ", " << point.y() << " " << c.hslHue();
 
-    s << point.x() << ", " << point.y() << " " << c.red() << " " << c.green() <<" " << c.blue();
+    } else {
+        s << point.x() << ", " << point.y() << " " << c.red() << " " << c.green() <<" " << c.blue();
+
+    }
+
+
     return info;
 }
 

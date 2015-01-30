@@ -7,19 +7,33 @@ LabelImage::LabelImage(QWidget *parent) :
     setMouseTracking(true);
     w = parent->width();
     h = parent->height();
+    x=-1;
+    y=-1;
     onDrawingRect = false;
+    inside  = false;
     setMouseTracking(true);
+}
+
+void LabelImage::enterEvent(QEvent *) {
+    inside = true;
+}
+
+void LabelImage::leaveEvent(QEvent *) {
+    inside = false;
 }
 
 void LabelImage::mouseMoveEvent(QMouseEvent *event){
     x = event->pos().x();
     y = event->pos().y();
-    if(onDrawingRect) repaint();
-    //QRgb rgb = this->pixmap()->toImage().pixel(x,y);
+    if(time.elapsed() > 50) {
+        time.restart();
+        if(onDrawingRect) repaint();
+    }
 }
 
 void LabelImage::mousePressEvent(QMouseEvent *event) {
     if(!onDrawingRect) {
+        time.start();
         onDrawingRect = true;
         pos1 = event->pos();
     }else {
@@ -45,7 +59,8 @@ void LabelImage::paintEvent(QPaintEvent *) {
     painter.drawImage(1,1,img);
 
     if(onDrawingRect) {
-        painter.drawRect(QRect(pos1,QPoint(x,y)));
+        if(inside)
+            painter.drawRect(QRect(pos1,QPoint(x,y)));
     }
 }
 
@@ -54,7 +69,7 @@ QPoint LabelImage::getPos() {
 }
 
 QRgb LabelImage::getRgb() {
-    if(x!=-1)
+    if(inside)
         return img.pixel(x,y);
     else return 0;
 }
