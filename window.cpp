@@ -10,7 +10,8 @@ Window::Window(QWidget *parent) :QMainWindow(parent)
     spaceColorList = new QComboBox();
     info =new QLabel("Info");
     spaceColorList->addItem("RGB");
-    spaceColorList->addItem("YUV");
+    spaceColorList->addItem("HSL");
+    spaceColorList->addItem("HSV");
 
 
     QGridLayout *mainLayout = new QGridLayout();
@@ -28,7 +29,7 @@ Window::Window(QWidget *parent) :QMainWindow(parent)
     up->start();
    connect(qApp,SIGNAL(aboutToQuit()),this,SLOT(quitMyApp()));
    connect(changeSpaceColor,SIGNAL(clicked()),this,SLOT(changeColor()));
-   connect(changeSpaceColor,SIGNAL(clicked(int)),up,SLOT(color(int)));
+   connect(this,SIGNAL(clicked(int)),up,SLOT(color(int)));
 
 
 }
@@ -40,8 +41,6 @@ void Window::quitMyApp() {
 
 void Window::changeColor() {
     type = spaceColorList->currentIndex();
-    qDebug() << type;
-
     emit clicked(type);
 }
 

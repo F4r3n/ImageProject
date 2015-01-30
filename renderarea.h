@@ -9,6 +9,9 @@
 #include <QRgb>
 #include <QPoint>
 #include <QTextStream>
+#include <QPushButton>
+#include "calcwidget.h"
+#include "spc.h"
 
 #include "labelimage.h"
 
@@ -20,8 +23,6 @@ public:
     void setImage(QImage *img);
     QString getInfo(int type);
 
-
-
 signals:
 
 public slots:
@@ -31,6 +32,7 @@ private:
     LabelImage *labelImage;
     QString *info;
     QRgb rgb;
+    CalcWidget *calc;
 
 };
 
