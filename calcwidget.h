@@ -6,7 +6,9 @@
 #include <QLabel>
 #include <QGridLayout>
 #include <QRect>
+#include <QTextEdit>
 #include "labelimage.h"
+#include <QScrollArea>
 
 class CalcWidget : public QWidget
 {
@@ -24,12 +26,14 @@ public slots:
 
 private:
     QPushButton *calc;
-    QLabel *result;
+    QTextEdit *result;
     QRect *rect;
     LabelImage *lab;
     QPushButton *next;
     QPushButton *previous;
     std::vector<QImage> images;
+    QScrollArea *area;
+    QPushButton *analyze;
     unsigned int index;
 
 };
