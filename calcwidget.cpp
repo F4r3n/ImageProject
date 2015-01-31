@@ -54,6 +54,7 @@ QVector<double> CalcWidget::derived() {
         dy[i] = (y[i]-y[i-1]);
     }
     qDebug() << x.size();
+    movingAverage(dy);
     return dy;
 }
 
