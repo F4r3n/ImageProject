@@ -68,8 +68,8 @@ void Window::loadFile() {
 }
 
 void Window::loadVideo() {
-//    QString str = QFileDialog::getOpenFileName(this,
-//                                               tr("Open Video"),  tr("Video Files (*.mp4 )"));
+   QString str = QFileDialog::getOpenFileName(this,
+                                             tr("Open Video"),  tr("Video Files (*.mp4 )"));
 ////    QProcess sh;
 ////    sh.setProcessChannelMode(QProcess::MergedChannels);
 ////    // avconv -i face.mp4 -vsync 1 -r 15 -an -y 'videoframe-%d.jpeg'
@@ -87,6 +87,13 @@ void Window::loadVideo() {
 //    myProcess->start(program, arguments);
 //    myProcess->waitForStarted();
 //    qDebug() << myProcess->error();
+
+    QProcess *p = new QProcess();
+    QFileInfo f(str);
+    QString path = f.absolutePath();
+    p->start("sh",QStringList() << "image.sh" << str.toUtf8() << path.toUtf8());
+    p->waitForStarted();
+    qDebug() << path.toUtf8();
 
 }
 
