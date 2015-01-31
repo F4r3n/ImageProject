@@ -10,6 +10,9 @@ class PlotingWidget : public QDialog
 
 public:
     explicit PlotingWidget(QVector<double> x, QVector<double> y,QWidget *parent = 0 );
+    double minValue(QVector<double> z);
+    double maxValue(QVector<double> z);
+
 
 
 

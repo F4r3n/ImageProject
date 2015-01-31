@@ -26,6 +26,7 @@ public slots:
     void nextImage();
     void previousImage();
     void analyzeImages();
+    void rewindImages();
 
 private:
     QPushButton *calc;
@@ -37,6 +38,7 @@ private:
     std::vector<QImage> images;
     QScrollArea *area;
     QPushButton *analyze;
+    QPushButton *rewind;
     QVector<double> x;
     QVector<double> y;
     unsigned int index;

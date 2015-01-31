@@ -13,24 +13,32 @@ CalcWidget::CalcWidget(LabelImage *label)
     next = new QPushButton("Next");
     previous = new QPushButton("Previous");
     analyze = new QPushButton("Analyze");
+    rewind = new QPushButton("Rewind");
     result = new QTextEdit();
     result->setReadOnly(true);
 
     s->addWidget(result);
     gr->addWidget(calc,0,0);
     gr->addWidget(next,0,2);
+    gr->addWidget(rewind,0,3);
     gr->addWidget(previous,0,1);
     area->setLayout(s);
-    gr->addWidget(area);
-    gr->addWidget(analyze,4,0);
+    gr->addWidget(area,2,0,5,5);
+    gr->addWidget(analyze,7,0);
 
     connect(calc,SIGNAL(clicked()),this,SLOT(calculus()));
     connect(next,SIGNAL(clicked()),this,SLOT(nextImage()));
     connect(previous,SIGNAL(clicked()),this,SLOT(previousImage()));
     connect(this,SIGNAL(clicked(QImage)),label,SLOT(nextImage(QImage)));
     connect(analyze,SIGNAL(clicked()),this,SLOT(analyzeImages()));
+    connect(rewind,SIGNAL(clicked()),this,SLOT(rewindImages()));
 
 
+}
+
+void CalcWidget::rewindImages() {
+    index = 0;
+    emit clicked(images[index]);
 }
 
 void CalcWidget::analyzeImages() {
