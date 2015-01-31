@@ -27,9 +27,9 @@ Window::Window(QWidget *parent) :QMainWindow(parent)
     panel->setLayout(mainLayout);
     up = new Updater(render,info);
     up->start();
-   connect(qApp,SIGNAL(aboutToQuit()),this,SLOT(quitMyApp()));
-   connect(changeSpaceColor,SIGNAL(clicked()),this,SLOT(changeColor()));
-   connect(this,SIGNAL(clicked(int)),up,SLOT(color(int)));
+    connect(qApp,SIGNAL(aboutToQuit()),this,SLOT(quitMyApp()));
+    connect(changeSpaceColor,SIGNAL(clicked()),this,SLOT(changeColor()));
+    connect(this,SIGNAL(clicked(int)),up,SLOT(color(int)));
 
 
 }
@@ -62,38 +62,37 @@ void Window::loadFile() {
         images.push_back(img);
     }
 
-  //  img.load(str.toUtf8().constData());
+    //  img.load(str.toUtf8().constData());
     render->setImages(&images);
 
 }
 
 void Window::loadVideo() {
-   QString str = QFileDialog::getOpenFileName(this,
-                                             tr("Open Video"),  tr("Video Files (*.mp4 )"));
-////    QProcess sh;
-////    sh.setProcessChannelMode(QProcess::MergedChannels);
-////    // avconv -i face.mp4 -vsync 1 -r 15 -an -y 'videoframe-%d.jpeg'
-////    QString s = "avconv -i "+ str+ " -vsync 1 -r 15 -an -y 'videoframe-%d.jpeg'";
-////    qDebug() << s;
-////    sh.start(s);
-////    sh.waitForFinished();
-////    qDebug() << str;
+    QString str = QFileDialog::getOpenFileName(this,
+                                               tr("Open Video"),  tr("Video Files (*.mp4 )"));
+    ////    QProcess sh;
+    ////    sh.setProcessChannelMode(QProcess::MergedChannels);
+    ////    // avconv -i face.mp4 -vsync 1 -r 15 -an -y 'videoframe-%d.jpeg'
+    ////    QString s = "avconv -i "+ str+ " -vsync 1 -r 15 -an -y 'videoframe-%d.jpeg'";
+    ////    qDebug() << s;
+    ////    sh.start(s);
+    ////    sh.waitForFinished();
+    ////    qDebug() << str;
 
-//    QString program = "/user/bin/avconv";
-//    QStringList arguments;
-//    arguments << "-i"<< str<< "-vsync" <<"1" <<"-r"<< "15"<< "-an"<< "-y"<< "'videoframe-%d.jpeg'";
+    //    QString program = "/user/bin/avconv";
+    //    QStringList arguments;
+    //    arguments << "-i"<< str<< "-vsync" <<"1" <<"-r"<< "15"<< "-an"<< "-y"<< "'videoframe-%d.jpeg'";
 
-//    QProcess *myProcess = new QProcess(this);
-//    myProcess->start(program, arguments);
-//    myProcess->waitForStarted();
-//    qDebug() << myProcess->error();
+    //    QProcess *myProcess = new QProcess(this);
+    //    myProcess->start(program, arguments);
+    //    myProcess->waitForStarted();
+    //    qDebug() << myProcess->error();
 
     QProcess *p = new QProcess();
     QFileInfo f(str);
     QString path = f.absolutePath();
     p->start("sh",QStringList() << "image.sh" << str.toUtf8() << path.toUtf8());
     p->waitForStarted();
-    qDebug() << path.toUtf8();
 
 }
 

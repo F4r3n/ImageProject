@@ -14,8 +14,8 @@ PlotingWidget::PlotingWidget(QVector<double> x, QVector<double> y , QWidget *par
     plot->yAxis->setLabel("y");
     gr->addWidget(plot);
     // set axes ranges, so we see all data:
-    plot->xAxis->setRange(minValue(x), maxValue(y)+5);
-    plot->yAxis->setRange(minValue(y)-5, maxValue(y)+5);
+    plot->xAxis->setRange(minValue(x), maxValue(x)+5);
+    plot->yAxis->setRange(minValue(y)-0.5, maxValue(y)+0.5);
     plot->replot();
     quit = new QPushButton("Quit");
     gr->addWidget(quit);

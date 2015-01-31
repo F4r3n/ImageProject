@@ -15,6 +15,8 @@ CalcWidget::CalcWidget(LabelImage *label)
     analyze = new QPushButton("Analyze");
     rewind = new QPushButton("Rewind");
     result = new QTextEdit();
+    averageBox = new QCheckBox("Average");
+    derivedBox = new QCheckBox("Derived");
     result->setReadOnly(true);
 
     s->addWidget(result);
@@ -25,6 +27,9 @@ CalcWidget::CalcWidget(LabelImage *label)
     area->setLayout(s);
     gr->addWidget(area,2,0,5,5);
     gr->addWidget(analyze,7,0);
+    gr->addWidget(averageBox,7,1);
+    gr->addWidget(derivedBox,7,2);
+
 
     connect(calc,SIGNAL(clicked()),this,SLOT(calculus()));
     connect(next,SIGNAL(clicked()),this,SLOT(nextImage()));
@@ -34,6 +39,15 @@ CalcWidget::CalcWidget(LabelImage *label)
     connect(rewind,SIGNAL(clicked()),this,SLOT(rewindImages()));
 
 
+}
+
+QVector<double> CalcWidget::derived() {
+    QVector<double> dy(y.size()+1);
+    for(int i=1;i<x.size();i++) {
+        dy[i] = (y[i]-y[i-1]);
+    }
+    qDebug() << x.size();
+    return dy;
 }
 
 void CalcWidget::rewindImages() {
@@ -48,12 +62,19 @@ void CalcWidget::analyzeImages() {
     unsigned int i=index;
     while(i < images.size()) {
         calculus();
+        displayData();
         nextImage();
         i++;
     }
     index = i;
-    PlotingWidget *p = new PlotingWidget(x,y,this);
-    p->show();
+    if(averageBox->isChecked()) {
+        PlotingWidget *p = new PlotingWidget(x,y,this);
+        p->show();
+    }
+    if(derivedBox->isChecked()) {
+        PlotingWidget *p = new PlotingWidget(x,derived(),this);
+        p->show();
+    }
 }
 
 void CalcWidget::previousImage() {
@@ -74,9 +95,14 @@ void CalcWidget::nextImage() {
 
 }
 
+void CalcWidget::displayData() {
+    QString temp = result->toPlainText() + QString().setNum(y[y.size()-1],'f');
+    temp.append(QString("\n"));
+    result->setText(temp);
+}
+
 
 void CalcWidget::calculus() {
-  //  if(lab->getImg()==0) return;
     QRect *r = lab->getRect();
     if(!r) {
         result->setText(QString("No rect"));
@@ -85,7 +111,6 @@ void CalcWidget::calculus() {
     float average = 0;
     QImage img = lab->getImg();
     int taille =0;
-    //qDebug() << r->topLeft().y() << " " << r->bottomLeft().y();
 
     for(int i=r->topLeft().y();i<r->bottomLeft().y();++i){
         for(int j=r->topLeft().x();j<r->topRight().x();j++) {
@@ -99,9 +124,7 @@ void CalcWidget::calculus() {
     average = average/taille;
     x.push_back(index);
     y.push_back(average);
-    QString temp = result->toPlainText() + QString().setNum(average,'f');
-    temp.append(QString("\n"));
-    result->setText(temp);
+
 
 }
 

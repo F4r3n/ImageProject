@@ -10,6 +10,7 @@
 #include "labelimage.h"
 #include "plotingwidget.h"
 #include <QVector>
+#include <QCheckBox>
 #include <QScrollArea>
 
 class CalcWidget : public QWidget
@@ -18,6 +19,9 @@ class CalcWidget : public QWidget
 public:
     explicit CalcWidget(LabelImage *label);
     void setImages(std::vector<QImage> *img);
+    QVector<double> derived();
+    void displayData();
+
 
 signals:
     void clicked(QImage img);
@@ -41,6 +45,8 @@ private:
     QPushButton *rewind;
     QVector<double> x;
     QVector<double> y;
+    QCheckBox *averageBox;
+    QCheckBox *derivedBox;
     unsigned int index;
 
 };
