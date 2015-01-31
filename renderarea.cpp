@@ -23,13 +23,22 @@ RenderArea::RenderArea(QWidget *parent) :
 
 }
 
+int RenderArea::getType() {
+    return type;
+}
+
+void RenderArea::setType(int type) {
+    this->type = type;
+    calc->setType(type);
+}
+
 void RenderArea::setImages(std::vector<QImage> *img) {
     this->images = *img;
     labelImage->setImage(&images[0]);
     calc->setImages(&images);
 }
 
-QString RenderArea::getInfo(int type) {
+QString RenderArea::getInfo() {
     rgb = labelImage->getRgb();
     QPoint point = labelImage->getPos();
     QString info;

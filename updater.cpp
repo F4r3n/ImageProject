@@ -9,6 +9,7 @@ Updater::Updater(RenderArea *img, QLabel *inf) {
 
 void Updater::color(int t) {
     type = t;
+    img->setType(t);
 }
 
 Updater::~Updater(){
@@ -20,7 +21,7 @@ Updater::~Updater(){
 void Updater::run() {
     while(running) {
         this->msleep(100);
-        QString s = img->getInfo(type);
+        QString s = img->getInfo();
         if(s!=0)
             inf->setText(s);
     }

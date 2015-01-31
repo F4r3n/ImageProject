@@ -10,6 +10,7 @@
 #include "labelimage.h"
 #include "plotingwidget.h"
 #include <QVector>
+#include "spc.h"
 #include <QCheckBox>
 #include <QScrollArea>
 
@@ -21,6 +22,7 @@ public:
     void setImages(std::vector<QImage> *img);
     QVector<double> derived();
     void displayData();
+    void setType(int type);
     void movingAverage(QVector<double> &z);
 
 
@@ -49,6 +51,7 @@ private:
     QCheckBox *averageBox;
     QCheckBox *derivedBox;
     unsigned int index;
+    int type;
 
 };
 

@@ -110,8 +110,13 @@ void CalcWidget::displayData() {
     result->setText(temp);
 }
 
+void CalcWidget::setType(int type) {
+    this->type = type;
+}
+
 
 void CalcWidget::calculus() {
+
     QRect *r = lab->getRect();
     if(!r) {
         result->setText(QString("No rect"));
@@ -124,7 +129,19 @@ void CalcWidget::calculus() {
     for(int i=r->topLeft().y();i<r->bottomLeft().y();++i){
         for(int j=r->topLeft().x();j<r->topRight().x();j++) {
             QColor c(img.pixel(j,i));
-            average += (c.red()+c.green()+c.blue())/3.f;
+
+            if(type==RGB) {
+                average += (c.red()+c.green()+c.blue())/3.f;
+            }
+            if(type==HSV) {
+                average += (c.hsvHue()+c.hsvSaturation()+c.lightness())/3.f;
+            }
+            if(type == HSL) {
+                average += (c.hslHue()+c.hslSaturation()+c.lightness())/3.f;
+            }
+            if(type == LI){
+                average+=c.lightness();
+            }
 
             taille++;
         }

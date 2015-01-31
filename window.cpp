@@ -12,6 +12,8 @@ Window::Window(QWidget *parent) :QMainWindow(parent)
     spaceColorList->addItem("RGB");
     spaceColorList->addItem("HSL");
     spaceColorList->addItem("HSV");
+    spaceColorList->addItem("LI");
+
 
 
     QGridLayout *mainLayout = new QGridLayout();

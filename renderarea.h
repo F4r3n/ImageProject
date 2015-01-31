@@ -21,7 +21,9 @@ class RenderArea : public QWidget
 public:
     explicit RenderArea(QWidget *parent = 0);
     void setImages(std::vector<QImage> *img);
-    QString getInfo(int type);
+    QString getInfo();
+    int getType();
+    void setType(int type);
 
 signals:
 
@@ -34,6 +36,7 @@ private:
     QRgb rgb;
     std::vector<QImage> images;
     CalcWidget *calc;
+    int type;
 
 };
 
