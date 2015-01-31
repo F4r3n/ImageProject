@@ -41,11 +41,11 @@ QString RenderArea::getInfo(int type) {
 
     if(type ==HSL) {
         c.toHsl();
-        s << point.x() << ", " << point.y() << " " << c.hslHue();
+        s << point.x() << ", " << point.y() << " " << c.hslHue() << " " << c.hslSaturation() << " " <<c.lightness();
     }
     if(type ==HSV) {
         c.toHsv();
-        s << point.x() << ", " << point.y() << " " << c.hsvHue();
+        s << point.x() << ", " << point.y() << " " << c.hsvHue() << " " << c.hsvSaturation() << " " <<c.lightness();
     }
 
     return info;
