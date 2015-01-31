@@ -1,8 +1,9 @@
 #include "plotingwidget.h"
 
-PlotingWidget::PlotingWidget(QVector<double> x, QVector<double> y , QWidget *parent) :
+PlotingWidget::PlotingWidget(QVector<double> x, QVector<double> y ,QString name, QWidget *parent) :
     QDialog(parent),x(x),y(y)
 {
+    setWindowTitle(name);
     resize(QSize(400,400));
     QGridLayout *gr = new QGridLayout();
     setLayout(gr);
@@ -13,7 +14,6 @@ PlotingWidget::PlotingWidget(QVector<double> x, QVector<double> y , QWidget *par
     plot->xAxis->setLabel("x");
     plot->yAxis->setLabel("y");
     gr->addWidget(plot);
-    // set axes ranges, so we see all data:
     plot->xAxis->setRange(minValue(x), maxValue(x)+5);
     plot->yAxis->setRange(minValue(y)-0.5, maxValue(y)+0.5);
     plot->replot();

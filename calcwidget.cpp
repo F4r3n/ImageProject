@@ -68,11 +68,11 @@ void CalcWidget::analyzeImages() {
     }
     index = i;
     if(averageBox->isChecked()) {
-        PlotingWidget *p = new PlotingWidget(x,y,this);
+        PlotingWidget *p = new PlotingWidget(x,y,QString("Average"),this);
         p->show();
     }
     if(derivedBox->isChecked()) {
-        PlotingWidget *p = new PlotingWidget(x,derived(),this);
+        PlotingWidget *p = new PlotingWidget(x,derived(),QString("Derived"),this);
         p->show();
     }
 }
