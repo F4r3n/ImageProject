@@ -67,17 +67,44 @@ void Window::loadFile() {
 
 }
 
+void Window::loadVideo() {
+//    QString str = QFileDialog::getOpenFileName(this,
+//                                               tr("Open Video"),  tr("Video Files (*.mp4 )"));
+////    QProcess sh;
+////    sh.setProcessChannelMode(QProcess::MergedChannels);
+////    // avconv -i face.mp4 -vsync 1 -r 15 -an -y 'videoframe-%d.jpeg'
+////    QString s = "avconv -i "+ str+ " -vsync 1 -r 15 -an -y 'videoframe-%d.jpeg'";
+////    qDebug() << s;
+////    sh.start(s);
+////    sh.waitForFinished();
+////    qDebug() << str;
+
+//    QString program = "/user/bin/avconv";
+//    QStringList arguments;
+//    arguments << "-i"<< str<< "-vsync" <<"1" <<"-r"<< "15"<< "-an"<< "-y"<< "'videoframe-%d.jpeg'";
+
+//    QProcess *myProcess = new QProcess(this);
+//    myProcess->start(program, arguments);
+//    myProcess->waitForStarted();
+//    qDebug() << myProcess->error();
+
+}
+
 
 void Window::createAction(){
     loadAct = new QAction("Load",this);
+    imageAct = new QAction("Create images",this);
+
     connect(loadAct,SIGNAL(triggered()),SLOT(loadFile()));
+    connect(imageAct,SIGNAL(triggered()),SLOT(loadVideo()));
+
 
 }
 
 void Window::createMenu() {
     fileMenu = menuBar()->addMenu("File");
     fileMenu->addAction(loadAct);
-    //fileMenu->addAction(saveAct);
+    fileMenu->addAction(imageAct);
 }
 
 Window::~Window()
