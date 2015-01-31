@@ -8,6 +8,8 @@
 #include <QRect>
 #include <QTextEdit>
 #include "labelimage.h"
+#include "plotingwidget.h"
+#include <QVector>
 #include <QScrollArea>
 
 class CalcWidget : public QWidget
@@ -35,6 +37,8 @@ private:
     std::vector<QImage> images;
     QScrollArea *area;
     QPushButton *analyze;
+    QVector<double> x;
+    QVector<double> y;
     unsigned int index;
 
 };

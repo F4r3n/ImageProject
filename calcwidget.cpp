@@ -33,6 +33,8 @@ CalcWidget::CalcWidget(LabelImage *label)
 }
 
 void CalcWidget::analyzeImages() {
+    x.clear();
+    y.clear();
     unsigned int i=0;
     while(i < images.size()) {
         calculus();
@@ -40,6 +42,8 @@ void CalcWidget::analyzeImages() {
         i++;
     }
     index = i;
+    PlotingWidget *p = new PlotingWidget(x,y,this);
+    p->show();
 }
 
 void CalcWidget::previousImage() {
@@ -83,6 +87,8 @@ void CalcWidget::calculus() {
     }
 
     average = average/taille;
+    x.push_back(index);
+    y.push_back(average);
     QString temp = result->toPlainText() + QString().setNum(average,'f');
     temp.append(QString("\n"));
     result->setText(temp);

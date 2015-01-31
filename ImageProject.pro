@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     labelimage.cpp \
     updater.cpp \
     calcwidget.cpp \
-    qcustomplot.cpp
+    qcustomplot.cpp \
+    plotingwidget.cpp
 
 HEADERS  += window.h \
     renderarea.h \
@@ -27,6 +28,7 @@ HEADERS  += window.h \
     updater.h \
     spc.h \
     calcwidget.h \
-    qcustomplot.h
+    qcustomplot.h \
+    plotingwidget.h
 
 FORMS    +=
