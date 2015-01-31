@@ -5,6 +5,8 @@ CalcWidget::CalcWidget(LabelImage *label)
     index = 0;
     lab = label;
     QGridLayout *gr = new QGridLayout();
+    QGridLayout *s = new QGridLayout();
+
     area = new QScrollArea();
     setLayout(gr);
     calc = new QPushButton("Calcul");
@@ -13,13 +15,12 @@ CalcWidget::CalcWidget(LabelImage *label)
     analyze = new QPushButton("Analyze");
     result = new QTextEdit();
     result->setReadOnly(true);
-    result->setMinimumWidth(300);
-    result->setMinimumHeight(600);
 
+    s->addWidget(result);
     gr->addWidget(calc,0,0);
     gr->addWidget(next,0,2);
     gr->addWidget(previous,0,1);
-    area->setWidget(result);
+    area->setLayout(s);
     gr->addWidget(area);
     gr->addWidget(analyze,4,0);
 
@@ -33,6 +34,7 @@ CalcWidget::CalcWidget(LabelImage *label)
 }
 
 void CalcWidget::analyzeImages() {
+    if(images.size() == 0) return;
     x.clear();
     y.clear();
     unsigned int i=0;
