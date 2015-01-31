@@ -142,6 +142,9 @@ void CalcWidget::calculus() {
             if(type == LI){
                 average+=c.lightness();
             }
+            if(type == HUE){
+                average+=c.hslHue();
+            }
 
             taille++;
         }

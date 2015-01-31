@@ -13,6 +13,8 @@ Window::Window(QWidget *parent) :QMainWindow(parent)
     spaceColorList->addItem("HSL");
     spaceColorList->addItem("HSV");
     spaceColorList->addItem("LI");
+    spaceColorList->addItem("HUE");
+
 
 
 
