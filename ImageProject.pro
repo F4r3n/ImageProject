@@ -7,7 +7,7 @@
 QT       += core gui
 QMAKE_CXXFLAGS += -std=c++11
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 TARGET = ImageProject
 TEMPLATE = app
@@ -18,13 +18,15 @@ SOURCES += main.cpp\
     renderarea.cpp \
     labelimage.cpp \
     updater.cpp \
-    calcwidget.cpp
+    calcwidget.cpp \
+    qcustomplot.cpp
 
 HEADERS  += window.h \
     renderarea.h \
     labelimage.h \
     updater.h \
     spc.h \
-    calcwidget.h
+    calcwidget.h \
+    qcustomplot.h
 
 FORMS    +=

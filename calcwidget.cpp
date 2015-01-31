@@ -27,10 +27,23 @@ CalcWidget::CalcWidget(LabelImage *label)
     connect(next,SIGNAL(clicked()),this,SLOT(nextImage()));
     connect(previous,SIGNAL(clicked()),this,SLOT(previousImage()));
     connect(this,SIGNAL(clicked(QImage)),label,SLOT(nextImage(QImage)));
+    connect(analyze,SIGNAL(clicked()),this,SLOT(analyzeImages()));
+
 
 }
 
+void CalcWidget::analyzeImages() {
+    unsigned int i=0;
+    while(i < images.size()) {
+        calculus();
+        nextImage();
+        i++;
+    }
+    index = i;
+}
+
 void CalcWidget::previousImage() {
+    if(images.size()==0) return;
     if(index > 0) {
         index--;
     }
@@ -38,6 +51,8 @@ void CalcWidget::previousImage() {
 }
 
 void CalcWidget::nextImage() {
+    if(!images.size()) return;
+
     if(index < images.size()-1){
         index++;
     }
@@ -47,6 +62,7 @@ void CalcWidget::nextImage() {
 
 
 void CalcWidget::calculus() {
+  //  if(lab->getImg()==0) return;
     QRect *r = lab->getRect();
     if(!r) {
         result->setText(QString("No rect"));
@@ -69,8 +85,6 @@ void CalcWidget::calculus() {
     average = average/taille;
     QString temp = result->toPlainText() + QString().setNum(average,'f');
     temp.append(QString("\n"));
-
-    qDebug() << temp.toUtf8();
     result->setText(temp);
 
 }

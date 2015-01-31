@@ -23,6 +23,7 @@ public slots:
     void calculus();
     void nextImage();
     void previousImage();
+    void analyzeImages();
 
 private:
     QPushButton *calc;
