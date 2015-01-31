@@ -19,6 +19,7 @@ public:
 private:
     QCustomPlot *plot;
     QVector<double> x,y;
+    QPushButton *quit;
 
 };
 

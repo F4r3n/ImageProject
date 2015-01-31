@@ -45,7 +45,7 @@ void CalcWidget::analyzeImages() {
     if(images.size() == 0) return;
     x.clear();
     y.clear();
-    unsigned int i=0;
+    unsigned int i=index;
     while(i < images.size()) {
         calculus();
         nextImage();

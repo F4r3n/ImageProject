@@ -17,6 +17,9 @@ PlotingWidget::PlotingWidget(QVector<double> x, QVector<double> y , QWidget *par
     plot->xAxis->setRange(minValue(x), maxValue(y)+5);
     plot->yAxis->setRange(minValue(y)-5, maxValue(y)+5);
     plot->replot();
+    quit = new QPushButton("Quit");
+    gr->addWidget(quit);
+    connect(quit,SIGNAL(clicked()),this,SLOT(close()));
 }
 
 
