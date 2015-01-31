@@ -18,9 +18,6 @@
 #include "spc.h"
 #include "renderarea.h"
 
-namespace Ui {
-class Window;
-}
 
 class Window : public QMainWindow
 {

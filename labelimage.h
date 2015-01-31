@@ -36,6 +36,8 @@ public:
 signals:
 
 public slots:
+    void nextImage(QImage img);
+
 
 private:
     int x;

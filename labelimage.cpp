@@ -4,7 +4,6 @@
 LabelImage::LabelImage(QWidget *parent) :
     QLabel(parent)
 {
-    setMouseTracking(true);
     w = parent->width();
     h = parent->height();
     x=-1;
@@ -13,6 +12,12 @@ LabelImage::LabelImage(QWidget *parent) :
     inside  = false;
     rectDone = false;
     setMouseTracking(true);
+}
+
+void LabelImage::nextImage(QImage img) {
+    setImage(&img);
+   // qDebug() << img.
+    repaint();
 }
 
 void LabelImage::enterEvent(QEvent *) {

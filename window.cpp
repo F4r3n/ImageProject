@@ -50,8 +50,8 @@ void Window::loadFile() {
 
 
     QDir export_folder(str);
-    export_folder.setNameFilters(QStringList()<<"*.jpeg");
-    export_folder.setSorting(QDir::LocaleAware|QDir::Reversed);
+    export_folder.setNameFilters(QStringList()<<"*.jpeg" << "*.png" << "*.jpg");
+    export_folder.setSorting(QDir::LocaleAware);
     QStringList fileList = export_folder.entryList();
 
 

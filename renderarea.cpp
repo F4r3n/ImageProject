@@ -26,6 +26,7 @@ RenderArea::RenderArea(QWidget *parent) :
 void RenderArea::setImages(std::vector<QImage> *img) {
     this->images = *img;
     labelImage->setImage(&images[0]);
+    calc->setImages(&images);
 }
 
 QString RenderArea::getInfo(int type) {
