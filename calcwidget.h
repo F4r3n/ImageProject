@@ -21,6 +21,7 @@ public:
     void setImages(std::vector<QImage> *img);
     QVector<double> derived();
     void displayData();
+    void movingAverage(QVector<double> &z);
 
 
 signals:

@@ -41,6 +41,13 @@ CalcWidget::CalcWidget(LabelImage *label)
 
 }
 
+void CalcWidget::movingAverage(QVector<double> &z) {
+
+    for(int i=1;i<x.size()-1;i++) {
+        z[i] = (z[i]+z[i-1]+z[i+1])/3;
+    }
+}
+
 QVector<double> CalcWidget::derived() {
     QVector<double> dy(y.size()+1);
     for(int i=1;i<x.size();i++) {
@@ -67,6 +74,8 @@ void CalcWidget::analyzeImages() {
         i++;
     }
     index = i;
+    movingAverage(y);
+
     if(averageBox->isChecked()) {
         PlotingWidget *p = new PlotingWidget(x,y,QString("Average"),this);
         p->show();
