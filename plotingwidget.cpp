@@ -20,7 +20,7 @@ PlotingWidget::PlotingWidget(QVector<double> x, QVector<double> y ,QString name,
     quit = new QPushButton("Quit");
     QString str;
     QTextStream i(&str);
-    i << x.size() << " " << frequency(variation(y));
+    i << "Frequency " <<  frequency(variation(y));
     info = new QLabel(str);
     info->setMaximumHeight(30);
     gr->addWidget(info);
