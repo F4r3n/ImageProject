@@ -16,8 +16,10 @@ CalcWidget::CalcWidget(LabelImage *label)
     rewind = new QPushButton("Rewind");
     result = new QTextEdit();
     averageBox = new QCheckBox("Average");
+    averageBox->setChecked(true);
     derivedBox = new QCheckBox("Derived");
     result->setReadOnly(true);
+    derivedBox->setChecked(true);
 
     s->addWidget(result);
     gr->addWidget(calc,0,0);
@@ -65,17 +67,22 @@ void CalcWidget::rewindImages() {
 
 void CalcWidget::analyzeImages() {
     if(images.size() == 0) return;
+    result->clear();
     x.clear();
     y.clear();
+    rewindImages();
     unsigned int i=index;
     while(i < images.size()) {
         calculus();
         displayData();
         nextImage();
         i++;
+
     }
     index = i;
     movingAverage(y);
+    result->verticalScrollBar()->setSliderPosition(
+                result->verticalScrollBar()->maximum());
 
     if(averageBox->isChecked()) {
         PlotingWidget *p = new PlotingWidget(x,y,QString("Average"),this);

@@ -50,8 +50,7 @@ void Window::changeColor() {
 
 void Window::loadFile() {
     QString str = QFileDialog::getExistingDirectory(this, tr("Open File"));
-
-
+    if(str.isEmpty()) return;
 
     QDir export_folder(str);
     export_folder.setNameFilters(QStringList()<<"*.jpeg" << "*.png" << "*.jpg");
@@ -73,24 +72,10 @@ void Window::loadFile() {
 
 void Window::loadVideo() {
     QString str = QFileDialog::getOpenFileName(this,
-                                               tr("Open Video"),  tr("Video Files (*.mp4 )"));
-    ////    QProcess sh;
-    ////    sh.setProcessChannelMode(QProcess::MergedChannels);
-    ////    // avconv -i face.mp4 -vsync 1 -r 15 -an -y 'videoframe-%d.jpeg'
-    ////    QString s = "avconv -i "+ str+ " -vsync 1 -r 15 -an -y 'videoframe-%d.jpeg'";
-    ////    qDebug() << s;
-    ////    sh.start(s);
-    ////    sh.waitForFinished();
-    ////    qDebug() << str;
+                                               tr("Open Video"),
+                                               tr("Video Files (*.mp4 )"));
 
-    //    QString program = "/user/bin/avconv";
-    //    QStringList arguments;
-    //    arguments << "-i"<< str<< "-vsync" <<"1" <<"-r"<< "15"<< "-an"<< "-y"<< "'videoframe-%d.jpeg'";
-
-    //    QProcess *myProcess = new QProcess(this);
-    //    myProcess->start(program, arguments);
-    //    myProcess->waitForStarted();
-    //    qDebug() << myProcess->error();
+    if(str.isEmpty()) return;
 
     QProcess *p = new QProcess();
     QFileInfo f(str);
