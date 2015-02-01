@@ -10,16 +10,17 @@ class PlotingWidget : public QDialog
 
 public:
     explicit PlotingWidget(QVector<double> x, QVector<double> y, QString name ="Plot" , QWidget *parent = 0 );
-    double minValue(QVector<double> z);
-    double maxValue(QVector<double> z);
-
-
+    double minValue(const QVector<double> &z);
+    double maxValue(const QVector<double> &z);
+    int variation(const QVector<double> &z);
+    double frequency(int v);
 
 
 private:
     QCustomPlot *plot;
     QVector<double> x,y;
     QPushButton *quit;
+    QLabel *info;
 
 };
 

@@ -18,12 +18,20 @@ PlotingWidget::PlotingWidget(QVector<double> x, QVector<double> y ,QString name,
     plot->yAxis->setRange(minValue(y)-0.5, maxValue(y)+0.5);
     plot->replot();
     quit = new QPushButton("Quit");
+    QString str;
+    QTextStream i(&str);
+    i << x.size() << " " << frequency(variation(y));
+    info = new QLabel(str);
+    info->setMaximumHeight(30);
+    gr->addWidget(info);
+
     gr->addWidget(quit);
+
     connect(quit,SIGNAL(clicked()),this,SLOT(close()));
 }
 
 
-double PlotingWidget::minValue(QVector<double> z) {
+double PlotingWidget::minValue(const QVector<double> &z) {
     double min =1000;
     for(double i : z) {
         min =qMin(min,i);
@@ -31,11 +39,38 @@ double PlotingWidget::minValue(QVector<double> z) {
     return min;
 }
 
-double PlotingWidget::maxValue(QVector<double> z) {
+double PlotingWidget::maxValue(const QVector<double> &z) {
     double max =0;
     for(double i : z) {
         max =qMax(max,i);
     }
     return max;
+}
+
+double PlotingWidget::frequency(int v) {
+    int time = x.size()/15;
+     return (v/2.f)*(1.f/time)*60.f;
+}
+
+int PlotingWidget::variation(const QVector<double> &z) {
+    bool up = false;
+    bool down = false;
+    int i=0;
+    for(double y : z) {
+        if(y<0 && up == true) i++;
+        if(y>0 && down == true) i++;
+
+        if(y<0) {
+            down =true;
+            up = false;
+        }
+        if(y>0) {
+            up =true;
+            down = false;
+        }
+
+    }
+    if(i>0) return i-1;
+    return 0;
 }
 
