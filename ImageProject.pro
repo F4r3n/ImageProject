@@ -20,7 +20,9 @@ SOURCES += main.cpp\
     updater.cpp \
     calcwidget.cpp \
     qcustomplot.cpp \
-    plotingwidget.cpp
+    plotingwidget.cpp \
+    strategie.cpp \
+    derivedalgo.cpp
 
 HEADERS  += window.h \
     renderarea.h \
@@ -29,6 +31,8 @@ HEADERS  += window.h \
     spc.h \
     calcwidget.h \
     qcustomplot.h \
-    plotingwidget.h
+    plotingwidget.h \
+    strategie.h \
+    derivedealgo.h
 
 FORMS    +=

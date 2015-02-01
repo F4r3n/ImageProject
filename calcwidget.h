@@ -10,6 +10,7 @@
 #include "labelimage.h"
 #include "plotingwidget.h"
 #include <QVector>
+#include "derivedealgo.h"
 #include "spc.h"
 #include <QCheckBox>
 #include <QScrollArea>

@@ -51,13 +51,10 @@ void CalcWidget::movingAverage(QVector<double> &z) {
 }
 
 QVector<double> CalcWidget::derived() {
-    QVector<double> dy(y.size()+1);
-    for(int i=1;i<x.size();i++) {
-        dy[i] = (y[i]-y[i-1]);
-    }
-    qDebug() << x.size();
-    movingAverage(dy);
-    return dy;
+   Strategie *s = new DerivedAlgo();
+   QVector<double> dy = s->execute(x,y);
+   movingAverage(dy);
+   return dy;
 }
 
 void CalcWidget::rewindImages() {
