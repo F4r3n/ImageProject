@@ -6,6 +6,7 @@ CalcWidget::CalcWidget(LabelImage *label)
     lab = label;
     QGridLayout *gr = new QGridLayout();
     QGridLayout *s = new QGridLayout();
+    type = RGB;
 
     area = new QScrollArea();
     setLayout(gr);

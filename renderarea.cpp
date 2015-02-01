@@ -4,6 +4,7 @@
 RenderArea::RenderArea(QWidget *parent) :
     QWidget(parent)
 {
+    type = 0;
     resize(600,600);
     QGridLayout *grid = new QGridLayout();
     setLayout(grid);
@@ -55,6 +56,13 @@ QString RenderArea::getInfo() {
     if(type ==HSV) {
         c.toHsv();
         s << point.x() << ", " << point.y() << " " << c.hsvHue() << " " << c.hsvSaturation() << " " <<c.lightness();
+    }
+    if(type == LI) {
+        s << point.x() << ", " << point.y() << " " << c.lightness() << " ";
+    }
+
+    if(type == HUE) {
+        s << point.x() << ", " << point.y() << " " << c.hslHue() << " ";
     }
 
     return info;
