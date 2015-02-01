@@ -8,16 +8,12 @@ RenderArea::RenderArea(QWidget *parent) :
     resize(600,600);
     QGridLayout *grid = new QGridLayout();
     setLayout(grid);
-  //  img.load("visage3.jpg");
     info = new QString();
     if(img.isNull()){
         info->append("Image Nulle");
     }
     labelImage = new LabelImage(this);
     calc = new CalcWidget(labelImage);
-
-    //setStyleSheet("background-color:black;");
-    //labelImage->setImage(&img);
 
     grid->addWidget(labelImage);
     grid->addWidget(calc,0,1);
@@ -45,6 +41,12 @@ QString RenderArea::getInfo() {
     QString info;
     QColor c(rgb);
     QTextStream s(&info);
+
+    QImage i = labelImage->getImg();
+    if(point.x() > i.width() || point.y() > i.height()) {
+        s << point.x() << ", " << point.y() << " ";
+        return info;
+    }
     if(type==RGB){
         s << point.x() << ", " << point.y() << " " << c.red() << " " << c.green() <<" " << c.blue();
     }
@@ -64,6 +66,7 @@ QString RenderArea::getInfo() {
     if(type == HUE) {
         s << point.x() << ", " << point.y() << " " << c.hslHue() << " ";
     }
+
 
     return info;
 }

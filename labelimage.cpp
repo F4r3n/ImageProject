@@ -85,7 +85,7 @@ QPoint LabelImage::getPos() {
 }
 
 QRgb LabelImage::getRgb() {
-    if(inside)
+    if(inside && x<img.width() && y<img.height())
         return img.pixel(x,y);
     else return 0;
 }
