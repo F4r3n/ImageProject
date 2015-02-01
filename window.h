@@ -15,6 +15,7 @@
 #include <QUrl>
 #include <vector>
 #include <QProcess>
+#include <QMessageBox>
 #include "updater.h"
 #include "spc.h"
 #include "renderarea.h"
@@ -39,6 +40,7 @@ public slots:
     void quitMyApp();
     void changeColor();
     void loadVideo();
+    void displayAbout();
 
 private:
     RenderArea *render;
@@ -52,6 +54,7 @@ private:
     QAction *loadAct;
     QAction *saveAct;
     QAction *imageAct;
+    QAction *aboutAct;
     Updater *up;
     std::vector<QImage> images;
     int type;

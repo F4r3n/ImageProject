@@ -16,7 +16,6 @@ LabelImage::LabelImage(QWidget *parent) :
 
 void LabelImage::nextImage(QImage img) {
     setImage(&img);
-   // qDebug() << img.
     repaint();
 }
 
@@ -93,7 +92,7 @@ QRgb LabelImage::getRgb() {
 
 void LabelImage::setImage(QImage *img) {
     this->img = *img;
-    if(this->img.width() > w ) {
+    if(this->img.width() > w || this->img.height() > h) {
         resizeImage(w,h);
     } else {
         setPixmap(QPixmap::fromImage(this->img));

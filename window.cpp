@@ -89,17 +89,28 @@ void Window::loadVideo() {
 void Window::createAction(){
     loadAct = new QAction("Load",this);
     imageAct = new QAction("Create images",this);
+    aboutAct = new QAction("About",this);
 
     connect(loadAct,SIGNAL(triggered()),SLOT(loadFile()));
     connect(imageAct,SIGNAL(triggered()),SLOT(loadVideo()));
+    connect(aboutAct,SIGNAL(triggered()),SLOT(displayAbout()));
+}
 
-
+void Window::displayAbout() {
+    QMessageBox msgBox;
+     msgBox.setText("This software is based on Qt 5.2 and uses QCustomPlot \n Made by Kotulski Guillaume");
+     msgBox.exec();
 }
 
 void Window::createMenu() {
     fileMenu = menuBar()->addMenu("File");
     fileMenu->addAction(loadAct);
     fileMenu->addAction(imageAct);
+
+    helpMenu = menuBar()->addMenu("Help");
+    helpMenu->addAction(aboutAct);
+
+
 }
 
 Window::~Window()

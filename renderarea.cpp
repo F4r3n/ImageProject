@@ -4,7 +4,7 @@
 RenderArea::RenderArea(QWidget *parent) :
     QWidget(parent)
 {
-    resize(600,400);
+    resize(600,600);
     QGridLayout *grid = new QGridLayout();
     setLayout(grid);
   //  img.load("visage3.jpg");
