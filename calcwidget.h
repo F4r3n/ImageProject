@@ -21,11 +21,12 @@ class CalcWidget : public QWidget
 public:
     explicit CalcWidget(LabelImage *label);
     void setImages(std::vector<QImage> *img);
-    QVector<double> derived();
+    QVector<double> derived(const QVector<double> &y);
     void displayData();
     void setType(int type);
     void movingAverage(QVector<double> &z);
-
+    QVector<double> addition(const QVector<double> &a, const QVector<double> &b);
+    QVector<double> multiplication(const double &a, const QVector<double> &b);
 
 signals:
     void clicked(QImage img);
@@ -51,6 +52,9 @@ private:
     QVector<double> y;
     QCheckBox *averageBox;
     QCheckBox *derivedBox;
+    QCheckBox *amplificationBox;
+    QCheckBox *amplificationDerivedBox;
+
     unsigned int index;
     int type;
 

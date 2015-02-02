@@ -3,6 +3,9 @@
 
 #include <QDialog>
 #include <QVector>
+#include <QGridLayout>
+#include <QLabel>
+#include <QPushButton>
 #include "qcustomplot.h"
 
 class PlotingWidget : public QDialog

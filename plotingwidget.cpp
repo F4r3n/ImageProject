@@ -14,7 +14,7 @@ PlotingWidget::PlotingWidget(QVector<double> x, QVector<double> y ,QString name,
     plot->xAxis->setLabel("x");
     plot->yAxis->setLabel("y");
     gr->addWidget(plot);
-    plot->xAxis->setRange(minValue(x), maxValue(x)+5);
+    plot->xAxis->setRange(0, maxValue(x)+5);
     plot->yAxis->setRange(minValue(y)-0.5, maxValue(y)+0.5);
     plot->replot();
     quit = new QPushButton("Quit");
@@ -33,7 +33,9 @@ PlotingWidget::PlotingWidget(QVector<double> x, QVector<double> y ,QString name,
 
 double PlotingWidget::minValue(const QVector<double> &z) {
     double min =1000;
+    qDebug() << z.size();
     for(double i : z) {
+        qDebug()<< i;
         min =qMin(min,i);
     }
     return min;
@@ -55,6 +57,9 @@ double PlotingWidget::frequency(int v) {
 int PlotingWidget::variation(const QVector<double> &z) {
     bool up = false;
     bool down = false;
+    double max = maxValue(y);
+    if(max<0.01) return 0;
+
     int i=0;
     for(double y : z) {
         if(y<0 && up == true) i++;

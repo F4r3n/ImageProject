@@ -21,6 +21,9 @@ CalcWidget::CalcWidget(LabelImage *label)
     derivedBox = new QCheckBox("Derived");
     result->setReadOnly(true);
     derivedBox->setChecked(true);
+    amplificationBox  = new QCheckBox("Amplification");
+    amplificationDerivedBox  = new QCheckBox("Amplification derived");
+
 
     s->addWidget(result);
     gr->addWidget(calc,0,0);
@@ -32,6 +35,9 @@ CalcWidget::CalcWidget(LabelImage *label)
     gr->addWidget(analyze,7,0);
     gr->addWidget(averageBox,7,1);
     gr->addWidget(derivedBox,7,2);
+    gr->addWidget(amplificationBox,7,3);
+    gr->addWidget(amplificationDerivedBox,7,4);
+
 
 
     connect(calc,SIGNAL(clicked()),this,SLOT(calculus()));
@@ -44,6 +50,23 @@ CalcWidget::CalcWidget(LabelImage *label)
 
 }
 
+QVector<double> CalcWidget::multiplication(const double &a, const QVector<double> &b) {
+    QVector<double> y(b.size());
+    for(int i=0;i<b.size();++i) {
+        y[i] = a*b[i];
+    }
+    return y;
+}
+
+
+QVector<double> CalcWidget::addition(const QVector<double> &a, const QVector<double> &b) {
+    QVector<double> y(a.size());
+    for(int i=0;i<a.size();++i) {
+        y[i] = a[i]+b[i];
+    }
+    return y;
+}
+
 void CalcWidget::movingAverage(QVector<double> &z) {
 
     for(int i=1;i<x.size()-1;i++) {
@@ -51,11 +74,11 @@ void CalcWidget::movingAverage(QVector<double> &z) {
     }
 }
 
-QVector<double> CalcWidget::derived() {
-   Strategie *s = new DerivedAlgo();
-   QVector<double> dy = s->execute(x,y);
-   movingAverage(dy);
-   return dy;
+QVector<double> CalcWidget::derived(const QVector<double> &y) {
+    Strategie *s = new DerivedAlgo();
+    QVector<double> dy = s->execute(x,y);
+    movingAverage(dy);
+    return dy;
 }
 
 void CalcWidget::rewindImages() {
@@ -79,15 +102,25 @@ void CalcWidget::analyzeImages() {
     }
     index = i;
     movingAverage(y);
-    result->verticalScrollBar()->setSliderPosition(
-                result->verticalScrollBar()->maximum());
+    //  result->verticalScrollBar()->setSliderPosition(
+    //            result->verticalScrollBar()->maximum());
 
     if(averageBox->isChecked()) {
         PlotingWidget *p = new PlotingWidget(x,y,QString("Average"),this);
         p->show();
     }
     if(derivedBox->isChecked()) {
-        PlotingWidget *p = new PlotingWidget(x,derived(),QString("Derived"),this);
+        PlotingWidget *p = new PlotingWidget(x,derived(y),QString("Derived"),this);
+        p->show();
+    }
+    if(amplificationBox->isChecked()) {
+        QVector<double> taylor = addition(y,multiplication(3,derived(y)));
+        PlotingWidget *p = new PlotingWidget(x,taylor,QString("Amplification"),this);
+        p->show();
+    }
+    if(amplificationDerivedBox->isChecked()) {
+        QVector<double> taylor = addition(y,derived(y));
+        PlotingWidget *p = new PlotingWidget(x,derived(taylor),QString("Amplification derived"),this);
         p->show();
     }
 }

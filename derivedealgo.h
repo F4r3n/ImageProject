@@ -7,7 +7,7 @@ class DerivedAlgo : public Strategie
 {
 public:
     DerivedAlgo();
-    QVector<double> execute(QVector<double> x, QVector<double> y);
+    QVector<double> execute(const QVector<double> &x,const QVector<double> &y);
 };
 
 #endif // AVERAGEALGO_H
