@@ -1,4 +1,5 @@
 #include "calcwidget.h"
+#include <cmath>
 
 CalcWidget::CalcWidget(LabelImage *label)
 {
@@ -23,6 +24,7 @@ CalcWidget::CalcWidget(LabelImage *label)
     derivedBox->setChecked(true);
     amplificationBox  = new QCheckBox("Amplification");
     amplificationDerivedBox  = new QCheckBox("Amplification derived");
+    derivedSBox = new QCheckBox("Derived Second");
 
 
     s->addWidget(result);
@@ -37,6 +39,7 @@ CalcWidget::CalcWidget(LabelImage *label)
     gr->addWidget(derivedBox,7,2);
     gr->addWidget(amplificationBox,7,3);
     gr->addWidget(amplificationDerivedBox,7,4);
+    gr->addWidget(derivedSBox,7,5);
 
 
 
@@ -108,6 +111,21 @@ void CalcWidget::analyzeImages() {
         Vector<double> taylor = y+derived(y);
         PlotingWidget *p = new PlotingWidget(x,derived(taylor),QString("Amplification derived"),this);
         p->show();
+    }
+
+    if(derivedSBox->isChecked()) {
+//        Vector<double> d = derived(derived(y));
+//        PlotingWidget *p = new PlotingWidget(x,d,QString("Derived Second"),this);
+//        p->show();
+//        Strategie *s = new Tfd();
+
+//        for(int i=0;i<x.size();i++) {
+//            y[i] = cos(2*3.14*10);
+//        }
+//        Vector<double> d = s->execute(x,y);
+
+//        PlotingWidget *pl = new PlotingWidget(x,d,QString("Derived Second"),this);
+//        pl->show();
     }
 }
 

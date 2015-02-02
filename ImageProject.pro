@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     qcustomplot.cpp \
     plotingwidget.cpp \
     strategie.cpp \
-    derivedalgo.cpp
+    derivedalgo.cpp \
+    tfd.cpp
 
 HEADERS  += window.h \
     renderarea.h \
@@ -34,6 +35,7 @@ HEADERS  += window.h \
     plotingwidget.h \
     strategie.h \
     derivedealgo.h \
-    Vector.h
+    Vector.h \
+    tfd.h
 
 FORMS    +=

@@ -14,7 +14,7 @@ PlotingWidget::PlotingWidget(QVector<double> x, QVector<double> y ,QString name,
     plot->xAxis->setLabel("x");
     plot->yAxis->setLabel("y");
     gr->addWidget(plot);
-    plot->xAxis->setRange(0, maxValue(x)+5);
+    plot->xAxis->setRange(0, x.size()+5);
     plot->yAxis->setRange(minValue(y)-0.5, maxValue(y)+0.5);
     plot->replot();
     quit = new QPushButton("Quit");

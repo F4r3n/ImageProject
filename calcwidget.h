@@ -14,6 +14,7 @@
 #include "spc.h"
 #include <QCheckBox>
 #include <QScrollArea>
+#include "tfd.h"
 #include <Vector.h>
 
 class CalcWidget : public QWidget
@@ -54,6 +55,8 @@ private:
     QCheckBox *derivedBox;
     QCheckBox *amplificationBox;
     QCheckBox *amplificationDerivedBox;
+    QCheckBox *derivedSBox;
+
 
     unsigned int index;
     int type;
