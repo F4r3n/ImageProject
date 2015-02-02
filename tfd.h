@@ -4,6 +4,7 @@
 #include "strategie.h"
 #include "Vector.h"
 #include <cmath>
+#include <QDebug>
 
 class Tfd : public Strategie
 {

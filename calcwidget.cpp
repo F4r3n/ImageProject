@@ -117,15 +117,15 @@ void CalcWidget::analyzeImages() {
 //        Vector<double> d = derived(derived(y));
 //        PlotingWidget *p = new PlotingWidget(x,d,QString("Derived Second"),this);
 //        p->show();
-//        Strategie *s = new Tfd();
+        Strategie *s = new Tfd();
 
-//        for(int i=0;i<x.size();i++) {
-//            y[i] = cos(2*3.14*10);
-//        }
-//        Vector<double> d = s->execute(x,y);
+        for(int i=0;i<x.size();i++) {
+            y[i] = 10*cos(2*3.14*10*i);
+        }
+        Vector<double> d = s->execute(x,y);
 
-//        PlotingWidget *pl = new PlotingWidget(x,d,QString("Derived Second"),this);
-//        pl->show();
+        PlotingWidget *pl = new PlotingWidget(x,d,QString("Derived Second"),this);
+        pl->show();
     }
 }
 
