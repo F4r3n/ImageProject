@@ -4,8 +4,8 @@ DerivedAlgo::DerivedAlgo()
 {
 }
 
-QVector<double>  DerivedAlgo::execute(const QVector<double> &x,const QVector<double> &y) {
-    QVector<double> dy(y.size());
+Vector<double> DerivedAlgo::execute(const Vector<double> &x, const Vector<double> &y) {
+    Vector<double> dy(y.size());
     for(int i=1;i<x.size();i++) {
         dy[i] = (y[i]-y[i-1]);
     }

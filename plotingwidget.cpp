@@ -33,9 +33,7 @@ PlotingWidget::PlotingWidget(QVector<double> x, QVector<double> y ,QString name,
 
 double PlotingWidget::minValue(const QVector<double> &z) {
     double min =1000;
-    qDebug() << z.size();
     for(double i : z) {
-        qDebug()<< i;
         min =qMin(min,i);
     }
     return min;

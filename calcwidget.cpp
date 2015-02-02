@@ -50,33 +50,18 @@ CalcWidget::CalcWidget(LabelImage *label)
 
 }
 
-QVector<double> CalcWidget::multiplication(const double &a, const QVector<double> &b) {
-    QVector<double> y(b.size());
-    for(int i=0;i<b.size();++i) {
-        y[i] = a*b[i];
-    }
-    return y;
-}
 
 
-QVector<double> CalcWidget::addition(const QVector<double> &a, const QVector<double> &b) {
-    QVector<double> y(a.size());
-    for(int i=0;i<a.size();++i) {
-        y[i] = a[i]+b[i];
-    }
-    return y;
-}
-
-void CalcWidget::movingAverage(QVector<double> &z) {
+void CalcWidget::movingAverage(Vector<double> &z) const{
 
     for(int i=1;i<x.size()-1;i++) {
         z[i] = (z[i]+z[i-1]+z[i+1])/3;
     }
 }
 
-QVector<double> CalcWidget::derived(const QVector<double> &y) {
+Vector<double> CalcWidget::derived(const Vector<double> &y) const {
     Strategie *s = new DerivedAlgo();
-    QVector<double> dy = s->execute(x,y);
+    Vector<double> dy = s->execute(x,y);
     movingAverage(dy);
     return dy;
 }
@@ -114,12 +99,13 @@ void CalcWidget::analyzeImages() {
         p->show();
     }
     if(amplificationBox->isChecked()) {
-        QVector<double> taylor = addition(y,multiplication(3,derived(y)));
+        double factor = 3;
+        Vector<double> taylor = y+multiply(derived(y),factor);
         PlotingWidget *p = new PlotingWidget(x,taylor,QString("Amplification"),this);
         p->show();
     }
     if(amplificationDerivedBox->isChecked()) {
-        QVector<double> taylor = addition(y,derived(y));
+        Vector<double> taylor = y+derived(y);
         PlotingWidget *p = new PlotingWidget(x,derived(taylor),QString("Amplification derived"),this);
         p->show();
     }

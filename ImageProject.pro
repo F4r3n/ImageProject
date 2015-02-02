@@ -33,6 +33,7 @@ HEADERS  += window.h \
     qcustomplot.h \
     plotingwidget.h \
     strategie.h \
-    derivedealgo.h
+    derivedealgo.h \
+    Vector.h
 
 FORMS    +=

@@ -1,14 +1,14 @@
 #ifndef STRATEGIE_H
 #define STRATEGIE_H
 
-#include <QVector>
+#include "Vector.h"
 
 class Strategie
 {
 public:
     Strategie();
     virtual ~Strategie();
-    virtual QVector<double> execute(const QVector<double> &x,const QVector<double> &y)=0;
+    virtual Vector<double> execute(const Vector<double> &x,const Vector<double> &y)=0;
 };
 
 #endif // STRATEGIE_H
