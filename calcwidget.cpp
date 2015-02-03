@@ -24,7 +24,8 @@ CalcWidget::CalcWidget(LabelImage *label)
     derivedBox->setChecked(true);
     amplificationBox  = new QCheckBox("Amplification");
     amplificationDerivedBox  = new QCheckBox("Amplification derived");
-    derivedSBox = new QCheckBox("Derived Second");
+    derivedSBox = new QCheckBox("FFT");
+    derivedSBox->setChecked(true);
 
 
     s->addWidget(result);
@@ -114,17 +115,10 @@ void CalcWidget::analyzeImages() {
     }
 
     if(derivedSBox->isChecked()) {
-//        Vector<double> d = derived(derived(y));
-//        PlotingWidget *p = new PlotingWidget(x,d,QString("Derived Second"),this);
-//        p->show();
+
         Strategie *s = new Tfd();
-
-        for(int i=0;i<x.size();i++) {
-            y[i] = 10*cos(2*3.14*10*i);
-        }
-        Vector<double> d = s->execute(x,y);
-
-        PlotingWidget *pl = new PlotingWidget(x,d,QString("Derived Second"),this);
+        Vector<double> d = s->execute(x,derived(y));
+        PlotingWidget *pl = new PlotingWidget(x,d,QString("FFT"),this);
         pl->show();
     }
 }

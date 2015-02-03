@@ -6,22 +6,32 @@
 #include <QGridLayout>
 #include <QLabel>
 #include <QPushButton>
+#define FS 15
+#define PMAX 200
+#define PMIN 5
+#define H 60
 #include "qcustomplot.h"
+#include "Vector.h"
+#include "derivedealgo.h"
+#include <QDebug>
 
 class PlotingWidget : public QDialog
 {
 
 public:
-    explicit PlotingWidget(QVector<double> x, QVector<double> y, QString name ="Plot" , QWidget *parent = 0 );
-    double minValue(const QVector<double> &z);
-    double maxValue(const QVector<double> &z);
-    int variation(const QVector<double> &z);
+    explicit PlotingWidget(Vector<double> x, Vector<double> y, QString name ="Plot" , QWidget *parent = 0 );
+    double minValue(const Vector<double> &z);
+    double maxValue(const Vector<double> &z);
+    Vector<int> variation(const Vector<double> &z);
     double frequency(int v);
-
+    int maxX();
+    int minX();
+    double maximaLocal(int deb, int end);
+    double frequencyTFD();
 
 private:
     QCustomPlot *plot;
-    QVector<double> x,y;
+    Vector<double> x,y;
     QPushButton *quit;
     QLabel *info;
 

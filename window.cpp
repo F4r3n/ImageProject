@@ -57,7 +57,7 @@ void Window::loadFile() {
     export_folder.setSorting(QDir::LocaleAware);
     QStringList fileList = export_folder.entryList();
 
-
+    images.clear();
     for(QString l : fileList){
         QImage img;
         qDebug() << l;

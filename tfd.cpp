@@ -7,7 +7,6 @@ Tfd::Tfd()
 Vector<double> Tfd::execute(const Vector<double> &x,const Vector<double> &y){
 
     unsigned int size = x.size();
-    qDebug() << "Taille "<<size;
     Vector<double> v(size);
 
     for (unsigned int k = 0; k < size; k++) {  /* For each output element */
@@ -18,10 +17,9 @@ Vector<double> Tfd::execute(const Vector<double> &x,const Vector<double> &y){
             double angle = 2 * M_PI * (t * k) / (float)size;
             sumreal +=  y[t] * cos(angle);
             sumimag += -y[t] * sin(angle);
-            qDebug() << t*k/size;
         }
         //qDebug() << sumreal;
-        v[k] = sumreal;
+        v[k] = fabs(sumreal);
         //  outimag[k] = sumimag;
     }
 
