@@ -105,6 +105,9 @@ double PlotingWidget::maximaLocal(int deb,int end) {
     return pos;
 }
 
+
+
+
 double PlotingWidget::frequencyTFD() {
     int end = maxX();
     int deb = minX();
@@ -115,7 +118,6 @@ double PlotingWidget::frequencyTFD() {
     Vector<int> v = variation(d->execute(x,y));
 
     for(int i : v) {
-        qDebug() << y[i]/max;
        if( i>end) continue;
        if(fabs(y[i]/max)>0.5 && pos!=i) return -1;
 

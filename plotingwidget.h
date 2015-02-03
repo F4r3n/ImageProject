@@ -14,6 +14,7 @@
 #include "Vector.h"
 #include "derivedealgo.h"
 #include <QDebug>
+#include <QEvent>
 
 class PlotingWidget : public QDialog
 {
@@ -28,6 +29,7 @@ public:
     int minX();
     double maximaLocal(int deb, int end);
     double frequencyTFD();
+
 
 private:
     QCustomPlot *plot;
