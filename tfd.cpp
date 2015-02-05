@@ -21,8 +21,8 @@ Vector<double> Tfd::execute(const Vector<double> &x,const Vector<double> &y){
             sumimag -= y[t] * sin(angle);
         }
         //qDebug() << sumreal;
-        re[k] = fabs(sumreal);
-        im[k] = fabs(sumimag);
+        re[k] = fabs(sumreal)/(size/2);
+        im[k] = fabs(sumimag)/(size/2);
 
     }
 
@@ -33,7 +33,7 @@ Vector<double> Tfd::execute(const Vector<double> &x,const Vector<double> &y){
     std::copy(im.begin(),im.end(),_im.begin());
 
 
-    return filter(y.size());
+    return re;
 }
 
 void Tfd::highPassFilter(double *re,double *im, int N) {
@@ -60,11 +60,6 @@ Vector<double> Tfd::getRe() {
 
 Vector<double> Tfd::filter(int N) {
 
-
-
-    double a1 = 5.0;
-    double a2 = 5.0;
-
     double ReFil[N/2+1];
     double ImFil[N/2+1];
 
@@ -78,10 +73,21 @@ Vector<double> Tfd::filter(int N) {
         ReOutput[f]=(double)(_re[f]*ReFil[f]-_im[f]*ImFil[f]);
         ImOutput[f]=(double)(_re[f]*ImFil[f]+_im[f]*ReFil[f]);
     }
-    return ReOutput;
+    return inverse(ReOutput,ImOutput,N);
 }
 
 Vector<double> Tfd::getImg() {
     return _im;
+}
+
+Vector<double> Tfd::inverse(const Vector<double> &ReOutput, const Vector<double> &ImOutput,int N) {
+    Vector<double> output(N);
+    for(int f=0;f<(N/2);f++) {
+        for(int i=0;i<N;i++) {
+            double w = 2*M_PI*(double)i/N;
+            output[i]+=ReOutput[f]*cos(f*w)-ImOutput[f]*sin(f*w);
+        }
+    }
+    return output;
 }
 

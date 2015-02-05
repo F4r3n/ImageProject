@@ -117,8 +117,10 @@ void CalcWidget::analyzeImages() {
 
     if(derivedSBox->isChecked()) {
 
-        Strategie *s = new Tfd();
+        Tfd *s = new Tfd();
         Vector<double> d = s->execute(x,derived(y));
+        d = s->filter(d.size());
+        d = s->execute(x,d);
         PlotingWidget *pl = new PlotingWidget(x,d,QString("FFT"),this);
         pl->show();
     }
