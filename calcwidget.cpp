@@ -94,23 +94,24 @@ void CalcWidget::analyzeImages() {
     movingAverage(y);
     //  result->verticalScrollBar()->setSliderPosition(
     //            result->verticalScrollBar()->maximum());
+    Vector<double> cy(y);
 
     if(averageBox->isChecked()) {
-        PlotingWidget *p = new PlotingWidget(x,y,QString("Average"),this);
+        PlotingWidget *p = new PlotingWidget(x,cy,QString("Average"),this);
         p->show();
     }
     if(derivedBox->isChecked()) {
-        PlotingWidget *p = new PlotingWidget(x,derived(y),QString("Derived"),this);
+        PlotingWidget *p = new PlotingWidget(x,derived(cy),QString("Derived"),this);
         p->show();
     }
     if(amplificationBox->isChecked()) {
         double factor = 3;
-        Vector<double> taylor = y+multiply(derived(y),factor);
+        Vector<double> taylor = cy+multiply(derived(cy),factor);
         PlotingWidget *p = new PlotingWidget(x,taylor,QString("Amplification"),this);
         p->show();
     }
     if(amplificationDerivedBox->isChecked()) {
-        Vector<double> taylor = y+derived(y);
+        Vector<double> taylor = cy+derived(cy);
         PlotingWidget *p = new PlotingWidget(x,derived(taylor),QString("Amplification derived"),this);
         p->show();
     }
@@ -118,7 +119,7 @@ void CalcWidget::analyzeImages() {
     if(derivedSBox->isChecked()) {
 
         Tfd *s = new Tfd();
-        Vector<double> d = s->execute(x,derived(y));
+        Vector<double> d = s->execute(x,derived(cy));
         d = s->filter(d.size());
         d = s->execute(x,d);
         PlotingWidget *pl = new PlotingWidget(x,d,QString("FFT"),this);

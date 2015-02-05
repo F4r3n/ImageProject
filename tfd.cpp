@@ -69,7 +69,6 @@ Vector<double> Tfd::filter(int N) {
     Vector<double> ImOutput(N);
 
     for(int f=0;f<N/2;f++) {
-        qDebug() << _re[f];
         ReOutput[f]=(double)(_re[f]*ReFil[f]-_im[f]*ImFil[f]);
         ImOutput[f]=(double)(_re[f]*ImFil[f]+_im[f]*ReFil[f]);
     }

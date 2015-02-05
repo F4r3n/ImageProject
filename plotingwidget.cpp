@@ -17,7 +17,8 @@ PlotingWidget::PlotingWidget(Vector<double> x, Vector<double> y ,QString name, Q
     plot->xAxis->setRange(0, x.size()+5);
     double m = maxValue(y);
     double min = minValue(y);
-    plot->yAxis->setRange(min, m+0.5*m);
+    qDebug() << min;
+    plot->yAxis->setRange(min, m);
     plot->replot();
     quit = new QPushButton("Quit");
     QString str;
