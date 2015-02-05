@@ -83,7 +83,8 @@ void CalcWidget::analyzeImages() {
     rewindImages();
     unsigned int i=index;
     while(i < images.size()) {
-        calculus();
+        bool isOk = calculus();
+        if(!isOk) return;
         displayData();
         nextImage();
         i++;
@@ -152,12 +153,12 @@ void CalcWidget::setType(int type) {
 }
 
 
-void CalcWidget::calculus() {
+bool CalcWidget::calculus() {
 
     QRect *r = lab->getRect();
     if(!r) {
         result->setText(QString("No rect"));
-        return;
+        return false;
     }
     float average = 0;
     QImage img = lab->getImg();
@@ -190,9 +191,11 @@ void CalcWidget::calculus() {
     average = average/taille;
     x.push_back(index);
     y.push_back(average);
-
+    return true;
 
 }
+
+
 
 void CalcWidget::setImages(std::vector<QImage> *img) {
     images = *img;

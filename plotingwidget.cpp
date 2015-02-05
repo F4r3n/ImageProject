@@ -15,7 +15,9 @@ PlotingWidget::PlotingWidget(Vector<double> x, Vector<double> y ,QString name, Q
     plot->yAxis->setLabel("y");
     gr->addWidget(plot);
     plot->xAxis->setRange(0, x.size()+5);
-    plot->yAxis->setRange(minValue(y)-0.5, maxValue(y)+0.5);
+    double m = maxValue(y);
+    double min = minValue(y);
+    plot->yAxis->setRange(min, m+0.5*m);
     plot->replot();
     quit = new QPushButton("Quit");
     QString str;
@@ -110,7 +112,7 @@ double PlotingWidget::maximaLocal(int deb,int end) {
 
 double PlotingWidget::frequencyTFD() {
     int end = maxX();
-    int deb = minX();
+    int deb = minX()+1;
    // int pos = 0;
    int pos = maximaLocal(deb,end);
     double max = y[pos];
@@ -120,10 +122,8 @@ double PlotingWidget::frequencyTFD() {
     for(int i : v) {
        if( i>end) continue;
        if(fabs(y[i]/max)>0.5 && pos!=i) return -1;
-
-
     }
- return pos*FS*H/x.size();
+ return (double)pos*FS*H/(double)x.size();
 
 }
 

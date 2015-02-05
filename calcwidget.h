@@ -32,7 +32,7 @@ public:
 signals:
     void clicked(QImage img);
 public slots:
-    void calculus();
+    bool calculus();
     void nextImage();
     void previousImage();
     void analyzeImages();
