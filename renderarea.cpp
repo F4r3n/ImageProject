@@ -69,10 +69,10 @@ void RenderArea::setType(int type) {
 
 void RenderArea::setImages(std::vector<QImage> *img) {
     images = *img;
-    for(QImage &i : images) {
-        setGray(i);
-        setBorderX(i);
-    }
+    //for(QImage &i : images) {
+     //   setGray(i);
+      //  setBorderX(i);
+    //}
     labelImage->setImage(&images[0]);
     calc->setImages(&images);
 }
