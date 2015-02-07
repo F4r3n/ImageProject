@@ -11,6 +11,7 @@
 #include <QTextStream>
 #include <QPushButton>
 #include <vector>
+#include <QRgb>
 #include "calcwidget.h"
 #include "spc.h"
 #include "labelimage.h"
@@ -24,6 +25,8 @@ public:
     QString getInfo();
     int getType();
     void setType(int type);
+    void setGray(QImage &img);
+    void setBorderX(QImage &img);
 
 signals:
 
