@@ -13,6 +13,9 @@
 class ModifierWidget : public QWidget
 {
     Q_OBJECT
+private:
+    int getSign(int a);
+
 public:
     explicit ModifierWidget(LabelImage *parent = 0);
     void setGray(QImage &img);
@@ -20,6 +23,8 @@ public:
     void setGaussianBlur(QImage &image);
     float **kernelBox(int r);
     float computePixelBox(QImage &img, float **box,int x,int y,int n);
+    void setCLTBlur(QImage &img,int n);
+    void saveImage(const QImage &img);
 
 
 
@@ -30,12 +35,15 @@ public slots:
     void toBlur(bool c);
     void toEdge(bool c);
     void resetImage();
+    void toBlurCLT(bool c);
 
 private:
+
     LabelImage *labelImage;
     QCheckBox *grayBox;
     QCheckBox *edgeBox;
     QCheckBox *smoothBox;
+    QCheckBox *cltBox;
     QSlider *smoothSlider;
     QImage img;
     QImage beforeImg;

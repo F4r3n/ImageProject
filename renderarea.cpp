@@ -37,6 +37,8 @@ void RenderArea::setImages(std::vector<QImage> *img) {
      //   setGray(i);
       //  setBorderX(i);
     //}
+    ModifierWidget *m = optionW->getModif();
+    m->saveImage(images[0]);
     labelImage->setImage(&images[0]);
     calc->setImages(&images);
 }

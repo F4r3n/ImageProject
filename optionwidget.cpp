@@ -12,3 +12,8 @@ CalcWidget *OptionWidget::getCalc() {
     return calc;
 }
 
+ModifierWidget *OptionWidget::getModif() {
+    return modif;
+}
+
+

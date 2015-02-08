@@ -9,9 +9,12 @@ ModifierWidget::ModifierWidget(LabelImage *parent)
     edgeBox = new QCheckBox("Edge");
     smoothBox = new QCheckBox("smooth");
     resetButton = new QPushButton("Reset");
+    cltBox = new QCheckBox("CLT blur");
     tabBox.push_back(grayBox);
     tabBox.push_back(edgeBox);
     tabBox.push_back(smoothBox);
+    tabBox.push_back(cltBox);
+
 
 
 
@@ -22,14 +25,22 @@ ModifierWidget::ModifierWidget(LabelImage *parent)
     gr->addWidget(edgeBox,0,1);
     gr->addWidget(smoothSlider,1,0);
     gr->addWidget(smoothBox,1,1);
+    gr->addWidget(cltBox,1,2);
+
     gr->addWidget(resetButton,2,2);
 
     connect(smoothBox,SIGNAL(toggled(bool)),smoothSlider,SLOT(setDisabled(bool)));
     connect(smoothBox,SIGNAL(toggled(bool)),this,SLOT(toBlur(bool)));
+    connect(cltBox,SIGNAL(toggled(bool)),this,SLOT(toBlurCLT(bool)));
+
     connect(grayBox,SIGNAL(toggled(bool)),this,SLOT(toGray(bool)));
     connect(edgeBox,SIGNAL(toggled(bool)),this,SLOT(toEdge(bool)));
     connect(resetButton,SIGNAL(clicked()),this,SLOT(resetImage()));
-    beforeImg = labelImage->getImg();
+
+}
+
+void ModifierWidget::saveImage(const QImage &img) {
+    beforeImg = img;
 
 }
 
@@ -77,16 +88,21 @@ void ModifierWidget::toBlur(bool c) {
     }
 }
 
+void ModifierWidget::toBlurCLT(bool c) {
+    if(c) {
+        img = labelImage->getImg();
+        setCLTBlur(img,5);
+        labelImage->setImage(&img);
+    }
+}
+
 void ModifierWidget::toGray(bool c) {
 
     if(c) {
         img = labelImage->getImg();
-        beforeImg = img;
         setGray(img);
-    } else {
-        img = beforeImg;
+        labelImage->setImage(&img);
     }
-    labelImage->setImage(&img);
 }
 
 float ModifierWidget::computePixelBox(QImage &img,float **box,int x,int y,int n) {
@@ -131,15 +147,49 @@ void ModifierWidget::setGray(QImage &img) {
     }
 }
 
+int ModifierWidget::getSign(int a) {
+    return (a>0)?1:0;
+}
+
+void ModifierWidget::setCLTBlur(QImage &img,int n) {
+    for(int i=0;i<img.width();++i) {
+        for(int j=0;j<img.height();++j) {
+
+            int sum = 0;
+            int nb = 0;
+            for(int k=-n;k<n;k++) {
+                if((j+k>0 && j+k<img.height())&& k!=0) {
+                    QColor c(img.pixel(i,j+k));
+                    sum+=c.red();
+                    nb++;
+                }
+            }
+            for(int k=-n;k<n;k++) {
+                if((i+k>0 && i+k<img.width()) && k!=0) {
+                    QColor c(img.pixel(i+k,j));
+                    sum+=c.red();
+                    nb++;
+                }
+            }
+            sum+=QColor(img.pixel(i,j)).red();
+            nb++;
+            sum/=nb;
+            img.setPixel(i,j,qRgb(sum,sum,sum));
+
+        }
+    }
+}
+
 void ModifierWidget::setBorderX(QImage &img) {
 
     for(int i=0;i<img.width();++i) {
         bool up = false;
         bool down = false;
         for(int j=0;j<img.height()-1;++j) {
-            QRgb a = img.pixel(i,j);
-            QRgb b = img.pixel(i,j+1);
-            int c = a-b;
+            QColor a(img.pixel(i,j));
+            QColor b(img.pixel(i,j+1));
+
+            int c = a.red()-b.red();
 
             if((down == true && c>0) || (up == true && c<0) ) img.setPixel(i,j,qRgb(255,255,255));
             else img.setPixel(i,j,qRgb(0,0,0));

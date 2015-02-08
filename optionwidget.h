@@ -11,6 +11,7 @@ class OptionWidget : public QTabWidget
 public:
     explicit OptionWidget(LabelImage *parent);
     CalcWidget *getCalc();
+    ModifierWidget *getModif();
 
 signals:
 
