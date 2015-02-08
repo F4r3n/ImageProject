@@ -10,29 +10,93 @@ ModifierWidget::ModifierWidget(LabelImage *parent)
     smoothBox = new QCheckBox("smooth");
 
     smoothSlider = new QSlider();
+    smoothSlider->setMaximum(10);
+    smoothSlider->setMinimum(0);
     gr->addWidget(grayBox,0,0);
     gr->addWidget(edgeBox,0,1);
     gr->addWidget(smoothSlider,1,0);
     gr->addWidget(smoothBox,1,1);
 
     connect(smoothBox,SIGNAL(toggled(bool)),smoothSlider,SLOT(setDisabled(bool)));
+    connect(smoothBox,SIGNAL(toggled(bool)),this,SLOT(toBlur(bool)));
     connect(grayBox,SIGNAL(toggled(bool)),this,SLOT(toGray(bool)));
 
+}
+
+float **ModifierWidget::kernelBox(int r) {
+    float **kernel =  new float*[r];
+    for(int i = 0; i < r; ++i) {
+        kernel[i] = new float[r];
+    }
+    double sigma = 1;
+    double mean = r/2;
+    double sum = 0.0;
+    for (int x = 0; x < r; ++x)
+        for (int y = 0; y < r; ++y) {
+            kernel[x][y] = exp( -0.5 * (pow((x-mean)/sigma, 2.0) + pow((y-mean)/sigma,2.0)) )
+                             / (2 * M_PI * sigma * sigma);
+
+            sum += kernel[x][y];
+        }
+
+    for (int x = 0; x < r; ++x)
+        for (int y = 0; y < r; ++y)
+            kernel[x][y] /= sum;
+    return kernel;
+}
+
+void ModifierWidget::toBlur(bool c) {
+    if(c) {
+    img = labelImage->getImg();
+    beforeImg = img;
+    setGaussianBlur(img);
+    } else {
+        img = beforeImg;
+    }
+    labelImage->setImage(&img);
 }
 
 void ModifierWidget::toGray(bool c) {
 
     if(c) {
     img = labelImage->getImg();
-
     beforeImg = img;
-
     setGray(img);
     } else {
         img = beforeImg;
     }
     labelImage->setImage(&img);
 }
+
+float ModifierWidget::computePixelBox(QImage &img,float **box,int x,int y,int n) {
+    float sum =0;
+    for(int i=0;i<n;++i) {
+        for(int j=0; j<n;j++) {
+            QColor col(img.pixel(i+x,j+y));
+            float r = col.red();
+
+            sum +=r*box[i][j];
+        }
+    }
+    return sum;
+}
+
+
+void ModifierWidget::setGaussianBlur(QImage &image) {
+    int n = 3;
+    float **box  = kernelBox(n);
+    for(int i=n;i<image.width()-n;++i) {
+        for(int j=n;j<image.height()-n;++j) {
+            QColor c(image.pixel(j,i));
+            float r = c.red();
+
+
+            r = computePixelBox(image,box,i,j,n);
+            image.setPixel(i,j,qRgb(r,r,r));
+        }
+    }
+}
+
 
 void ModifierWidget::setGray(QImage &img) {
     QRgb col;
