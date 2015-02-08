@@ -15,6 +15,7 @@
 #include "calcwidget.h"
 #include "spc.h"
 #include "labelimage.h"
+#include "optionwidget.h"
 
 class RenderArea : public QWidget
 {
@@ -39,6 +40,8 @@ private:
     QRgb rgb;
     std::vector<QImage> images;
     CalcWidget *calc;
+
+    OptionWidget *optionW;
     int type;
 
 };

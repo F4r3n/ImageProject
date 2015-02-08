@@ -23,7 +23,9 @@ SOURCES += main.cpp\
     plotingwidget.cpp \
     strategie.cpp \
     derivedalgo.cpp \
-    tfd.cpp
+    tfd.cpp \
+    optionwidget.cpp \
+    modifierwidget.cpp
 
 HEADERS  += window.h \
     renderarea.h \
@@ -36,6 +38,8 @@ HEADERS  += window.h \
     strategie.h \
     derivedealgo.h \
     Vector.h \
-    tfd.h
+    tfd.h \
+    optionwidget.h \
+    modifierwidget.h
 
 FORMS    +=

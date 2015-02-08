@@ -13,10 +13,10 @@ RenderArea::RenderArea(QWidget *parent) :
         info->append("Image Nulle");
     }
     labelImage = new LabelImage(this);
-    calc = new CalcWidget(labelImage);
-
+    optionW = new OptionWidget(labelImage);
+    calc = optionW->getCalc();
     grid->addWidget(labelImage);
-    grid->addWidget(calc,0,1);
+    grid->addWidget(optionW,0,1);
 
 }
 
