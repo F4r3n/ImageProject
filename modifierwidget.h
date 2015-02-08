@@ -6,6 +6,8 @@
 #include <QSlider>
 #include <QGridLayout>
 #include <QImage>
+#include <QPushButton>
+#include <vector>
 #include "labelimage.h"
 
 class ModifierWidget : public QWidget
@@ -27,6 +29,7 @@ public slots:
     void toGray(bool c);
     void toBlur(bool c);
     void toEdge(bool c);
+    void resetImage();
 
 private:
     LabelImage *labelImage;
@@ -36,6 +39,8 @@ private:
     QSlider *smoothSlider;
     QImage img;
     QImage beforeImg;
+    QPushButton *resetButton;
+    std::vector<QCheckBox*> tabBox;
 
 };
 

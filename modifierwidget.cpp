@@ -8,6 +8,12 @@ ModifierWidget::ModifierWidget(LabelImage *parent)
     grayBox = new QCheckBox("Gray");
     edgeBox = new QCheckBox("Edge");
     smoothBox = new QCheckBox("smooth");
+    resetButton = new QPushButton("Reset");
+    tabBox.push_back(grayBox);
+    tabBox.push_back(edgeBox);
+    tabBox.push_back(smoothBox);
+
+
 
     smoothSlider = new QSlider();
     smoothSlider->setMaximum(10);
@@ -16,13 +22,21 @@ ModifierWidget::ModifierWidget(LabelImage *parent)
     gr->addWidget(edgeBox,0,1);
     gr->addWidget(smoothSlider,1,0);
     gr->addWidget(smoothBox,1,1);
+    gr->addWidget(resetButton,2,2);
 
     connect(smoothBox,SIGNAL(toggled(bool)),smoothSlider,SLOT(setDisabled(bool)));
     connect(smoothBox,SIGNAL(toggled(bool)),this,SLOT(toBlur(bool)));
     connect(grayBox,SIGNAL(toggled(bool)),this,SLOT(toGray(bool)));
     connect(edgeBox,SIGNAL(toggled(bool)),this,SLOT(toEdge(bool)));
+    connect(resetButton,SIGNAL(clicked()),this,SLOT(resetImage()));
+    beforeImg = labelImage->getImg();
 
+}
 
+void ModifierWidget::resetImage() {
+    labelImage->setImage(&beforeImg);
+    for(QCheckBox *c : tabBox)
+        c->setChecked(false);
 }
 
 float **ModifierWidget::kernelBox(int r) {
@@ -36,7 +50,7 @@ float **ModifierWidget::kernelBox(int r) {
     for (int x = 0; x < r; ++x)
         for (int y = 0; y < r; ++y) {
             kernel[x][y] = exp( -0.5 * (pow((x-mean)/sigma, 2.0) + pow((y-mean)/sigma,2.0)) )
-                             / (2 * M_PI * sigma * sigma);
+                    / (2 * M_PI * sigma * sigma);
 
             sum += kernel[x][y];
         }
@@ -49,32 +63,26 @@ float **ModifierWidget::kernelBox(int r) {
 
 void ModifierWidget::toEdge(bool c) {
     if(c) {
-    img = labelImage->getImg();
-    beforeImg = img;
-    setBorderX(img);
-    } else {
-        img = beforeImg;
+        img = labelImage->getImg();
+        setBorderX(img);
+        labelImage->setImage(&img);
     }
-    labelImage->setImage(&img);
 }
 
 void ModifierWidget::toBlur(bool c) {
     if(c) {
-    img = labelImage->getImg();
-    beforeImg = img;
-    setGaussianBlur(img);
-    } else {
-        img = beforeImg;
+        img = labelImage->getImg();
+        setGaussianBlur(img);
+        labelImage->setImage(&img);
     }
-    labelImage->setImage(&img);
 }
 
 void ModifierWidget::toGray(bool c) {
 
     if(c) {
-    img = labelImage->getImg();
-    beforeImg = img;
-    setGray(img);
+        img = labelImage->getImg();
+        beforeImg = img;
+        setGray(img);
     } else {
         img = beforeImg;
     }
@@ -85,7 +93,7 @@ float ModifierWidget::computePixelBox(QImage &img,float **box,int x,int y,int n)
     float sum =0;
     for(int i=0;i<n;++i) {
         for(int j=0; j<n;j++) {
-            QColor col(img.pixel(i+x,j+y));
+            QColor col(img.pixel(i+x-2,j+y-2));
             float r = col.red();
 
             sum +=r*box[i][j];
