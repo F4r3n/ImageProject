@@ -20,11 +20,13 @@ public:
     float computePixelBox(QImage &img, float **box,int x,int y,int n);
 
 
+
 signals:
 
 public slots:
     void toGray(bool c);
     void toBlur(bool c);
+    void toEdge(bool c);
 
 private:
     LabelImage *labelImage;

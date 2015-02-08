@@ -20,6 +20,8 @@ ModifierWidget::ModifierWidget(LabelImage *parent)
     connect(smoothBox,SIGNAL(toggled(bool)),smoothSlider,SLOT(setDisabled(bool)));
     connect(smoothBox,SIGNAL(toggled(bool)),this,SLOT(toBlur(bool)));
     connect(grayBox,SIGNAL(toggled(bool)),this,SLOT(toGray(bool)));
+    connect(edgeBox,SIGNAL(toggled(bool)),this,SLOT(toEdge(bool)));
+
 
 }
 
@@ -43,6 +45,17 @@ float **ModifierWidget::kernelBox(int r) {
         for (int y = 0; y < r; ++y)
             kernel[x][y] /= sum;
     return kernel;
+}
+
+void ModifierWidget::toEdge(bool c) {
+    if(c) {
+    img = labelImage->getImg();
+    beforeImg = img;
+    setBorderX(img);
+    } else {
+        img = beforeImg;
+    }
+    labelImage->setImage(&img);
 }
 
 void ModifierWidget::toBlur(bool c) {
@@ -83,7 +96,7 @@ float ModifierWidget::computePixelBox(QImage &img,float **box,int x,int y,int n)
 
 
 void ModifierWidget::setGaussianBlur(QImage &image) {
-    int n = 3;
+    int n = 9;
     float **box  = kernelBox(n);
     for(int i=n;i<image.width()-n;++i) {
         for(int j=n;j<image.height()-n;++j) {
