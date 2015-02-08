@@ -13,10 +13,14 @@ class ModifierWidget : public QWidget
     Q_OBJECT
 public:
     explicit ModifierWidget(LabelImage *parent = 0);
+    void setGray(QImage &img);
+    void setBorderX(QImage &img);
+
 
 signals:
 
 public slots:
+    void toGray(bool c);
 
 private:
     LabelImage *labelImage;
@@ -24,7 +28,8 @@ private:
     QCheckBox *edgeBox;
     QCheckBox *smoothBox;
     QSlider *smoothSlider;
-    QImage *img;
+    QImage img;
+    QImage beforeImg;
 
 };
 
