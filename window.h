@@ -47,14 +47,17 @@ private:
     QPushButton *changeSpaceColor;
     QComboBox *spaceColorList;
     QLabel *info;
+
     QMenu *fileMenu;
     QMenu *editMenu;
     QMenu *formatMenu;
     QMenu *helpMenu;
+
     QAction *loadAct;
     QAction *saveAct;
     QAction *imageAct;
     QAction *aboutAct;
+
     Updater *up;
     std::vector<QImage> images;
     int type;

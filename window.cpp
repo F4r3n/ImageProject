@@ -16,8 +16,6 @@ Window::Window(QWidget *parent) :QMainWindow(parent)
     spaceColorList->addItem("HUE");
 
 
-
-
     QGridLayout *mainLayout = new QGridLayout();
     mainLayout->setColumnStretch(0, 1);
     mainLayout->setColumnStretch(3, 1);
@@ -34,8 +32,6 @@ Window::Window(QWidget *parent) :QMainWindow(parent)
     connect(qApp,SIGNAL(aboutToQuit()),this,SLOT(quitMyApp()));
     connect(changeSpaceColor,SIGNAL(clicked()),this,SLOT(changeColor()));
     connect(this,SIGNAL(clicked(int)),up,SLOT(color(int)));
-
-
 }
 
 void Window::quitMyApp() {
@@ -109,8 +105,6 @@ void Window::createMenu() {
 
     helpMenu = menuBar()->addMenu("Help");
     helpMenu->addAction(aboutAct);
-
-
 }
 
 Window::~Window()

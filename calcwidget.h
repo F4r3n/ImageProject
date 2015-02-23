@@ -33,10 +33,12 @@ signals:
     void clicked(QImage img);
 public slots:
     bool calculus();
+    bool calculsColor();
     void nextImage();
     void previousImage();
     void analyzeImages();
     void rewindImages();
+    void optionCalc(int btnChecked);
 
 private:
     QPushButton *calc;
@@ -57,9 +59,12 @@ private:
     QCheckBox *amplificationDerivedBox;
     QCheckBox *derivedSBox;
 
+    Vector<double> squaresAverages;
+    const int squareSize = 5;
 
     unsigned int index;
     int type;
+    bool analyseColor;
 
 };
 

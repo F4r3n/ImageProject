@@ -4,7 +4,10 @@ OptionWidget::OptionWidget(LabelImage *parent)
 {
     calc = new CalcWidget(parent);
     modif = new ModifierWidget(parent);
+    analyze = new AnalyzeWidget(parent,calc);
+
     addTab(calc,"Calcul");
+    addTab(analyze,"Analyze");
     addTab(modif,"Options");
 }
 

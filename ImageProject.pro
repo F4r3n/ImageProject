@@ -25,7 +25,8 @@ SOURCES += main.cpp\
     derivedalgo.cpp \
     tfd.cpp \
     optionwidget.cpp \
-    modifierwidget.cpp
+    modifierwidget.cpp \
+    analyzewidget.cpp
 
 HEADERS  += window.h \
     renderarea.h \
@@ -40,6 +41,7 @@ HEADERS  += window.h \
     Vector.h \
     tfd.h \
     optionwidget.h \
-    modifierwidget.h
+    modifierwidget.h \
+    analyzewidget.h
 
 FORMS    +=

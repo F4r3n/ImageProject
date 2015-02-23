@@ -1,13 +1,13 @@
 #include "calcwidget.h"
 #include <cmath>
 
-CalcWidget::CalcWidget(LabelImage *label)
-{
+CalcWidget::CalcWidget(LabelImage *label) {
     index = 0;
     lab = label;
     QGridLayout *gr = new QGridLayout();
     QGridLayout *s = new QGridLayout();
     type = RGB;
+    analyseColor = false;
 
     area = new QScrollArea();
     setLayout(gr);
@@ -27,7 +27,6 @@ CalcWidget::CalcWidget(LabelImage *label)
     derivedSBox = new QCheckBox("FFT");
     derivedSBox->setChecked(true);
 
-
     s->addWidget(result);
     gr->addWidget(calc,0,0);
     gr->addWidget(next,0,2);
@@ -42,22 +41,17 @@ CalcWidget::CalcWidget(LabelImage *label)
     gr->addWidget(amplificationDerivedBox,7,4);
     gr->addWidget(derivedSBox,7,5);
 
-
-
     connect(calc,SIGNAL(clicked()),this,SLOT(calculus()));
     connect(next,SIGNAL(clicked()),this,SLOT(nextImage()));
     connect(previous,SIGNAL(clicked()),this,SLOT(previousImage()));
     connect(this,SIGNAL(clicked(QImage)),label,SLOT(nextImage(QImage)));
     connect(analyze,SIGNAL(clicked()),this,SLOT(analyzeImages()));
     connect(rewind,SIGNAL(clicked()),this,SLOT(rewindImages()));
-
-
 }
 
 
 
 void CalcWidget::movingAverage(Vector<double> &z) const{
-
     for(int i=1;i<x.size()-1;i++) {
         z[i] = (z[i]+z[i-1]+z[i+1])/3;
     }
@@ -83,8 +77,16 @@ void CalcWidget::analyzeImages() {
     rewindImages();
     unsigned int i=index;
     while(i < images.size()) {
-        bool isOk = calculus();
-        if(!isOk) return;
+        bool isOk;
+
+        if(analyseColor) {
+            isOk = calculsColor();
+        } else {
+            isOk = calculus();
+        }
+
+        if(!isOk)
+            return;
         displayData();
         nextImage();
         i++;
@@ -157,7 +159,6 @@ void CalcWidget::setType(int type) {
 
 
 bool CalcWidget::calculus() {
-
     QRect *r = lab->getRect();
     if(!r) {
         result->setText(QString("No rect"));
@@ -195,11 +196,57 @@ bool CalcWidget::calculus() {
     x.push_back(index);
     y.push_back(average);
     return true;
-
 }
 
+
+bool CalcWidget::calculsColor() {
+    QRect *r = lab->getRect();
+    if(!r) {
+        result->setText(QString("No rect"));
+        return false;
+    }
+    float average = 0;
+
+    QImage img = lab->getImg();
+    int taille = 0;
+    int average = 0;
+
+    for(int i=r->topLeft().y(); i<r->bottomLeft().y(); i+squareSize){
+        for(int j=r->topLeft().x(); j<r->topRight().x(); j+squareSize) {
+            for(int k=i; i<squareSize+i; k++) {
+                for(int l=j; j<squareSize+j; l++) {
+                    QColor c(img.pixel(l,k));
+                    if(type == RGB) {
+                        average += (c.red()+c.green()+c.blue())/3.f;
+                    }
+                }
+            }
+            average = average/squareSize*squareSize;
+            squaresAverages.push_back(average);
+        }
+    }
+
+//    average = average/taille;
+//    x.push_back(index);
+//    y.push_back(average);
+    return true;
+}
 
 
 void CalcWidget::setImages(std::vector<QImage> *img) {
     images = *img;
+}
+
+
+void CalcWidget::optionCalc(int btnChecked) {
+    switch(btnChecked) {
+        case -2:
+            analyseColor = false;
+            break;
+        case -3:
+            analyseColor = true;
+            break;
+        default:
+            break;
+    }
 }

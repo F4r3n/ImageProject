@@ -4,6 +4,7 @@
 #include <QTabWidget>
 #include "calcwidget.h"
 #include "modifierwidget.h"
+#include "analyzewidget.h"
 
 class OptionWidget : public QTabWidget
 {
@@ -19,7 +20,7 @@ public slots:
 private:
     CalcWidget *calc;
     ModifierWidget *modif;
-
+    AnalyzeWidget *analyze;
 };
 
 #endif // OPTIONWIDGET_H
