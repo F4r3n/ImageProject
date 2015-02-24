@@ -27,18 +27,19 @@ public:
     void displayData();
     void setType(int type);
     void movingAverage(Vector<double> &z) const;
-
+    void displayDataColor();
 
 signals:
     void clicked(QImage img);
 public slots:
     bool calculus();
-    bool calculsColor();
+    bool calculusColor();
     void nextImage();
     void previousImage();
     void analyzeImages();
     void rewindImages();
     void optionCalc(int btnChecked);
+    void redirectCalculus();
 
 private:
     QPushButton *calc;
@@ -60,6 +61,7 @@ private:
     QCheckBox *derivedSBox;
 
     Vector<double> squaresAverages;
+    Vector<Vector<double> > squares;
     const int squareSize = 5;
 
     unsigned int index;

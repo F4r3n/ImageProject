@@ -41,7 +41,7 @@ CalcWidget::CalcWidget(LabelImage *label) {
     gr->addWidget(amplificationDerivedBox,7,4);
     gr->addWidget(derivedSBox,7,5);
 
-    connect(calc,SIGNAL(clicked()),this,SLOT(calculus()));
+    connect(calc,SIGNAL(clicked()),this,SLOT(redirectCalculus()));
     connect(next,SIGNAL(clicked()),this,SLOT(nextImage()));
     connect(previous,SIGNAL(clicked()),this,SLOT(previousImage()));
     connect(this,SIGNAL(clicked(QImage)),label,SLOT(nextImage(QImage)));
@@ -49,6 +49,13 @@ CalcWidget::CalcWidget(LabelImage *label) {
     connect(rewind,SIGNAL(clicked()),this,SLOT(rewindImages()));
 }
 
+void CalcWidget::redirectCalculus() {
+    if(analyseColor) {
+        calculusColor();
+    } else {
+        calculus();
+    }
+}
 
 
 void CalcWidget::movingAverage(Vector<double> &z) const{
@@ -80,14 +87,19 @@ void CalcWidget::analyzeImages() {
         bool isOk;
 
         if(analyseColor) {
-            isOk = calculsColor();
+            isOk = calculusColor();
         } else {
             isOk = calculus();
         }
 
         if(!isOk)
             return;
-        displayData();
+
+        if(analyseColor) {
+            displayDataColor();
+        } else {
+            displayData();
+        }
         nextImage();
         i++;
 
@@ -95,7 +107,7 @@ void CalcWidget::analyzeImages() {
     index = i;
     movingAverage(y);
     //  result->verticalScrollBar()->setSliderPosition(
-    //            result->verticalScrollBar()->maximum());
+    //  result->verticalScrollBar()->maximum());
     Vector<double> cy(y);
 
     if(averageBox->isChecked()) {
@@ -119,7 +131,6 @@ void CalcWidget::analyzeImages() {
     }
 
     if(derivedSBox->isChecked()) {
-
         Tfd *s = new Tfd();
         Vector<double> d = s->execute(x,derived(cy));
         d = s->filter(d.size());
@@ -149,6 +160,12 @@ void CalcWidget::nextImage() {
 
 void CalcWidget::displayData() {
     QString temp = result->toPlainText() + QString().setNum(y[y.size()-1],'f');
+    temp.append(QString("\n"));
+    result->setText(temp);
+}
+
+void CalcWidget::displayDataColor() {
+    QString temp = result->toPlainText() + QString().setNum(squares[squares.size()-1][0],'f');
     temp.append(QString("\n"));
     result->setText(temp);
 }
@@ -195,40 +212,44 @@ bool CalcWidget::calculus() {
     average = average/taille;
     x.push_back(index);
     y.push_back(average);
+
     return true;
 }
 
 
-bool CalcWidget::calculsColor() {
+bool CalcWidget::calculusColor() {
     QRect *r = lab->getRect();
     if(!r) {
         result->setText(QString("No rect"));
         return false;
     }
-    float average = 0;
 
     QImage img = lab->getImg();
-    int taille = 0;
-    int average = 0;
+    double average = 0;
 
-    for(int i=r->topLeft().y(); i<r->bottomLeft().y(); i+squareSize){
-        for(int j=r->topLeft().x(); j<r->topRight().x(); j+squareSize) {
-            for(int k=i; i<squareSize+i; k++) {
-                for(int l=j; j<squareSize+j; l++) {
-                    QColor c(img.pixel(l,k));
-                    if(type == RGB) {
-                        average += (c.red()+c.green()+c.blue())/3.f;
+    for(int i=r->topLeft().y(); i<r->bottomLeft().y(); i+=squareSize){
+        for(int j=r->topLeft().x(); j<r->topRight().x(); j+=squareSize) {
+
+            if(squareSize+i < r->bottomLeft().y()) {
+                for(int k=i; k<squareSize+i; k++) {
+                    if(squareSize+j < r->topRight().x()) {
+                        for(int l=j; l<squareSize+j; l++) {
+                            QColor c(img.pixel(l,k));
+                            if(type == RGB) {
+                                average += (c.red()+c.green()+c.blue())/3.f;
+                            }
+                        }
                     }
                 }
             }
-            average = average/squareSize*squareSize;
+
+            average = average/(squareSize*squareSize);
             squaresAverages.push_back(average);
         }
     }
 
-//    average = average/taille;
-//    x.push_back(index);
-//    y.push_back(average);
+    squares.push_back(squaresAverages);
+    x.push_back(index);
     return true;
 }
 

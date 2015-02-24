@@ -5,6 +5,7 @@
 
 template <typename T>
 class Vector :public QVector<T> {
+
 public:
     Vector():QVector<T>(){}
     Vector(unsigned int t):QVector<T>(t){}
@@ -44,7 +45,5 @@ Vector<T> multiply(const Vector<T> &a,T b) {
     }
     return v;
 }
-
-
 
 #endif // VECTOR_H
