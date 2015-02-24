@@ -104,6 +104,10 @@ void CalcWidget::analyzeImages() {
         i++;
 
     }
+    if(analyseColor) {
+        createNewVector();
+    }
+
     index = i;
     movingAverage(y);
     //  result->verticalScrollBar()->setSliderPosition(
@@ -138,6 +142,18 @@ void CalcWidget::analyzeImages() {
         PlotingWidget *pl = new PlotingWidget(x,d,QString("FFT"),this);
         pl->show();
     }
+}
+
+void CalcWidget::createNewVector() {
+    for(auto i : squares) {
+        for(auto j : i) {
+
+        }
+    }
+}
+
+void CalcWidget::amplified() {
+
 }
 
 void CalcWidget::previousImage() {
@@ -226,27 +242,42 @@ bool CalcWidget::calculusColor() {
 
     QImage img = lab->getImg();
     double average = 0;
+    int cpt = 0;
+    bool isOk = false;
+
+    double rect_h = r->topLeft().y()-r->bottomLeft().y();
+    double rect_w = r->topLeft().x()-r->topRight().x();
 
     for(int i=r->topLeft().y(); i<r->bottomLeft().y(); i+=squareSize){
         for(int j=r->topLeft().x(); j<r->topRight().x(); j+=squareSize) {
+            average = 0;
 
-            if(squareSize+i < r->bottomLeft().y()) {
+            if(squareSize+i <= r->bottomLeft().y()) {
                 for(int k=i; k<squareSize+i; k++) {
-                    if(squareSize+j < r->topRight().x()) {
+                    if(squareSize+j <= r->topRight().x()) {
                         for(int l=j; l<squareSize+j; l++) {
                             QColor c(img.pixel(l,k));
                             if(type == RGB) {
                                 average += (c.red()+c.green()+c.blue())/3.f;
                             }
+                            isOk = true;
                         }
                     }
                 }
             }
 
-            average = average/(squareSize*squareSize);
-            squaresAverages.push_back(average);
+            if(isOk) {
+                average = average/(squareSize*squareSize);
+                squaresAverages.push_back(average);
+            }
+            isOk = false;
         }
     }
+//    qDebug()<< "Height : "<< rect_h << " - Width : " << rect_w;
+//    qDebug()<< "Nb de carrés : " << rect_h * rect_w / 25;
+
+//    qDebug()<<squaresAverages.size();
+//    qDebug() << squaresAverages.size() - (rect_h * rect_w / 25);
 
     squares.push_back(squaresAverages);
     x.push_back(index);

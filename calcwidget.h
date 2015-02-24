@@ -28,9 +28,12 @@ public:
     void setType(int type);
     void movingAverage(Vector<double> &z) const;
     void displayDataColor();
+    void amplified();
+    void createNewVector();
 
 signals:
     void clicked(QImage img);
+
 public slots:
     bool calculus();
     bool calculusColor();
@@ -60,8 +63,9 @@ private:
     QCheckBox *amplificationDerivedBox;
     QCheckBox *derivedSBox;
 
-    Vector<double> squaresAverages;
     Vector<Vector<double> > squares;
+    Vector<double> squaresAverages;
+    Vector<Vector<double> > ys;
     const int squareSize = 5;
 
     unsigned int index;
