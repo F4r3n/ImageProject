@@ -64,7 +64,6 @@ private:
     QCheckBox *derivedSBox;
 
     Vector<Vector<double> > squares;
-    Vector<double> squaresAverages;
     Vector<Vector<double> > ys;
     const int squareSize = 5;
 

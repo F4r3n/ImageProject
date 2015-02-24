@@ -104,15 +104,19 @@ void CalcWidget::analyzeImages() {
         i++;
 
     }
+    index = i;
+
     if(analyseColor) {
-        createNewVector();
+        amplified();
+    }
+    if(!analyseColor) {
+        movingAverage(y);
     }
 
-    index = i;
-    movingAverage(y);
     //  result->verticalScrollBar()->setSliderPosition(
     //  result->verticalScrollBar()->maximum());
     Vector<double> cy(y);
+
 
     if(averageBox->isChecked()) {
         PlotingWidget *p = new PlotingWidget(x,cy,QString("Average"),this);
@@ -144,17 +148,6 @@ void CalcWidget::analyzeImages() {
     }
 }
 
-void CalcWidget::createNewVector() {
-    for(auto i : squares) {
-        for(auto j : i) {
-
-        }
-    }
-}
-
-void CalcWidget::amplified() {
-
-}
 
 void CalcWidget::previousImage() {
     if(images.size()==0) return;
@@ -232,6 +225,23 @@ bool CalcWidget::calculus() {
     return true;
 }
 
+void CalcWidget::setImages(std::vector<QImage> *img) {
+    images = *img;
+}
+
+
+void CalcWidget::optionCalc(int btnChecked) {
+    switch(btnChecked) {
+        case -2:
+            analyseColor = false;
+            break;
+        case -3:
+            analyseColor = true;
+            break;
+        default:
+            break;
+    }
+}
 
 bool CalcWidget::calculusColor() {
     QRect *r = lab->getRect();
@@ -242,11 +252,11 @@ bool CalcWidget::calculusColor() {
 
     QImage img = lab->getImg();
     double average = 0;
-    int cpt = 0;
     bool isOk = false;
 
-    double rect_h = r->topLeft().y()-r->bottomLeft().y();
-    double rect_w = r->topLeft().x()-r->topRight().x();
+    Vector<double> squaresAverages;
+    double rect_h = r->bottomLeft().y() - r->topLeft().y();
+    double rect_w = r->topRight().x() - r->topLeft().x();
 
     for(int i=r->topLeft().y(); i<r->bottomLeft().y(); i+=squareSize){
         for(int j=r->topLeft().x(); j<r->topRight().x(); j+=squareSize) {
@@ -274,31 +284,30 @@ bool CalcWidget::calculusColor() {
         }
     }
 //    qDebug()<< "Height : "<< rect_h << " - Width : " << rect_w;
-//    qDebug()<< "Nb de carrés : " << rect_h * rect_w / 25;
-
-//    qDebug()<<squaresAverages.size();
-//    qDebug() << squaresAverages.size() - (rect_h * rect_w / 25);
+//    qDebug()<< "Nb de carrés voulu : " << rect_h * rect_w / 25;
+//    qDebug() << "Obtenus : " << squaresAverages.size();
 
     squares.push_back(squaresAverages);
     x.push_back(index);
+    qDebug()<<index;
     return true;
 }
 
+void CalcWidget::amplified() {
+//    double factor = 5;
 
-void CalcWidget::setImages(std::vector<QImage> *img) {
-    images = *img;
-}
+//    Vector<double> moyennes;
+//    for(int i=0;i<squares.size();i++) {
+//        double m = squares[i][0];
+//        moyennes.push_back(m);
+//    }
+//    y = moyennes;
 
-
-void CalcWidget::optionCalc(int btnChecked) {
-    switch(btnChecked) {
-        case -2:
-            analyseColor = false;
-            break;
-        case -3:
-            analyseColor = true;
-            break;
-        default:
-            break;
+    double factor = 5;
+    for(int i=0;i<squares.size();i++) {
+//        for(int j=0; j<squares[i].size(); j++) {
+            squares[i] = squares[i] + multiply(derived(squares[i]),factor);
+//            qDebug()<<squares[i][j];
+//        }
     }
 }
