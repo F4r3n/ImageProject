@@ -117,7 +117,6 @@ void CalcWidget::analyzeImages() {
     //  result->verticalScrollBar()->maximum());
     Vector<double> cy(y);
 
-
     if(averageBox->isChecked()) {
         PlotingWidget *p = new PlotingWidget(x,cy,QString("Average"),this);
         p->show();
@@ -146,6 +145,7 @@ void CalcWidget::analyzeImages() {
         PlotingWidget *pl = new PlotingWidget(x,d,QString("FFT"),this);
         pl->show();
     }
+
 }
 
 
@@ -255,8 +255,6 @@ bool CalcWidget::calculusColor() {
     bool isOk = false;
 
     Vector<double> squaresAverages;
-    double rect_h = r->bottomLeft().y() - r->topLeft().y();
-    double rect_w = r->topRight().x() - r->topLeft().x();
 
     for(int i=r->topLeft().y(); i<r->bottomLeft().y(); i+=squareSize){
         for(int j=r->topLeft().x(); j<r->topRight().x(); j+=squareSize) {
@@ -283,31 +281,34 @@ bool CalcWidget::calculusColor() {
             isOk = false;
         }
     }
-//    qDebug()<< "Height : "<< rect_h << " - Width : " << rect_w;
-//    qDebug()<< "Nb de carrés voulu : " << rect_h * rect_w / 25;
-//    qDebug() << "Obtenus : " << squaresAverages.size();
 
     squares.push_back(squaresAverages);
     x.push_back(index);
-    qDebug()<<index;
     return true;
 }
 
 void CalcWidget::amplified() {
-//    double factor = 5;
-
-//    Vector<double> moyennes;
-//    for(int i=0;i<squares.size();i++) {
-//        double m = squares[i][0];
-//        moyennes.push_back(m);
-//    }
-//    y = moyennes;
-
     double factor = 5;
+    double average = 0;
+
     for(int i=0;i<squares.size();i++) {
-//        for(int j=0; j<squares[i].size(); j++) {
-            squares[i] = squares[i] + multiply(derived(squares[i]),factor);
-//            qDebug()<<squares[i][j];
-//        }
+        Vector<double> temp;
+        for(int j=0; j<squares[i].size(); j++) {
+            temp.push_back(squares[i][j]);
+        }
+
+        temp  = temp + multiply(derived(temp),factor);
+        for(int k=0; k<squares[i].size(); k++) {
+            squares[i][k] = temp[k];
+        }
+    }
+
+
+    for(int i=0;i<squares.size();i++) {
+        for(int j=0; j<squares[i].size(); j++) {
+            average += squares[i][j];
+        }
+        average = average/squares[i].size();
+        y.push_back(average);
     }
 }

@@ -29,7 +29,6 @@ public:
     void movingAverage(Vector<double> &z) const;
     void displayDataColor();
     void amplified();
-    void createNewVector();
 
 signals:
     void clicked(QImage img);
@@ -64,7 +63,6 @@ private:
     QCheckBox *derivedSBox;
 
     Vector<Vector<double> > squares;
-    Vector<Vector<double> > ys;
     const int squareSize = 5;
 
     unsigned int index;
