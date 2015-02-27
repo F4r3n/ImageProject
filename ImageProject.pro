@@ -6,6 +6,11 @@
 
 QT       += core gui
 QMAKE_CXXFLAGS += -std=c++11
+INCLUDEPATH +=/usr/include/opencv2\
+                /usr/include/opencv\
+                /usr/include/opencv2/core
+
+LIBS += `pkg-config opencv --libs`
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 

@@ -6,15 +6,12 @@
 #include <QGridLayout>
 #include <QLabel>
 #include <QPushButton>
-#define FS 15
-#define PMAX 200
-#define PMIN 5
-#define H 60
+#include <QDebug>
+#include <QEvent>
 #include "qcustomplot.h"
 #include "Vector.h"
 #include "derivedealgo.h"
-#include <QDebug>
-#include <QEvent>
+
 
 class PlotingWidget : public QDialog
 {

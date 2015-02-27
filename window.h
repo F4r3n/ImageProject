@@ -16,10 +16,11 @@
 #include <vector>
 #include <QProcess>
 #include <QMessageBox>
+#include <cv.h>
+#include <highgui.h>
 #include "updater.h"
 #include "spc.h"
 #include "renderarea.h"
-
 
 class Window : public QMainWindow
 {

@@ -1,5 +1,5 @@
 #include "modifierwidget.h"
-
+using namespace cv;
 ModifierWidget::ModifierWidget(LabelImage *parent)
 {
     labelImage = parent;
@@ -39,6 +39,58 @@ ModifierWidget::ModifierWidget(LabelImage *parent)
 
 }
 
+void ModifierWidget::CannyThreshold(int, void*)
+{
+    /// Reduce noise with a kernel 3x3
+    blur( src_gray, detected_edges, Size(3,3) );
+
+    /// Canny detector
+    Canny( detected_edges, detected_edges, lowThreshold, lowThreshold*ratio, kernel_size );
+
+    /// Using Canny's output as a mask, we display our result
+    dst = Scalar::all(0);
+
+    src.copyTo( dst, detected_edges);
+}
+
+QImage ModifierWidget::Mat2QImage(Mat const& src)
+{
+     Mat temp; // make the same cv::Mat
+     cvtColor(src, temp,CV_BGR2RGB); // cvtColor Makes a copt, that what i need
+     QImage dest((const uchar *) temp.data, temp.cols, temp.rows, temp.step, QImage::Format_RGB888);
+     dest.bits(); // enforce deep copy, see documentation
+     // of QImage::QImage ( const uchar * data, int width, int height, Format format )
+     return dest;
+}
+
+Mat ModifierWidget::QImage2Mat(QImage const& src)
+{
+     Mat tmp(src.height(),src.width(),CV_8UC3,(uchar*)src.bits(),src.bytesPerLine());
+     Mat result; // deep copy just in case (my lack of knowledge with open cv)
+     cvtColor(tmp, result,CV_BGR2RGB);
+     return result;
+}
+
+void ModifierWidget::setEdgeOpenCV(QImage &img) {
+    Mat src, src_gray;
+    src = QImage2Mat(img);
+
+
+
+    /// Create a matrix of the same type and size as src (for dst)
+    dst.create( src.size(), src.type() );
+
+    /// Convert the image to grayscale
+    cvtColor( src, src_gray, CV_BGR2GRAY );
+
+    /// Show the image
+    CannyThreshold(0, 0);
+    img = Mat2QImage(src);
+
+    /// Wait until user exit program by pressing a key
+
+}
+
 void ModifierWidget::saveImage(const QImage &img) {
     beforeImg = img;
 
@@ -75,7 +127,7 @@ float **ModifierWidget::kernelBox(int r) {
 void ModifierWidget::toEdge(bool c) {
     if(c) {
         img = labelImage->getImg();
-        setBorderX(img);
+        setEdgeOpenCV(img);
         labelImage->setImage(&img);
     }
 }

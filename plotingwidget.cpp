@@ -99,6 +99,11 @@ Vector<int> PlotingWidget::variation(const Vector<double> &z) {
     }
     return v;
 }
+#define FS 15
+#define PMAX 200
+#define PMIN 5
+#define H 60
+
 
 int PlotingWidget::maxX() {
     return (PMAX/H)*x.size()/FS;
