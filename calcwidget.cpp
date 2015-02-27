@@ -122,9 +122,9 @@ void CalcWidget::analyzeImages() {
 
     if(averageBox->isChecked()) {
         PlotingWidget *p = new PlotingWidget(x,cy,QString("Average"),this);
-		p->addGraph(x, yr, QString("Red average"),QPen(Qt::red),true);
-		p->addGraph(x, yb, QString("Blue average"),QPen(Qt::blue),true);
-		p->addGraph(x, yg, QString("Green average"),QPen(Qt::darkGreen),true);
+		p->addGraph(x, cyr, QString("Red average"),QPen(Qt::red),true);
+		p->addGraph(x, cyb, QString("Blue average"),QPen(Qt::blue),true);
+		p->addGraph(x, cyg, QString("Green average"),QPen(Qt::darkGreen),true);
 		p->show();
     }
     if(derivedBox->isChecked()) {
@@ -134,7 +134,14 @@ void CalcWidget::analyzeImages() {
     if(amplificationBox->isChecked()) {
         double factor = 3;
         Vector<double> taylor = cy+multiply(derived(cy),factor);
+        Vector<double> taylorRed = cy+multiply(derived(cyr),factor);
+        Vector<double> taylorBlue = cy+multiply(derived(cyb),factor);
+        Vector<double> taylorGreen = cy+multiply(derived(cyg),factor);
+
         PlotingWidget *p = new PlotingWidget(x,taylor,QString("Amplification"),this);
+		p->addGraph(x, taylorRed, QString("Red average ampli"),QPen(Qt::red),true);
+		p->addGraph(x, taylorBlue, QString("Blue average ampli"),QPen(Qt::blue),true);
+		p->addGraph(x, taylorGreen, QString("Green average ampli"),QPen(Qt::darkGreen),true);
         p->show();
     }
     if(amplificationDerivedBox->isChecked()) {
