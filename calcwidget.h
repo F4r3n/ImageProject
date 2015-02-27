@@ -56,6 +56,10 @@ private:
     QPushButton *rewind;
     Vector<double> x;
     Vector<double> y;
+    Vector<double> yr;
+    Vector<double> yg;
+    Vector<double> yb;
+
     QCheckBox *averageBox;
     QCheckBox *derivedBox;
     QCheckBox *amplificationBox;
@@ -63,7 +67,7 @@ private:
     QCheckBox *derivedSBox;
 
     Vector<Vector<double> > squares;
-    const int squareSize = 5;
+    const int squareSize = 10;
 
     unsigned int index;
     int type;

@@ -116,10 +116,16 @@ void CalcWidget::analyzeImages() {
     //  result->verticalScrollBar()->setSliderPosition(
     //  result->verticalScrollBar()->maximum());
     Vector<double> cy(y);
+    Vector<double> cyr(yr);
+    Vector<double> cyb(yb);
+    Vector<double> cyg(yg);
 
     if(averageBox->isChecked()) {
         PlotingWidget *p = new PlotingWidget(x,cy,QString("Average"),this);
-        p->show();
+		p->addGraph(x, yr, QString("Red average"),QPen(Qt::red),true);
+		p->addGraph(x, yb, QString("Blue average"),QPen(Qt::blue),true);
+		p->addGraph(x, yg, QString("Green average"),QPen(Qt::darkGreen),true);
+		p->show();
     }
     if(derivedBox->isChecked()) {
         PlotingWidget *p = new PlotingWidget(x,derived(cy),QString("Derived"),this);
@@ -190,7 +196,7 @@ bool CalcWidget::calculus() {
         result->setText(QString("No rect"));
         return false;
     }
-    float average = 0;
+    float average = 0, red_average = 0, blue_average = 0, green_average = 0;
     QImage img = lab->getImg();
     int taille =0;
 
@@ -199,6 +205,9 @@ bool CalcWidget::calculus() {
             QColor c(img.pixel(j,i));
 
             if(type==RGB) {
+				red_average += c.red();
+				blue_average += c.blue();
+				green_average += c.green(); 
                 average += (c.red()+c.green()+c.blue())/3.f;
             }
             if(type==HSV) {
@@ -218,9 +227,16 @@ bool CalcWidget::calculus() {
         }
     }
 
+	red_average = red_average/taille;
+	blue_average = blue_average/taille;
+	green_average = green_average/taille;
     average = average/taille;
+
     x.push_back(index);
     y.push_back(average);
+    yr.push_back(red_average);
+    yg.push_back(green_average);
+    yb.push_back(blue_average);
 
     return true;
 }

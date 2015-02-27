@@ -7,19 +7,24 @@ PlotingWidget::PlotingWidget(Vector<double> x, Vector<double> y ,QString name, Q
     resize(QSize(400,400));
     QGridLayout *gr = new QGridLayout();
     setLayout(gr);
+
     plot = new QCustomPlot();
     plot->setGeometry(0,0,400,400);
     plot->addGraph();
-    plot->graph(0)->setData(x,y);
+    plot->graph(nbGraph)->setData(x,y);
+	plot->graph(nbGraph)->setPen(QPen(Qt::black));
     plot->xAxis->setLabel("x");
     plot->yAxis->setLabel("y");
     gr->addWidget(plot);
     plot->xAxis->setRange(0, x.size()+5);
+
     double m = maxValue(y);
     double min = minValue(y);
-    qDebug() << min;
+
     plot->yAxis->setRange(min, m);
     plot->replot();
+	// plot->legend->setVisible(true);
+
     quit = new QPushButton("Quit");
     QString str;
     QTextStream i(&str);
@@ -27,12 +32,19 @@ PlotingWidget::PlotingWidget(Vector<double> x, Vector<double> y ,QString name, Q
     info = new QLabel(str);
     info->setMaximumHeight(30);
     gr->addWidget(info);
-
     gr->addWidget(quit);
 
     connect(quit,SIGNAL(clicked()),this,SLOT(close()));
 }
 
+void PlotingWidget::addGraph(Vector<double> x, Vector<double> y, QString name, QPen pen, bool rescale) {
+	nbGraph++;
+	plot->addGraph();
+    plot->graph(nbGraph)->setData(x,y);
+	plot->graph(nbGraph)->setPen(pen);
+	plot->graph(nbGraph)->setName(name);
+	plot->graph(nbGraph)->rescaleAxes(rescale);
+}
 
 double PlotingWidget::minValue(const Vector<double> &z) {
     double min =1000;
