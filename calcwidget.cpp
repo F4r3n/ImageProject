@@ -109,9 +109,8 @@ void CalcWidget::analyzeImages() {
     if(analyseColor) {
         amplified();
     }
-    if(!analyseColor) {
         movingAverage(y);
-    }
+
 
     //  result->verticalScrollBar()->setSliderPosition(
     //  result->verticalScrollBar()->maximum());
@@ -129,6 +128,9 @@ void CalcWidget::analyzeImages() {
     }
     if(derivedBox->isChecked()) {
         PlotingWidget *p = new PlotingWidget(x,derived(cy),QString("Derived"),this);
+        p->addGraph(x, derived(cyr), QString("Red average"),QPen(Qt::red),true);
+        p->addGraph(x, derived(cyb), QString("Blue average"),QPen(Qt::blue),true);
+        p->addGraph(x, derived(cyg), QString("Green average"),QPen(Qt::darkGreen),true);
         p->show();
     }
     if(amplificationBox->isChecked()) {
@@ -152,7 +154,8 @@ void CalcWidget::analyzeImages() {
 
     if(derivedSBox->isChecked()) {
         Tfd *s = new Tfd();
-        Vector<double> d = s->execute(x,derived(cy));
+        //On fait la fft avec le vert
+        Vector<double> d = s->execute(x,derived(cyr));
         d = s->filter(d.size());
         d = s->execute(x,d);
         PlotingWidget *pl = new PlotingWidget(x,d,QString("FFT"),this);
@@ -244,7 +247,7 @@ bool CalcWidget::calculus() {
     yr.push_back(red_average);
     yg.push_back(green_average);
     yb.push_back(blue_average);
-
+    delete rect;
     return true;
 }
 
@@ -304,7 +307,7 @@ bool CalcWidget::calculusColor() {
             isOk = false;
         }
     }
-
+    delete rect;
     squares.push_back(squaresAverages);
     x.push_back(index);
     return true;
