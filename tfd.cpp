@@ -5,8 +5,23 @@ Tfd::Tfd()
 
 }
 
-Vector<double> Tfd::execute(const Vector<double> &x,const Vector<double> &y){
+Vector<double> Tfd::hamming(double n) {
+    Vector<double> in;
+    for(int i=0;i<n;i++) {
+        in.push_back(0.54-0.46*cos((double)2*M_PI*i/(double)(n)));
+    }
+    return in;
+}
 
+Vector<double> Tfd::execute(const Vector<double> &x,const Vector<double> &in){
+
+    qDebug() << x.size();
+    Vector<double> y(x.size());
+    std::copy(in.begin(),in.end(),y.begin());
+    Vector<double> window = hamming(in.size());
+    for(int i=0;i<in.size();i++) {
+        y[i] *= window[i];
+    }
     unsigned int size = x.size();
     Vector<double> re(size);
     Vector<double> im(size);
@@ -16,7 +31,7 @@ Vector<double> Tfd::execute(const Vector<double> &x,const Vector<double> &y){
         double sumimag = 0;
         unsigned int t;
         for (t = 0; t < size; t++) {  /* For each input element */
-            double angle = 2 * M_PI * (t * k) / (float)size;
+            double angle = 2 * M_PI * (t * k) / ((float)size);
             sumreal +=  y[t] * cos(angle);
             sumimag -= y[t] * sin(angle);
         }
@@ -72,7 +87,9 @@ Vector<double> Tfd::filter(int N) {
         ReOutput[f]=(double)(_re[f]*ReFil[f]-_im[f]*ImFil[f]);
         ImOutput[f]=(double)(_re[f]*ImFil[f]+_im[f]*ReFil[f]);
     }
+
     return inverse(ReOutput,ImOutput,N);
+
 }
 
 Vector<double> Tfd::getImg() {
@@ -87,6 +104,7 @@ Vector<double> Tfd::inverse(const Vector<double> &ReOutput, const Vector<double>
             output[i]+=ReOutput[f]*cos(f*w)-ImOutput[f]*sin(f*w);
         }
     }
+
     return output;
 }
 

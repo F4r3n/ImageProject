@@ -81,6 +81,9 @@ void CalcWidget::analyzeImages() {
     result->clear();
     x.clear();
     y.clear();
+    yr.clear();
+    yb.clear();
+    yg.clear();
     rewindImages();
     unsigned int i=index;
     while(i < images.size()) {

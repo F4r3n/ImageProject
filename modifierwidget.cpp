@@ -87,7 +87,6 @@ void ModifierWidget::setEdgeOpenCV(QImage &img) {
     CannyThreshold(0, 0);
     img = Mat2QImage(src);
 
-    /// Wait until user exit program by pressing a key
 
 }
 

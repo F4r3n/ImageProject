@@ -4,6 +4,7 @@
 #include "strategie.h"
 #include "Vector.h"
 #include <cmath>
+#include "plotingwidget.h"
 #include <QDebug>
 
 class Tfd : public Strategie
@@ -18,7 +19,7 @@ public:
     void bandPassFilter(double *re,double *im, int N);
     void lowPassFilter(double *re,double *im, int N);
     Vector<double> inverse(const Vector<double> &ReOutput, const Vector<double> &ImOutput, int N);
-
+    Vector<double> hamming(double n);
 
 
 private:
