@@ -32,6 +32,8 @@ Window::Window(QWidget *parent) :QMainWindow(parent)
     connect(qApp,SIGNAL(aboutToQuit()),this,SLOT(quitMyApp()));
     connect(changeSpaceColor,SIGNAL(clicked()),this,SLOT(changeColor()));
     connect(this,SIGNAL(clicked(int)),up,SLOT(color(int)));
+
+    isRectAuto = true;
 }
 
 void Window::quitMyApp() {
@@ -63,7 +65,9 @@ void Window::loadFile() {
 
     //  img.load(str.toUtf8().constData());
     render->setImages(&images);
-
+    if(isRectAuto) {
+        render->createRect();
+    }
 }
 
 void Window::loadVideo() {
@@ -86,10 +90,22 @@ void Window::createAction(){
     loadAct = new QAction("Load",this);
     imageAct = new QAction("Create images",this);
     aboutAct = new QAction("About",this);
+    autoRect = new QAction("Auto rect",this);
+    autoRect->setCheckable(true);
+    autoRect->setChecked(true);
 
     connect(loadAct,SIGNAL(triggered()),SLOT(loadFile()));
     connect(imageAct,SIGNAL(triggered()),SLOT(loadVideo()));
     connect(aboutAct,SIGNAL(triggered()),SLOT(displayAbout()));
+    connect(autoRect,SIGNAL(triggered()),SLOT(handleRect()));
+}
+
+void Window::handleRect() {
+    if(autoRect->isChecked()) {
+        isRectAuto = true;
+    } else {
+        isRectAuto = false;
+    }
 }
 
 void Window::displayAbout() {
@@ -102,6 +118,9 @@ void Window::createMenu() {
     fileMenu = menuBar()->addMenu("File");
     fileMenu->addAction(loadAct);
     fileMenu->addAction(imageAct);
+
+    optionMenu = menuBar()->addMenu("Options");
+    optionMenu->addAction(autoRect);
 
     helpMenu = menuBar()->addMenu("Help");
     helpMenu->addAction(aboutAct);

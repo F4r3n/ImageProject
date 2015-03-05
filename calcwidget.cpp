@@ -205,6 +205,7 @@ void CalcWidget::setType(int type) {
 
 bool CalcWidget::calculus() {
     QRect *r = lab->getRect();
+    qDebug() << r->top() << " " << r->bottom() << " " << r->left() << " " << r->right();
     if(!r) {
         result->setText(QString("No rect"));
         return false;

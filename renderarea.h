@@ -28,6 +28,7 @@ public:
     void setType(int type);
     void setGray(QImage &img);
     void setBorderX(QImage &img);
+    void createRect();
 
 signals:
 

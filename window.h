@@ -42,6 +42,7 @@ public slots:
     void changeColor();
     void loadVideo();
     void displayAbout();
+    void handleRect();
 
 private:
     RenderArea *render;
@@ -50,6 +51,7 @@ private:
     QLabel *info;
 
     QMenu *fileMenu;
+    QMenu *optionMenu;
     QMenu *editMenu;
     QMenu *formatMenu;
     QMenu *helpMenu;
@@ -58,10 +60,12 @@ private:
     QAction *saveAct;
     QAction *imageAct;
     QAction *aboutAct;
+    QAction *autoRect;
 
     Updater *up;
     std::vector<QImage> images;
     int type;
+    bool isRectAuto;
 };
 
 #endif // WINDOW_H

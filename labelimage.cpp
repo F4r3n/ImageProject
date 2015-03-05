@@ -12,6 +12,7 @@ LabelImage::LabelImage(QWidget *parent) :
     inside  = false;
     rectDone = false;
     setMouseTracking(true);
+    autoRect = false;
 }
 
 void LabelImage::nextImage(QImage img) {
@@ -68,6 +69,15 @@ QImage LabelImage::getImg() {
     return img;
 }
 
+void LabelImage::createRect() {
+    autoRect = true;
+    onDrawingRect = true;
+    pos1 = QPoint(147,126);
+    pos2 = QPoint(367,434);
+    repaint();
+    rectDone = true;
+}
+
 
 void LabelImage::paintEvent(QPaintEvent *) {
     QPainter painter(this);
@@ -75,8 +85,11 @@ void LabelImage::paintEvent(QPaintEvent *) {
     painter.drawImage(1,1,img);
 
     if(onDrawingRect) {
-        if(inside)
+        if(inside) {
             painter.drawRect(QRect(pos1,QPoint(x,y)));
+        } else if(autoRect) {
+            painter.drawRect(QRect(pos1,pos2));
+        }
     }
 }
 

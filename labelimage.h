@@ -29,9 +29,7 @@ public:
     QPoint getPos();
     QRgb getRgb();
     QImage getImg();
-
-
-
+    void createRect();
 
 signals:
 
@@ -49,6 +47,7 @@ private:
     bool inside;
     QTime time;
     bool rectDone;
+    bool autoRect;
 
 };
 

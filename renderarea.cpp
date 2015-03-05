@@ -20,7 +20,9 @@ RenderArea::RenderArea(QWidget *parent) :
 
 }
 
-
+void RenderArea::createRect() {
+    labelImage->createRect();
+}
 
 int RenderArea::getType() {
     return type;
