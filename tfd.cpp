@@ -18,10 +18,10 @@ Vector<double> Tfd::execute(const Vector<double> &x,const Vector<double> &in){
     qDebug() << x.size();
     Vector<double> y(x.size());
     std::copy(in.begin(),in.end(),y.begin());
-    Vector<double> window = hamming(in.size());
-    for(int i=0;i<in.size();i++) {
-        y[i] *= window[i];
-    }
+  //  Vector<double> window = hamming(in.size());
+   // for(int i=0;i<in.size();i++) {
+     //   y[i] *= window[i];
+    //}
     unsigned int size = x.size();
     Vector<double> re(size);
     Vector<double> im(size);

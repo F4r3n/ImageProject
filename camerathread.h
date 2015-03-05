@@ -10,6 +10,7 @@ class CameraThread : public QThread
 public:
     explicit CameraThread(QLabel *l, cv::VideoCapture s);
     void run();
+    QImage getImage();
 
 signals:
 
@@ -18,6 +19,8 @@ public slots:
 private:
     QLabel *_l;
     cv::VideoCapture _s;
+    QImage current;
+    int i=0;
 
 };
 

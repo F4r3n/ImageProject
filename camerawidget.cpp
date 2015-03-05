@@ -1,6 +1,5 @@
 #include "camerawidget.h"
 
- QLabel *CameraWidget::m_imageLabel =0;
 
 CameraWidget::CameraWidget(QWidget *parent)
     : QDialog(parent)
@@ -25,7 +24,7 @@ CameraWidget::CameraWidget(QWidget *parent)
     }
 
     connect(goButton,SIGNAL(clicked()),this,SLOT(displayWebcam()));
-th = new CameraThread(m_imageLabel,stream1);
+    th = new CameraThread(m_imageLabel,stream1);
     //displayWebcam();
 }
 
@@ -43,16 +42,20 @@ void CameraWidget::setLabel(QLabel *l) {
 
 QImage CameraWidget::Mat2QImage(cv::Mat const& src)
 {
-     cv::Mat temp; // make the same cv::Mat
-     cvtColor(src, temp,CV_BGR2RGB); // cvtColor Makes a copt, that what i need
-     QImage dest((const uchar *) temp.data, temp.cols, temp.rows, temp.step, QImage::Format_RGB888);
-     dest.bits(); // enforce deep copy, see documentation
-     // of QImage::QImage ( const uchar * data, int width, int height, Format format )
-     return dest;
+    cv::Mat temp; // make the same cv::Mat
+    cvtColor(src, temp,CV_BGR2RGB); // cvtColor Makes a copt, that what i need
+    QImage dest((const uchar *) temp.data, temp.cols, temp.rows, temp.step, QImage::Format_RGB888);
+    dest.bits(); // enforce deep copy, see documentation
+    // of QImage::QImage ( const uchar * data, int width, int height, Format format )
+    return dest;
 }
 
 void CameraWidget::displayWebcam() {
-th->run();
+    qDebug()<<"a";
+
+    th->start();
+
+
 }
 
 
@@ -62,11 +65,7 @@ CameraWidget::~CameraWidget(void)
 void CameraWidget::putFrame(cv::Mat image)
 {
     QImage i = CameraWidget::Mat2QImage(image);
-    qDebug() << i;
-    if(i.save("test.jpg"))
-        {
-          std::cout<< "save successful!" <<std::endl;
-        } else std::cout < "fail";
+
     m_imageLabel->setPixmap(QPixmap::fromImage(i));
 }
 QPixmap CameraWidget::toPixmap(IplImage *cvimage) {
