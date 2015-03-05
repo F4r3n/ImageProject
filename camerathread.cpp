@@ -18,9 +18,9 @@ void CameraThread::run() {
         current = CameraWidget::Mat2QImage(cameraFrame);
 
       //  qDebug() << current;
-        std::string s = std::to_string(i);
-        std::string v = "000"+s+".jpg";
-        QString a = QString(v.c_str());
+      char f [20];
+        sprintf(f,"file%03d.jpg",i);
+        QString a = QString(f);
         if(current.save(a))
             {
               //std::cout<< "save successful!" <<std::endl;
