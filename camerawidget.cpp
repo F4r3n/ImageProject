@@ -1,13 +1,17 @@
 #include "camerawidget.h"
 
+ QLabel *CameraWidget::m_imageLabel =0;
+
 CameraWidget::CameraWidget(QWidget *parent)
     : QDialog(parent)
 {
-    m_layout = new QVBoxLayout;
     m_imageLabel = new QLabel;
+    m_layout = new QVBoxLayout;
+    goButton = new QPushButton("Go");
     QImage dummy(100, 100, QImage::Format_RGB32);
     m_image = dummy;
     m_layout->addWidget(m_imageLabel);
+    m_layout->addWidget(goButton);
     for (int x = 0; x < 100; x ++)
         for (int y =0; y < 100; y++)
             m_image.setPixel(x,y,qRgb(x, y, y));
@@ -19,7 +23,22 @@ CameraWidget::CameraWidget(QWidget *parent)
     if (!stream1.isOpened()) { //check if video device has been initialised
         std::cout << "cannot open camera";
     }
+
+    connect(goButton,SIGNAL(clicked()),this,SLOT(displayWebcam()));
+th = new CameraThread(m_imageLabel,stream1);
     //displayWebcam();
+}
+
+QLabel* CameraWidget::getLabel() {
+    return m_imageLabel;
+}
+
+cv::VideoCapture CameraWidget::getStream() {
+    return stream1;
+}
+
+void CameraWidget::setLabel(QLabel *l) {
+    m_imageLabel = l;
 }
 
 QImage CameraWidget::Mat2QImage(cv::Mat const& src)
@@ -33,23 +52,22 @@ QImage CameraWidget::Mat2QImage(cv::Mat const& src)
 }
 
 void CameraWidget::displayWebcam() {
-    while(1) {
-        cv::Mat cameraFrame;
-        stream1.read(cameraFrame);
-        m_imageLabel->setPixmap(QPixmap::fromImage(Mat2QImage(cameraFrame)));
-
-
-    }
-
+th->run();
 }
 
 
 CameraWidget::~CameraWidget(void)
 {
 }
-void CameraWidget::putFrame(IplImage *image)
+void CameraWidget::putFrame(cv::Mat image)
 {
-    m_imageLabel->setPixmap(toPixmap(image));
+    QImage i = CameraWidget::Mat2QImage(image);
+    qDebug() << i;
+    if(i.save("test.jpg"))
+        {
+          std::cout<< "save successful!" <<std::endl;
+        } else std::cout < "fail";
+    m_imageLabel->setPixmap(QPixmap::fromImage(i));
 }
 QPixmap CameraWidget::toPixmap(IplImage *cvimage) {
     int cvIndex, cvLineStart;

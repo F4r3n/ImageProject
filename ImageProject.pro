@@ -32,7 +32,8 @@ SOURCES += main.cpp\
     optionwidget.cpp \
     modifierwidget.cpp \
     analyzewidget.cpp \
-    camerawidget.cpp
+    camerawidget.cpp \
+    camerathread.cpp
 
 HEADERS  += window.h \
     renderarea.h \
@@ -49,6 +50,7 @@ HEADERS  += window.h \
     optionwidget.h \
     modifierwidget.h \
     analyzewidget.h \
-    camerawidget.h
+    camerawidget.h \
+    camerathread.h
 
 FORMS    +=
