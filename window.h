@@ -21,6 +21,7 @@
 #include "updater.h"
 #include "spc.h"
 #include "renderarea.h"
+#include "camerawidget.h"
 
 class Window : public QMainWindow
 {
@@ -43,12 +44,14 @@ public slots:
     void loadVideo();
     void displayAbout();
     void handleRect();
+    void showCam();
 
 private:
     RenderArea *render;
     QPushButton *changeSpaceColor;
     QComboBox *spaceColorList;
     QLabel *info;
+    QPushButton *cameraButton;
 
     QMenu *fileMenu;
     QMenu *optionMenu;
@@ -66,6 +69,7 @@ private:
     std::vector<QImage> images;
     int type;
     bool isRectAuto;
+    CameraWidget *cam;
 };
 
 #endif // WINDOW_H

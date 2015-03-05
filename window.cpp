@@ -15,14 +15,16 @@ Window::Window(QWidget *parent) :QMainWindow(parent)
     spaceColorList->addItem("LI");
     spaceColorList->addItem("HUE");
 
-
+    cameraButton = new QPushButton("Camera");
+    cam = new CameraWidget(this);
     QGridLayout *mainLayout = new QGridLayout();
     mainLayout->setColumnStretch(0, 1);
     mainLayout->setColumnStretch(3, 1);
+    mainLayout->addWidget(cameraButton,2,0,Qt::AlignRight);
     mainLayout->addWidget(render,0,0,1,4);
-    mainLayout->addWidget(changeSpaceColor,2,0,Qt::AlignRight);
-    mainLayout->addWidget(spaceColorList,2,1,Qt::AlignRight);
-    mainLayout->addWidget(info,2,2,Qt::AlignRight);
+    mainLayout->addWidget(changeSpaceColor,2,1,Qt::AlignRight);
+    mainLayout->addWidget(spaceColorList,2,2,Qt::AlignRight);
+    mainLayout->addWidget(info,2,3,Qt::AlignRight);
 
     createAction();
     createMenu();
@@ -32,8 +34,12 @@ Window::Window(QWidget *parent) :QMainWindow(parent)
     connect(qApp,SIGNAL(aboutToQuit()),this,SLOT(quitMyApp()));
     connect(changeSpaceColor,SIGNAL(clicked()),this,SLOT(changeColor()));
     connect(this,SIGNAL(clicked(int)),up,SLOT(color(int)));
-
+    connect(cameraButton,SIGNAL(clicked()),this,SLOT(showCam()));
     isRectAuto = true;
+}
+
+void Window::showCam() {
+    cam->show();
 }
 
 void Window::quitMyApp() {

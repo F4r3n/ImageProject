@@ -31,7 +31,8 @@ SOURCES += main.cpp\
     tfd.cpp \
     optionwidget.cpp \
     modifierwidget.cpp \
-    analyzewidget.cpp
+    analyzewidget.cpp \
+    camerawidget.cpp
 
 HEADERS  += window.h \
     renderarea.h \
@@ -47,6 +48,7 @@ HEADERS  += window.h \
     tfd.h \
     optionwidget.h \
     modifierwidget.h \
-    analyzewidget.h
+    analyzewidget.h \
+    camerawidget.h
 
 FORMS    +=

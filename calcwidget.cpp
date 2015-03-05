@@ -18,7 +18,7 @@ CalcWidget::CalcWidget(LabelImage *label) {
     rewind = new QPushButton("Rewind");
     result = new QTextEdit();
     averageBox = new QCheckBox("Average");
-    averageBox->setChecked(true);
+    averageBox->setChecked(false);
     derivedBox = new QCheckBox("Derived");
     result->setReadOnly(true);
     derivedBox->setChecked(true);
@@ -205,7 +205,6 @@ void CalcWidget::setType(int type) {
 
 bool CalcWidget::calculus() {
     QRect *r = lab->getRect();
-    qDebug() << r->top() << " " << r->bottom() << " " << r->left() << " " << r->right();
     if(!r) {
         result->setText(QString("No rect"));
         return false;
