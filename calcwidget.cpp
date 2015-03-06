@@ -121,19 +121,20 @@ void CalcWidget::analyzeImages() {
     Vector<double> cyr(yr);
     Vector<double> cyb(yb);
     Vector<double> cyg(yg);
+    int size = cyr.size();
 
     if(averageBox->isChecked()) {
-        PlotingWidget *p = new PlotingWidget(x,cy,QString("Average"),this);
-		p->addGraph(x, cyr, QString("Red average"),QPen(Qt::red),true);
-		p->addGraph(x, cyb, QString("Blue average"),QPen(Qt::blue),true);
-		p->addGraph(x, cyg, QString("Green average"),QPen(Qt::darkGreen),true);
+        PlotingWidget *p = new PlotingWidget(x,cyg,size,QString("Average"),this);
+  //      p->addGraph(x, cyr, QString("Red average"),QPen(Qt::red),true);
+    //    p->addGraph(x, cyb, QString("Blue average"),QPen(Qt::blue),true);
+      //  p->addGraph(x, cyg, QString("Green average"),QPen(Qt::darkGreen),true);
 		p->show();
     }
     if(derivedBox->isChecked()) {
-        PlotingWidget *p = new PlotingWidget(x,derived(cy),QString("Derived"),this);
-        p->addGraph(x, derived(cyr), QString("Red average"),QPen(Qt::red),true);
-        p->addGraph(x, derived(cyb), QString("Blue average"),QPen(Qt::blue),true);
-        p->addGraph(x, derived(cyg), QString("Green average"),QPen(Qt::darkGreen),true);
+        PlotingWidget *p = new PlotingWidget(x,derived(cyg),size,QString("Derived"),this);
+        //p->addGraph(x, derived(cyr), QString("Red average"),QPen(Qt::red),true);
+       // p->addGraph(x, derived(cyb), QString("Blue average"),QPen(Qt::blue),true);
+        //p->addGraph(x, derived(cyg), QString("Green average"),QPen(Qt::darkGreen),true);
         p->show();
     }
     if(amplificationBox->isChecked()) {
@@ -143,7 +144,7 @@ void CalcWidget::analyzeImages() {
         Vector<double> taylorBlue = cy+multiply(derived(cyb),factor);
         Vector<double> taylorGreen = cy+multiply(derived(cyg),factor);
 
-        PlotingWidget *p = new PlotingWidget(x,taylor,QString("Amplification"),this);
+        PlotingWidget *p = new PlotingWidget(x,taylor,size,QString("Amplification"),this);
 		p->addGraph(x, taylorRed, QString("Red average ampli"),QPen(Qt::red),true);
 		p->addGraph(x, taylorBlue, QString("Blue average ampli"),QPen(Qt::blue),true);
 		p->addGraph(x, taylorGreen, QString("Green average ampli"),QPen(Qt::darkGreen),true);
@@ -151,17 +152,34 @@ void CalcWidget::analyzeImages() {
     }
     if(amplificationDerivedBox->isChecked()) {
         Vector<double> taylor = cy+derived(cy);
-        PlotingWidget *p = new PlotingWidget(x,derived(taylor),QString("Amplification derived"),this);
+        PlotingWidget *p = new PlotingWidget(x,derived(taylor),size,QString("Amplification derived"),this);
         p->show();
     }
 
     if(derivedSBox->isChecked()) {
         Tfd *s = new Tfd();
         //On fait la fft avec le vert
-        Vector<double> d = s->execute(x,derived(cyr));
-        d = s->filter(d.size());
-        d = s->execute(x,d);
-        PlotingWidget *pl = new PlotingWidget(x,d,QString("FFT"),this);
+        double n = x.size();
+        double c=n;
+        Vector<double> h = s->hamming(n);
+        Vector<double> de = derived(cyr);
+        qDebug() <<"t"<<de.size();
+        for(int i=0;i<n;i++) {
+            de[i] *=h[i];
+        }
+
+        for(int i=0;i<(1024-c);i++) {
+            x.push_back(n);
+            de.push_back(0);
+            n++;
+        }
+   //     qDebug() << x;
+//        qDebug() << cyr.size();
+
+        Vector<double> d = s->execute(x,de);
+   //     d = s->filter(d.size());
+    //    d = s->execute(x,d);
+        PlotingWidget *pl = new PlotingWidget(x,d,(int)c,QString("FFT"),this);
         pl->show();
     }
 

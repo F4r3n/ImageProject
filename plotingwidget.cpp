@@ -1,6 +1,6 @@
 #include "plotingwidget.h"
 
-PlotingWidget::PlotingWidget(Vector<double> x, Vector<double> y ,QString name, QWidget *parent) :
+PlotingWidget::PlotingWidget(Vector<double> x, Vector<double> y , int n, QString name, QWidget *parent) :
     QDialog(parent),x(x),y(y)
 {
     setWindowTitle(name);
@@ -16,7 +16,7 @@ PlotingWidget::PlotingWidget(Vector<double> x, Vector<double> y ,QString name, Q
     plot->xAxis->setLabel("x");
     plot->yAxis->setLabel("y");
     gr->addWidget(plot);
-    plot->xAxis->setRange(0, x.size()+5);
+    plot->xAxis->setRange(0, n);
 
     double m = maxValue(y);
     double min = minValue(y);

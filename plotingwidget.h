@@ -17,7 +17,7 @@ class PlotingWidget : public QDialog
 {
 
 public:
-    explicit PlotingWidget(Vector<double> x, Vector<double> y, QString name ="Plot" , QWidget *parent = 0 );
+    explicit PlotingWidget(Vector<double> x, Vector<double> y, int n,QString name ="Plot" , QWidget *parent = 0 );
     double minValue(const Vector<double> &z);
     double maxValue(const Vector<double> &z);
     Vector<int> variation(const Vector<double> &z);
