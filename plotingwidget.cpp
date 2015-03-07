@@ -12,7 +12,7 @@ PlotingWidget::PlotingWidget(Vector<double> x, Vector<double> y , int n, QString
     plot->setGeometry(0,0,400,400);
     plot->addGraph();
     plot->graph(nbGraph)->setData(x,y);
-	plot->graph(nbGraph)->setPen(QPen(Qt::black));
+    plot->graph(nbGraph)->setPen(QPen(Qt::black));
     plot->xAxis->setLabel("x");
     plot->yAxis->setLabel("y");
     gr->addWidget(plot);
@@ -23,14 +23,16 @@ PlotingWidget::PlotingWidget(Vector<double> x, Vector<double> y , int n, QString
 
     plot->yAxis->setRange(min, m);
     plot->replot();
-	// plot->legend->setVisible(true);
+    // plot->legend->setVisible(true);
 
     quit = new QPushButton("Quit");
     QString str;
     QTextStream i(&str);
-    i << "Frequency " << frequencyTFD();
+    double v = variation(y).size()/2.f;
+    i << "Frequency " << frequencyTFD() << "\nNombre de variations (trigger) "
+      << (v / (x.size()/15))*60 << "\n" << (((v+1) / (x.size()/15))*60);
     info = new QLabel(str);
-    info->setMaximumHeight(30);
+    info->setMaximumHeight(60);
     gr->addWidget(info);
     gr->addWidget(quit);
 
@@ -38,12 +40,12 @@ PlotingWidget::PlotingWidget(Vector<double> x, Vector<double> y , int n, QString
 }
 
 void PlotingWidget::addGraph(Vector<double> x, Vector<double> y, QString name, QPen pen, bool rescale) {
-	nbGraph++;
-	plot->addGraph();
+    nbGraph++;
+    plot->addGraph();
     plot->graph(nbGraph)->setData(x,y);
-	plot->graph(nbGraph)->setPen(pen);
-	plot->graph(nbGraph)->setName(name);
-	plot->graph(nbGraph)->rescaleAxes(rescale);
+    plot->graph(nbGraph)->setPen(pen);
+    plot->graph(nbGraph)->setName(name);
+    plot->graph(nbGraph)->rescaleAxes(rescale);
 }
 
 double PlotingWidget::minValue(const Vector<double> &z) {
@@ -117,6 +119,7 @@ double PlotingWidget::maximaLocal(int deb,int end) {
     double max = 0;
     int pos = 0;
     for(int i=deb;i<end;i++){
+
         if(max < y[i]) {
             max = y[i];
             pos = i;
@@ -129,19 +132,20 @@ double PlotingWidget::maximaLocal(int deb,int end) {
 
 
 double PlotingWidget::frequencyTFD() {
-    int end = maxX();
-    int deb = minX()+1;
-   // int pos = 0;
-   int pos = maximaLocal(deb,end);
+    int end = 180*x.size()/(FS*H);
+    int deb = 30*x.size()/(FS*H);
+    // int pos = 0;
+    int pos = maximaLocal(deb,end);
     double max = y[pos];
     DerivedAlgo *d = new DerivedAlgo();
     Vector<int> v = variation(d->execute(x,y));
 
     for(int i : v) {
-       if( i>end) continue;
-       if(fabs(y[i]/max)>0.5 && pos!=i) return -1;
+        if( i>end) continue;
+        if(fabs(y[i]/max)>0.5 && pos!=i) return -1;
     }
- return (double)pos*FS*H/(double)x.size();
+    qDebug() << pos;
+    return (double)pos*FS*H/(double)x.size();
 
 }
 

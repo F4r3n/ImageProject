@@ -173,13 +173,15 @@ void CalcWidget::analyzeImages() {
             de.push_back(0);
             n++;
         }
+        movingAverage(de);
    //     qDebug() << x;
 //        qDebug() << cyr.size();
 
         Vector<double> d = s->execute(x,de);
-   //     d = s->filter(d.size());
-    //    d = s->execute(x,d);
-        PlotingWidget *pl = new PlotingWidget(x,d,(int)c,QString("FFT"),this);
+       // d = s->filter(d.size());
+       // d = s->execute(x,d);
+     //   for(int i=0;i<c;i++) x[i] = i/0.1;
+        PlotingWidget *pl = new PlotingWidget(x,d,1024,QString("FFT"),this);
         pl->show();
     }
 
