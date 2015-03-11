@@ -2,6 +2,7 @@
 #define CAMERAWIDGET_H
 
 #include <QDialog>
+#include <QApplication>
 #include <QLabel>
 #include <QLayout>
 #include <QPushButton>
@@ -34,6 +35,7 @@ signals:
 
 public slots:
     void displayWebcam();
+    void aboutToclose();
 
 
 
@@ -47,6 +49,7 @@ private:
     cv::VideoCapture stream1;
     QPushButton *goButton;
     cv::Mat matImage;
+    bool running;
 
 
 };

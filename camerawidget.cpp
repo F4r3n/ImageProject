@@ -16,15 +16,11 @@ CameraWidget::CameraWidget(QWidget *parent)
             m_image.setPixel(x,y,qRgb(x, y, y));
     m_imageLabel->setPixmap(QPixmap::fromImage(m_image));
     setLayout(m_layout);
+    running = false;
 
-    stream1 =cv::VideoCapture(0);
 
-    if (!stream1.isOpened()) { //check if video device has been initialised
-        std::cout << "cannot open camera";
-    }
 
     connect(goButton,SIGNAL(clicked()),this,SLOT(displayWebcam()));
-    th = new CameraThread(m_imageLabel,stream1);
     //displayWebcam();
 }
 
@@ -50,11 +46,26 @@ QImage CameraWidget::Mat2QImage(cv::Mat const& src)
     return dest;
 }
 
+void CameraWidget::aboutToclose() {
+    stream1.release();
+    this->close();
+}
+
 void CameraWidget::displayWebcam() {
-    qDebug()<<"a";
+ goButton->setText("Quitter");
+ disconnect(goButton);
+ connect(goButton,SIGNAL(clicked()),this,SLOT(aboutToclose()));
 
-    th->start();
+    if(!running) {
+        stream1 =cv::VideoCapture(0);
+        if (!stream1.isOpened()) { //check if video device has been initialised
+            std::cout << "cannot open camera";
+        }
+        th = new CameraThread(m_imageLabel,stream1);
 
+        th->start();
+    }
+    running = true;
 
 }
 

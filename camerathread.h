@@ -3,6 +3,7 @@
 
 #include "camerawidget.h"
 #include <QThread>
+#include <QDir>
 
 class CameraThread : public QThread
 {
