@@ -16,6 +16,7 @@
 \usepackage{mathtools}
 \usepackage{hyperref}
 \usepackage{enumitem}
+\usepackage{graphicx}
 
 \usepackage{array,multirow,makecell}
 \setcellgapes{1pt}
@@ -33,7 +34,7 @@
 	colorlinks=true,	% colorise les liens
 	breaklinks=true,    % permet les retours à la ligne pour les liens trop longs
 	urlcolor= navy,		% couleur des hyperliens
-	linkcolor= navy,    % couleur des liens internes aux documents (index, figures, tableaux, equations,...)
+	linkcolor= black,    % couleur des liens internes aux documents (index, figures, tableaux, equations,...)
 	citecolor= navy      % couleur des liens vers les references bibliographiques
 }
 
@@ -122,8 +123,12 @@
 	\end{center}
 \end{titlepage}
 
-\chapter{Remerciements}
+\chapter*{Remerciements}
 \input{thanks.tex}
+
+\setcounter{tocdepth}{4}
+\renewcommand{\contentsname}{Sommaire} 
+\tableofcontents
 
 \chapter{Introduction}
 \input{introduction.tex}
@@ -137,7 +142,8 @@
 \chapter{Conclusion}
 \input{conclusion.tex}
 
-% Bibliographie 
-% Annexes
+\appendix
+\chapter{Annexes}
+\input{annexes.tex}
 
 \end{document}
