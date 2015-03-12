@@ -59,6 +59,7 @@ void CalcWidget::redirectCalculus() {
 
 
 void CalcWidget::movingAverage(Vector<double> &z) const{
+    if(z.size()==0) return ;
     for(int i=1;i<x.size()-1;i++) {
         z[i] = (z[i]+z[i-1]+z[i+1])/3;
     }
@@ -113,7 +114,10 @@ void CalcWidget::analyzeImages() {
         amplified();
     }
         movingAverage(y);
-
+        if(analyseColor) {
+            yg = y;
+        }
+qDebug() << "taille y" << y.size();
 
     //  result->verticalScrollBar()->setSliderPosition(
     //  result->verticalScrollBar()->maximum());
@@ -121,7 +125,7 @@ void CalcWidget::analyzeImages() {
     Vector<double> cyr(yr);
     Vector<double> cyb(yb);
     Vector<double> cyg(yg);
-    int size = cyr.size();
+    int size = cyg.size();
 
     if(averageBox->isChecked()) {
         PlotingWidget *p = new PlotingWidget(x,cyg,size,QString("Average"),this);
@@ -162,7 +166,7 @@ void CalcWidget::analyzeImages() {
         double n = x.size();
         double c=n;
         Vector<double> h = s->hamming(n);
-        Vector<double> de = derived(cyr);
+        Vector<double> de = derived(cyg);
         qDebug() <<"t"<<de.size();
         for(int i=0;i<n;i++) {
             de[i] *=h[i];

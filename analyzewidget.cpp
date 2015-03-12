@@ -7,8 +7,9 @@ AnalyzeWidget::AnalyzeWidget(QWidget *parent, CalcWidget *calc) :
     setLayout(grid);
 
     QRadioButton *analyze = new QRadioButton("Analyze");
-    analyze->setChecked(true);
+    analyze->setChecked(false);
     QRadioButton *analyzeColor = new QRadioButton("Analyze with Color");
+    analyzeColor->setChecked(true);
 
     QButtonGroup *btnGroup = new QButtonGroup(this);
     btnGroup->addButton(analyze);

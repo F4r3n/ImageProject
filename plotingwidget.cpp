@@ -1,8 +1,14 @@
 #include "plotingwidget.h"
 
+#define PW_FS 15
+#define PW_PMAX 200
+#define PW_PMIN 5
+#define PW_H 60
+
 PlotingWidget::PlotingWidget(Vector<double> x, Vector<double> y , int n, QString name, QWidget *parent) :
     QDialog(parent),x(x),y(y)
 {
+    if(y.size()==0) return;
     setWindowTitle(name);
     resize(QSize(400,400));
     QGridLayout *gr = new QGridLayout();
@@ -28,9 +34,10 @@ PlotingWidget::PlotingWidget(Vector<double> x, Vector<double> y , int n, QString
     quit = new QPushButton("Quit");
     QString str;
     QTextStream i(&str);
-    double v = variation(y).size()/2.f;
+    double v = variation(y)/4.f;
+    qDebug() << "variation" << v*4;
     i << "Frequency " << frequencyTFD() << "\nNombre de variations (trigger) "
-      << (v / (x.size()/15))*60 << "\n" << (((v+1) / (x.size()/15))*60);
+      << ((v-3)*(15.f/x.size()))*60.f << "\n" << (((v) * (15.f/x.size()))*60.f);
     info = new QLabel(str);
     info->setMaximumHeight(60);
     gr->addWidget(info);
@@ -69,50 +76,48 @@ double PlotingWidget::frequency(int v) {
     return (v/2.f)*(1.f/time)*60.f;
 }
 
-Vector<int> PlotingWidget::variation(const Vector<double> &z) {
+int PlotingWidget::variation(const Vector<double> &z) {
     bool up = false;
     bool down = false;
+    double bande = 0.05;
     double max = maxValue(y);
-    if(max<0.01) return 0;
+
+    if(max<0.01) {
+        return 0;
+    }
 
     int i=0;
     int j=0;
+
     Vector<int> v;
     for(double y : z) {
-        if(y<0 && up == true) {
+        if(y<bande && up == true) {
             i++;
-            v.push_back(j);
         }
-        if(y>0 && down == true) {
+        if(y>-bande && down == true) {
             i++;
-            v.push_back(j);
+        }
+        if(y<bande) {
 
-        }
-        if(y<0) {
-            down =true;
+            down = true;
             up = false;
         }
-        if(y>0) {
-            up =true;
+        if(y>-bande) {
+            up = true;
             down = false;
         }
 
         j++;
     }
-    return v;
+    return i;
 }
-#define FS 15
-#define PMAX 200
-#define PMIN 5
-#define H 60
-
 
 int PlotingWidget::maxX() {
-    return (PMAX/H)*x.size()/FS;
+    return (PW_PMAX/PW_H)*x.size()/PW_FS;
 }
 
 int PlotingWidget::minX() {
-    return (PMIN/H)*x.size()/FS;
+    return (PW_PMIN/PW_H)*x.size()/PW_FS;
 }
 
 double PlotingWidget::maximaLocal(int deb,int end) {
@@ -132,8 +137,8 @@ double PlotingWidget::maximaLocal(int deb,int end) {
 
 
 double PlotingWidget::frequencyTFD() {
-    int end = 180*x.size()/(FS*H);
-    int deb = 30*x.size()/(FS*H);
+    int end = 180*x.size()/(PW_FS*PW_H);
+    int deb = 30*x.size()/(PW_FS*PW_H);
     // int pos = 0;
     int pos = maximaLocal(deb,end);
     double max = y[pos];
@@ -144,8 +149,7 @@ double PlotingWidget::frequencyTFD() {
         if( i>end) continue;
         if(fabs(y[i]/max)>0.5 && pos!=i) return -1;
     }
-    qDebug() << pos;
-    return (double)pos*FS*H/(double)x.size();
+    return (double)pos*PW_FS*PW_H/(double)x.size();
 
 }
 
