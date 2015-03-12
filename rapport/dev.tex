@@ -3,9 +3,67 @@
 \begin{itemize}
 	\item Site web en ligne (CMS Wordpress) : \url{http://www.ecole.ensicaen.fr/~lvimont/} 
 	\item Gestionnaire de versions (Git) 
+		\begin{itemize}[label=\textbullet]
+			\item Application Android : \url{https://github.com/F4r3n/Vamp} 
+			\item Logiciel de traitement d'images : \url{https://github.com/F4r3n/ImageProject.git} 
+		\end{itemize}
 	\item Gestionnaire de projet (Trello)
 \end{itemize}
 
 \section{Technologies utilisées}
 
 java, c++, qt, android, opencv
+
+\section{Algorithme mis en place}
+
+L'oeil humain est limité, en effet il est incapable de voir les subtils changements temporels. Alors
+que justement en effectuant des traitements sur une vidéo. On est capable de révéler ces changements
+comme par exemple, la circulation du sang. On peut même grâce à ça réussir à connaitre le pouls d'une
+personne. 
+
+Notre première idée fut simplement de réaliser une moyenne pour chaque couleur pour un pixel, puis 
+une moyenne de tout les moyennes calculer par pixels. On pensait alors par la suite grâce à cette 
+collection de moyenne arriver a détecter une variation. En effectuant par exemple, une dérivée puis
+une amplification de la courbe obtenue.  
+
+Dans un second temps, en restant basé sur le même principe, nous avons tenté de découper notre image
+par zone de petits carrés de pixels. Par exemple une zone serait d'une taille de 5*5. On réalise 
+ainsi une moyenne de chaque zone, puis par la suite une moyenne de ces moyennes. Enfin on réapplique
+les mêmes fonctions qu'au-dessus.
+
+\section{Solutions mis en place}
+
+Durant le projet nous avons développés plusieurs outils pour répondre au besoin. Une application Android qui permettrait d'utiliser le moyen d'authentification désiré et ainsi déverouiller le smarthpone d'une
+personne. Un logiciel C++ utilisant la librairie QT a également été mis en place, afin de pouvoir tester plus facilement les algorithmes que nous voulions développer. Dans la suite du projet, il a également
+permis d'utiliser la webcam. 
+
+\subsection{Développement Android}
+
+\begin{itemize}
+	\item Détection visage en temps réel
+	\item Rectangle autour visage
+	\item Capture de 15 images par seconde
+	\item Détection couleur pixel (RGB)
+	\item Caméra fonctionnelle
+	\item Compteur sur 5 sec
+	\item Algo mis en place  
+\end{itemize}
+
+Lockscreen
+
+\subsection{Développement C++}
+
+\begin{itemize}
+ 	\item Utilisation de avconv : résultat vidéo divisé en plusieurs images au rythme 15 FPS  
+	\item Dessin d'un rect autour des images
+	\item Réalisation de la moyenne
+	\item Fonctions : dérivé, amplification, fft...
+	\item Filtres passe bas 
+	\item Changement espaces de couleurs
+	\item Capture avec une webcam (opencv)
+	\item Ajout du trigger 
+	\item Variations
+\end{itemize}
+
+\section{Problèmes rencontrés}
+
