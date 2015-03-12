@@ -12,6 +12,7 @@ public:
     explicit CameraThread(QLabel *l, cv::VideoCapture s);
     void run();
     QImage getImage();
+    bool running;
 
 signals:
 
@@ -22,6 +23,7 @@ private:
     cv::VideoCapture _s;
     QImage current;
     int i=0;
+    int compteur;
 
 };
 

@@ -48,6 +48,7 @@ QImage CameraWidget::Mat2QImage(cv::Mat const& src)
 
 void CameraWidget::aboutToclose() {
     stream1.release();
+    th->running = false;
     this->close();
 }
 
