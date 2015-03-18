@@ -31,17 +31,30 @@
 L’œil humain est limité, en effet il est incapable de voir les subtils changements temporels. Alors
 que justement en effectuant des traitements sur une vidéo. On est capable de révéler ces changements
 comme par exemple, la circulation du sang. On peut même grâce à ça réussir à connaître le pouls d'une
-personne. 
+personne.
+\\
+De plus lorsque le sang monte jusqu'à la tête puis descend, il fait que notre tête bouge imperceptiblement, ces différents changements peuvent capturés avec un téléphone portable.
+\\
+Mais comment obtenir ces changements ? Comment savoir où se situe le visage ?\\
 
-Notre première idée fut simplement de réaliser une moyenne pour chaque couleur pour un pixel, puis 
-une moyenne de tout les moyennes calculer par pixels. On pensait alors par la suite grâce à cette 
-collection de moyenne arriver a détecter une variation. En effectuant par exemple, une dérivée puis
-une amplification de la courbe obtenue.  
+ Dans un premier temps nous devons détecter si quelque chose ayant un visage humain se tenait devant l'appareil, ceci se fait très bien par l'api de Google sur Android et même par OpenCV.
+ Après détection de la personne nous pouvons obtenir des coordonnées nous disant où se situe le visage.\\
+ Maintenant que nous savons où se situe le visage, nous nous demandons comment reconnaître une fréquence ?\\
+ Nous avons choisi l'espace de couleur RGB car c'est dans cette espace de couleur que nous détectons le plus de variations, les autres modes tel que HSL ou HUV nous donnaient des valeurs plus faibles.
+ Nous avons donc fait une moyenne du canal vert (c'est le canal vert qui varie le plus) pour chaque pixel se situant dans un rectangle (en l’occurrence le rectangle délimitant le visage).
+ Et ceci pour chaque frame que l'on capturait, nous obtenions une certaine valeur.
+ Après obtention de ces valeurs nous pouvions les traiter.
+ La variation des valeurs étant très grande, nous avons dans un premier temps fait une moyenne glissante. Puis pour amplifier les variations nous avons avons fait une dérivée de Taylor.
+ Nos valeurs étant prêtes à être analyser, nous les avons analyser de deux façons différentes.
+ La première, la plus simple fut le Trigger, qui nous permettait d'avoir une fourchette de pulsation.\\ La deuxième plus longue,une FFT, nécessitait des étapes de calcul supplémentaire tel que un fenêtrage de Hamming et un padding, mais donnait des résultats plus précis.
+ \\
+ Ces deux analyses nous permettait d'avoir le pouls de notre utilisateur (dans le cas idéal).
+ \\ 
 
-Dans un second temps, en restant basé sur le même principe, nous avons tenté de découper notre image
+Nous avons remarqué que la collecte des données n'accentuait pas assez les variations, nous avons donc créé une deuxième méthode qui en restant basé sur le même principe que la première technique, nous découpions notre image
 par zone de petits carrés de pixels. Par exemple une zone serait d'une taille de 5*5. On réalise 
 ainsi une moyenne de chaque zone, puis par la suite une moyenne de ces moyennes. Enfin on rapplique
-les mêmes fonctions qu'au-dessus.
+les mêmes fonctions citées précédemment.
 
 \section{Solutions mis en place}
 
@@ -63,6 +76,11 @@ permis d'utiliser la webcam.
 	\\
 	\\
 	Pour résoudre ce manque nous avons codé une application fonctionnant avec OpenCV, celle-ci suit parfaitement le visage lorsqu'il bouge. Mais le temps de traitement d'une image par OpenCV est beaucoup plus lent que l'api de Google. Ce qui fait que nous tournons à environ 7 FPS en back-caméra et 2 FPS en front-caméra ce qui n'est pas idéal.
+	\begin{figure}[h!]
+			\centering
+			\includegraphics[width=0.9\textwidth]{data/opencv.png}
+			\caption{Aperçu de l'application OpenCV}
+		\end{figure}
 	\\
 	\\
 	L'application sous OpenCV permet de faire une FFT et un système de Trigger, en croisant les résultats donnés par ces deux systèmes nous obtenons un meilleur résultat que si il n'y avait seulement le Trigger.  
