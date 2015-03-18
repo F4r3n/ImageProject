@@ -113,12 +113,10 @@ void CalcWidget::analyzeImages() {
     if(analyseColor) {
         amplified();
     }
-        movingAverage(y);
-        if(analyseColor) {
-            yg = y;
-        }
-qDebug() << "taille y" << y.size();
-
+    movingAverage(y);
+    if(analyseColor) {
+        yg = y;
+    }
     //  result->verticalScrollBar()->setSliderPosition(
     //  result->verticalScrollBar()->maximum());
     Vector<double> cy(y);
@@ -129,29 +127,29 @@ qDebug() << "taille y" << y.size();
 
     if(averageBox->isChecked()) {
         PlotingWidget *p = new PlotingWidget(x,cyg,size,QString("Average"),this);
-  //      p->addGraph(x, cyr, QString("Red average"),QPen(Qt::red),true);
-    //    p->addGraph(x, cyb, QString("Blue average"),QPen(Qt::blue),true);
-      //  p->addGraph(x, cyg, QString("Green average"),QPen(Qt::darkGreen),true);
-		p->show();
+        //      p->addGraph(x, cyr, QString("Red average"),QPen(Qt::red),true);
+        //    p->addGraph(x, cyb, QString("Blue average"),QPen(Qt::blue),true);
+        //  p->addGraph(x, cyg, QString("Green average"),QPen(Qt::darkGreen),true);
+        p->show();
     }
     if(derivedBox->isChecked()) {
         PlotingWidget *p = new PlotingWidget(x,derived(cyg),size,QString("Derived"),this);
         //p->addGraph(x, derived(cyr), QString("Red average"),QPen(Qt::red),true);
-       // p->addGraph(x, derived(cyb), QString("Blue average"),QPen(Qt::blue),true);
+        // p->addGraph(x, derived(cyb), QString("Blue average"),QPen(Qt::blue),true);
         //p->addGraph(x, derived(cyg), QString("Green average"),QPen(Qt::darkGreen),true);
         p->show();
     }
     if(amplificationBox->isChecked()) {
         double factor = 3;
         Vector<double> taylor = cy+multiply(derived(cy),factor);
-        Vector<double> taylorRed = cy+multiply(derived(cyr),factor);
-        Vector<double> taylorBlue = cy+multiply(derived(cyb),factor);
-        Vector<double> taylorGreen = cy+multiply(derived(cyg),factor);
+        Vector<double> taylorRed = cyr+multiply(derived(cyr),factor);
+        Vector<double> taylorBlue = cyb+multiply(derived(cyb),factor);
+        Vector<double> taylorGreen = cyg+multiply(derived(cyg),factor);
 
         PlotingWidget *p = new PlotingWidget(x,taylor,size,QString("Amplification"),this);
-		p->addGraph(x, taylorRed, QString("Red average ampli"),QPen(Qt::red),true);
-		p->addGraph(x, taylorBlue, QString("Blue average ampli"),QPen(Qt::blue),true);
-		p->addGraph(x, taylorGreen, QString("Green average ampli"),QPen(Qt::darkGreen),true);
+        p->addGraph(x, taylorRed, QString("Red average ampli"),QPen(Qt::red),true);
+        p->addGraph(x, taylorBlue, QString("Blue average ampli"),QPen(Qt::blue),true);
+        p->addGraph(x, taylorGreen, QString("Green average ampli"),QPen(Qt::darkGreen),true);
         p->show();
     }
     if(amplificationDerivedBox->isChecked()) {
@@ -177,14 +175,13 @@ qDebug() << "taille y" << y.size();
             de.push_back(0);
             n++;
         }
-        movingAverage(de);
-   //     qDebug() << x;
-//        qDebug() << cyr.size();
+       // movingAverage(de);
+
 
         Vector<double> d = s->execute(x,de);
-       // d = s->filter(d.size());
-       // d = s->execute(x,d);
-     //   for(int i=0;i<c;i++) x[i] = i/0.1;
+        // d = s->filter(d.size());
+        // d = s->execute(x,d);
+        //   for(int i=0;i<c;i++) x[i] = i/0.1;
         PlotingWidget *pl = new PlotingWidget(x,d,1024,QString("FFT"),this);
         pl->show();
     }
@@ -242,9 +239,9 @@ bool CalcWidget::calculus() {
             QColor c(img.pixel(j,i));
 
             if(type==RGB) {
-				red_average += c.red();
-				blue_average += c.blue();
-				green_average += c.green(); 
+                red_average += c.red();
+                blue_average += c.blue();
+                green_average += c.green();
                 average += (c.red()+c.green()+c.blue())/3.f;
             }
             if(type==HSV) {
@@ -264,9 +261,9 @@ bool CalcWidget::calculus() {
         }
     }
 
-	red_average = red_average/taille;
-	blue_average = blue_average/taille;
-	green_average = green_average/taille;
+    red_average = red_average/taille;
+    blue_average = blue_average/taille;
+    green_average = green_average/taille;
     average = average/taille;
 
     x.push_back(index);
@@ -285,14 +282,14 @@ void CalcWidget::setImages(std::vector<QImage> *img) {
 
 void CalcWidget::optionCalc(int btnChecked) {
     switch(btnChecked) {
-        case -2:
-            analyseColor = false;
-            break;
-        case -3:
-            analyseColor = true;
-            break;
-        default:
-            break;
+    case -2:
+        analyseColor = false;
+        break;
+    case -3:
+        analyseColor = true;
+        break;
+    default:
+        break;
     }
 }
 

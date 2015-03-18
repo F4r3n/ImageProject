@@ -27,7 +27,7 @@ PlotingWidget::PlotingWidget(Vector<double> x, Vector<double> y , int n, QString
     double m = maxValue(y);
     double min = minValue(y);
 
-    plot->yAxis->setRange(min, m);
+    plot->yAxis->setRange(min,m);
     plot->replot();
     // plot->legend->setVisible(true);
 
@@ -37,7 +37,7 @@ PlotingWidget::PlotingWidget(Vector<double> x, Vector<double> y , int n, QString
     double v = variation(y)/4.f;
     qDebug() << "variation" << v*4;
     i << "Frequency " << frequencyTFD() << "\nNombre de variations (trigger) "
-      << ((v-3)*(15.f/x.size()))*60.f << "\n" << (((v) * (15.f/x.size()))*60.f);
+      << (v-1)*(60*15.f/x.size()) << "\n" << ((v+1) * 60*15.f/x.size());
     info = new QLabel(str);
     info->setMaximumHeight(60);
     gr->addWidget(info);
@@ -79,7 +79,7 @@ double PlotingWidget::frequency(int v) {
 int PlotingWidget::variation(const Vector<double> &z) {
     bool up = false;
     bool down = false;
-    double bande = 0.05;
+    double bande = 0.01;
     double max = maxValue(y);
 
     if(max<0.01) {
@@ -89,7 +89,6 @@ int PlotingWidget::variation(const Vector<double> &z) {
     int i=0;
     int j=0;
 
-    Vector<int> v;
     for(double y : z) {
         if(y<bande && up == true) {
             i++;
@@ -137,18 +136,11 @@ double PlotingWidget::maximaLocal(int deb,int end) {
 
 
 double PlotingWidget::frequencyTFD() {
-    int end = 180*x.size()/(PW_FS*PW_H);
-    int deb = 30*x.size()/(PW_FS*PW_H);
+    int end = 150*x.size()/(PW_FS*PW_H);
+    int deb = 50*x.size()/(PW_FS*PW_H);
     // int pos = 0;
     int pos = maximaLocal(deb,end);
-    double max = y[pos];
-    DerivedAlgo *d = new DerivedAlgo();
-    Vector<int> v = variation(d->execute(x,y));
 
-    for(int i : v) {
-        if( i>end) continue;
-        if(fabs(y[i]/max)>0.5 && pos!=i) return -1;
-    }
     return (double)pos*PW_FS*PW_H/(double)x.size();
 
 }
