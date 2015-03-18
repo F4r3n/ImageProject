@@ -27,7 +27,7 @@
 \definecolor{grey}{rgb}{0.4,0.4,0.4}
 \definecolor{blueTitle}{RGB}{10, 45, 130}
 \titleformat{\chapter}{\color{blue}\normalfont\huge\bfseries}{\thechapter}{1em}{} 
-\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\newcommand{\HRule}{\rule{\linewidth}{0.3mm}}
 \newcolumntype{C}[1]{>{\centering\arraybackslash }b{#1}}
 
 \hypersetup{                    
@@ -95,7 +95,21 @@
 	title=\lstname,        
 }
 
-\title{ENSICAEN - 2A Spécialité Informatique\\Projet 2A}
+\newcommand{\blap}[1]{\vbox to 0pt{#1\vss}}
+
+\newcommand\AtUpperLeftCorner[3]{%
+  \put(\LenToUnit{#1},\LenToUnit{\dimexpr\paperheight-#2}){\blap{#3}}%
+}
+
+\newcommand\AtUpperRightCorner[3]{%
+\put(\LenToUnit{\dimexpr\paperwidth-#1},\LenToUnit{\dimexpr\paperheight-#2}){\blap{\llap{#3}}}%
+}
+
+% \Large{Reconnaissance faciale : anti-fake}\\
+% \bsc{Promo 2016} \\
+% \@date
+
+\title{ENSICAEN - Projet 2A Informatique\\}
 \author{\textsc{Vimont} Ludovic \& \textsc{Kotulski} Guillaume}
 \date{\today}
 \makeatletter
@@ -103,25 +117,37 @@
 \begin{document}
 
 \begin{titlepage}
-	\begin{center}
-		\vspace*{\fill}
-		\textsc{\Large \@title } 
-		\HRule
-		\vspace{1.5cm}
-		\begin{center}
-			\includegraphics[width=0.6\textwidth]{data/logo.png}
-		\end{center}
-		\vspace{1.5cm}
-		\HRule \\
-		\Large{Reconnaissance faciale : anti-fake}\\
+\AddToShipoutPicture{%
+	% \AtUpperLeftCorner{1.5cm}{1cm }{\includegraphics[width=5cm]{data/mbb.png}}
+	\AtUpperRightCorner{1.5cm}{1cm}{\includegraphics[width=6cm]{data/ensi.jpg}}
+}
 
-		\large{\@author} \\
-		\vspace*{\fill}
+\begin{center}
+\vspace*{9cm}
+	\Large{\@title}
+\vspace*{0.1cm}
+	Reconnaissance faciale : anti-fake
+\HRule
+\vspace*{0.3cm}
+	\large{\@author\\}
+	\large{Promo 2016}
+\end{center}
 
-		\bsc{Promo 2016} \\
-		\@date
-	\end{center}
+\vspace*{5.8cm}
+\begin{center}
+\makebox[\textwidth]{\includegraphics[width=\paperwidth]{data/logo.png}}
+\end{center}
+\vspace*{0.5cm}
+
+\begin{flushright}
+ENSICAEN\\
+6, boulevard Maréchal Juin - F. 14050 Caen\\
+Tél. +33 (0)2 31 45 27 50\\
+Fax +33 (0)2 31 45 27 60 
+\end{flushright}
 \end{titlepage}
+\ClearShipoutPicture
+
 
 \chapter*{Remerciements}
 \input{thanks.tex}
