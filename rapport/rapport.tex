@@ -25,8 +25,10 @@
 
 \definecolor{navy}{rgb}{0,0.4,0.75}
 \definecolor{grey}{rgb}{0.4,0.4,0.4}
-\definecolor{blueTitle}{RGB}{10, 45, 130}
-\titleformat{\chapter}{\color{blue}\normalfont\huge\bfseries}{\thechapter}{1em}{} 
+\definecolor{blueChapter}{RGB}{0, 112, 202}
+\definecolor{blueSection}{RGB}{31, 74, 155}
+\titleformat{\chapter}{\color{blueChapter}\normalfont\huge\bfseries}{\thechapter}{1em}{} 
+\titleformat{\section}{\color{blueSection}\normalfont\Large\bfseries}{\thesection}{1em}{}
 \newcommand{\HRule}{\rule{\linewidth}{0.3mm}}
 \newcolumntype{C}[1]{>{\centering\arraybackslash }b{#1}}
 
@@ -117,6 +119,9 @@
 \begin{document}
 
 \begin{titlepage}
+  
+\enlargethispage{3cm}
+
 \AddToShipoutPicture{%
 	% \AtUpperLeftCorner{1.5cm}{1cm }{\includegraphics[width=5cm]{data/mbb.png}}
 	\AtUpperRightCorner{1.5cm}{1cm}{\includegraphics[width=6cm]{data/ensi.jpg}}
@@ -133,7 +138,7 @@
 	\large{Promo 2016}
 \end{center}
 
-\vspace*{5.8cm}
+\vspace*{8cm}
 \begin{center}
 \makebox[\textwidth]{\includegraphics[width=\paperwidth]{data/logo.png}}
 \end{center}
