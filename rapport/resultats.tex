@@ -21,7 +21,21 @@ Avec une webcam, nos résultats sont moins précis, mais sont assez correct pour
 	\caption{Vidéo pris par la webcam et analysé avec notre logiciel.}
 \end{figure}
 
-\section{Android}
+\section{Mobile}
+
+\subsection{Android}
 
 Notre plus gros problème a bien entendue était lors de nos tests sur Android, la stabilité de la vidéo et le nombre de frames capturés.
 Actuellement notre application est capable de capturer des frames et appliqué notre algorithme mais nos résultats restent erronées.
+
+\subsection{OpenCV}
+
+
+\section{Bilan}
+
+Notre différenciation entre un humain et une photo fonctionne correctement dès lors où la stabilité est assurée. En effet, prenons Android, nous arrivons
+à capturer plus de frames qu'en utilisant OpenCV, toutefois le tracking d'OpenCV est plus efficace. De ce fait, malgré une meilleure capture sous Android 
+comme la stabilité est plus mauvaise, nos résultats sont moins bons. Mais à contrario, lorsqu'on utilise l'application réalisée avec OpenCV, le nombre d'images
+capturé est seulement de 20 pour 4 secondes, avec si peu d'images à traiter notre magnification n'est pas correcte. C'est seulement au bout de 10 secondes
+lorsqu'on capture entre 50 à 70 frames qu'on a des résultats cohérents. 
+
