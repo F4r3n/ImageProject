@@ -20,10 +20,10 @@
 \section{Technologies utilisées}
 
 \begin{itemize}[label=\textbullet]
-	\item QT:Nous avons utilisé la librairie Qt pour pouvoir créer notre application qui permettait de tester les algorithmes.
-	\item Android:La programmation sous Android s'est faite en utilisant Java et de l'XML.
-	\item OpenCV:Utilisation de la webcam et application utilisant la caméra gérée  par OpenCV
-	\item Pyhton: Traitement des données pour création d'un graphique et permet une meilleure vérification des résultats
+	\item Qt : Nous avons utilisé la librairie Qt pour pouvoir créer notre application qui permettait de tester les algorithmes.
+	\item Android : La programmation sous Android s'est faite en utilisant Java et de l'XML.
+	\item OpenCV : Utilisation de la webcam et application utilisant la caméra gérée  par OpenCV
+	\item Python : Traitement des données pour création d'un graphique et permet une meilleure vérification des résultats
 \end{itemize}
 
 \section{Algorithme mis en place}
@@ -46,9 +46,9 @@ Mais comment obtenir ces changements ? Comment savoir où se situe le visage ?\\
  Après obtention de ces valeurs nous pouvions les traiter.
  La variation des valeurs étant très grande, nous avons dans un premier temps fait une moyenne glissante. Puis pour amplifier les variations nous avons avons fait une dérivée de Taylor.
  Nos valeurs étant prêtes à être analysées, nous les avons traitées de deux façons différentes.
- La première, la plus simple fut le Trigger, qui nous permettait d'avoir une fourchette de pulsation.\\ La deuxième plus longue,une FFT, nécessitait des étapes de calcul supplémentaireis telles qu'une fenêtrage de Hamming ou encore un padding, mais donnaient des résultats plus précis.
+ La première, la plus simple fut le Trigger, qui nous permettait d'avoir une fourchette de pulsation.\\ La deuxième plus longue,une FFT, nécessitait des étapes de calcul supplémentaireis telles qu'un fenêtrage de Hamming ou encore un padding, mais donnaient des résultats plus précis.
  \\
- Ces deux analyses nous permettent d'avoir le pouls de notre utilisateur (dans le cas idéal).
+ Ces deux analyses nous permettent d'avoir le pouls de notre utilisateur (dans le cas idéal, c'est à dire lorsque la caméra et l'utilisateur ne bougeaient presque pas).
  \\ 
 
 Nous avons remarqué que la collecte des données n'accentuait pas assez les variations, nous avons donc créé une deuxième méthode qui en restant basé sur le même principe que la première technique, nous découpions notre image
@@ -59,7 +59,7 @@ les mêmes fonctions citées précédemment.
 \section{Solutions mis en place}
 
 Durant le projet nous avons développé plusieurs outils pour répondre au besoin. Une application Android qui permettrait d'utiliser le moyen d'authentification désiré et ainsi déverrouiller le smartphone d'une
-personne. Un logiciel C++ utilisant la librairie QT a également été mis en place, afin de pouvoir tester plus facilement les algorithmes que nous voulions développer. Dans la suite du projet, il a également
+personne. Un logiciel C++ utilisant la librairie Qt a également été mis en place, afin de pouvoir tester plus facilement les algorithmes que nous voulions développer. Dans la suite du projet, il a également
 permis d'utiliser la webcam. 
 
 \subsection{Développement Android}
