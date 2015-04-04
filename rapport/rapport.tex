@@ -27,12 +27,12 @@
 \definecolor{grey}{rgb}{0.4,0.4,0.4}
 \definecolor{blueChapter}{RGB}{0, 112, 202}
 \definecolor{blueSection}{RGB}{31, 74, 155}
-\titleformat{\chapter}{\color{blueChapter}\normalfont\huge\bfseries}{\thechapter}{1em}{} 
+\titleformat{\chapter}{\color{blueChapter}\normalfont\huge\bfseries}{\thechapter}{1em}{}
 \titleformat{\section}{\color{blueSection}\normalfont\Large\bfseries}{\thesection}{1em}{}
 \newcommand{\HRule}{\rule{\linewidth}{0.3mm}}
 \newcolumntype{C}[1]{>{\centering\arraybackslash }b{#1}}
 
-\hypersetup{                    
+\hypersetup{
 	colorlinks=true,	% colorise les liens
 	breaklinks=true,    % permet les retours à la ligne pour les liens trop longs
 	urlcolor= navy,		% couleur des hyperliens
@@ -40,17 +40,17 @@
 	citecolor= navy      % couleur des liens vers les references bibliographiques
 }
 
-\lstset{backgroundcolor=\color{white},   
-	basicstyle=\footnotesize,        
-	breakatwhitespace=false,        
-	breaklines=true,               
-	captionpos=b,                
-	commentstyle=\color{grey},    
-	extendedchars=true,         
-	frame=false,               
-	keepspaces=true,          
-	keywordstyle=\color{blue}, 
-	language=C++,             
+\lstset{backgroundcolor=\color{white},
+	basicstyle=\footnotesize,
+	breakatwhitespace=false,
+	breaklines=true,
+	captionpos=b,
+	commentstyle=\color{grey},
+	extendedchars=true,
+	frame=false,
+	keepspaces=true,
+	keywordstyle=\color{blue},
+	language=C++,
 	literate=
 	{²}{{\textsuperscript{2}}}1
 	{⁴}{{\textsuperscript{4}}}1
@@ -72,7 +72,7 @@
 	{Á}{{\'{A}}}1
 	{Â}{{\^{A}}}1
 	{Ã}{{\~{A}}}1
-	{ç}{{\c{c}}}1 
+	{ç}{{\c{c}}}1
 	{Ç}{{\c{C}}}1
 	{õ}{{\~{o}}}1
 	{ó}{{\'{o}}}1
@@ -84,17 +84,17 @@
 	{Î}{{\^{I}}}1
 	{í}{{\'{i}}}1
 	{Í}{{\~{Í}}}1,
-	numbers=left,            
-	numbersep=5pt,          
+	numbers=left,
+	numbersep=5pt,
 	numberstyle=\tiny\color{black},
-	rulecolor=\color{black},      
-	showspaces=false,            
-	showstringspaces=false,     
-	showtabs=false,            
-	stepnumber=1,             
-	stringstyle=\color{red}, 
-	tabsize=4,              
-	title=\lstname,        
+	rulecolor=\color{black},
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	stepnumber=1,
+	stringstyle=\color{red},
+	tabsize=4,
+	title=\lstname,
 }
 
 \newcommand{\blap}[1]{\vbox to 0pt{#1\vss}}
@@ -119,7 +119,7 @@
 \begin{document}
 
 \begin{titlepage}
-  
+
 \enlargethispage{3cm}
 
 \AddToShipoutPicture{%
@@ -148,7 +148,7 @@
 ENSICAEN\\
 6, boulevard Maréchal Juin - F. 14050 Caen\\
 Tél. +33 (0)2 31 45 27 50\\
-Fax +33 (0)2 31 45 27 60 
+Fax +33 (0)2 31 45 27 60
 \end{flushright}
 \end{titlepage}
 \ClearShipoutPicture
@@ -158,7 +158,7 @@ Fax +33 (0)2 31 45 27 60
 \input{thanks.tex}
 
 \setcounter{tocdepth}{4}
-\renewcommand{\contentsname}{Sommaire} 
+\renewcommand{\contentsname}{Sommaire}
 \tableofcontents
 
 \chapter{Introduction}

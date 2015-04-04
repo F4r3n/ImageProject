@@ -1,7 +1,7 @@
 \section{Outils mis en place}
 
 \begin{itemize}
-	\item Site web en ligne (CMS Wordpress): \url{http://www.ecole.ensicaen.fr/~lvimont/} 
+	\item Site web en ligne (CMS Wordpress): \url{http://www.ecole.ensicaen.fr/~lvimont/}
 
 		\begin{figure}[h!]
 			\centering
@@ -9,10 +9,10 @@
 			\caption{Capture d'écran du site web.}
 		\end{figure}
 
-	\item Gestionnaire de versions (Git) 
+	\item Gestionnaire de versions (Git)
 		\begin{itemize}[label=\textbullet]
-			\item Application Android: \url{https://github.com/F4r3n/Vamp} 
-			\item Logiciel de traitement d'images: \url{https://github.com/F4r3n/ImageProject.git} 
+			\item Application Android: \url{https://github.com/F4r3n/Vamp}
+			\item Logiciel de traitement d'images: \url{https://github.com/F4r3n/ImageProject.git}
 		\end{itemize}
 	\item Gestionnaire de projets (Trello)
 \end{itemize}
@@ -49,24 +49,29 @@ Mais comment obtenir ces changements ? Comment savoir où se situe le visage ?\\
  La première, la plus simple fut le Trigger, qui nous permettait d'avoir une fourchette de pulsation.\\ La deuxième plus longue,une FFT, nécessitait des étapes de calcul supplémentaireis telles qu'un fenêtrage de Hamming ou encore un padding, mais donnaient des résultats plus précis.
  \\
  Ces deux analyses nous permettent d'avoir le pouls de notre utilisateur (dans le cas idéal, c'est à dire lorsque la caméra et l'utilisateur ne bougeaient presque pas).
- \\ 
+ \\
 
 Nous avons remarqué que la collecte des données n'accentuait pas assez les variations, nous avons donc créé une deuxième méthode qui en restant basé sur le même principe que la première technique, nous découpions notre image
-par zone de petits carrés de pixels. Par exemple une zone serait d'une taille de 5*5. On réalise 
-ainsi une moyenne de chaque zone, puis par la suite une moyenne de ces moyennes. Enfin on rapplique
-les mêmes fonctions citées précédemment.
+par zone de petits carrés de pixels. Par exemple une zone serait d'une taille de 5*5. On réalise ainsi une moyenne de chaque zone, puis par la suite une moyenne de ces moyennes. Enfin on rapplique les mêmes fonctions citées précédemment.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.5\textwidth]{data/algo-schema.png}
+	\caption{Schéma de l'algo précédent}
+\end{figure}
+
 
 \section{Solutions mis en place}
 
 Durant le projet nous avons développé plusieurs outils pour répondre au besoin. Une application Android qui permettrait d'utiliser le moyen d'authentification désiré et ainsi déverrouiller le smartphone d'une
 personne. Un logiciel C++ utilisant la librairie Qt a également été mis en place, afin de pouvoir tester plus facilement les algorithmes que nous voulions développer. Dans la suite du projet, il a également
-permis d'utiliser la webcam. 
+permis d'utiliser la webcam.
 
 \subsection{Développement Android}
 
-	Notre application Android est capable d'utiliser la caméra frontale de n'importe quel smartphone. L'api d'Android propose une classe appelée FaceDetectionListener qui va permettre de capter, les visages 
-présent devant une caméra, grâce à ce système il est possible de dessiner un Rect (c'est à dire un rectangle) autour du visage de la personne. C'est notre classe DisplayedFace qui se charge de ce travail. 
-Une fois la reconnaissance mis en place, nous avons utilisé la fonction 
+	Notre application Android est capable d'utiliser la caméra frontale de n'importe quel smartphone. L'api d'Android propose une classe appelée FaceDetectionListener qui va permettre de capter, les visages
+présent devant une caméra, grâce à ce système il est possible de dessiner un Rect (c'est à dire un rectangle) autour du visage de la personne. C'est notre classe DisplayedFace qui se charge de ce travail.
+Une fois la reconnaissance mis en place, nous avons utilisé la fonction
 \href{http://developer.android.com/reference/android/hardware/Camera.PreviewCallback.html#onPreviewFrame\%28byte\%5B\%5D,\%20android.hardware.Camera\%29}{onPreviewFrame}. Cette dernière permet d'enregistrer
 en temps réel, les données. On lance un compteur quand la première reconnaissance d'un visage a lieu, ce dernier va durer 5 secondes.\\
 
@@ -76,7 +81,7 @@ en temps réel, les données. On lance un compteur quand la première reconnaiss
 	\caption{Aperçu de l'application Android}
 \end{figure}
 
-Les données ainsi récoltées sont au format de l'espace de couleur \href{http://fr.wikipedia.org/wiki/YUV}{YUV}. Nous devons donc convertir ces données au format RGB qui se révèle plus évocateur au niveau des variations. 
+Les données ainsi récoltées sont au format de l'espace de couleur \href{http://fr.wikipedia.org/wiki/YUV}{YUV}. Nous devons donc convertir ces données au format RGB qui se révèle plus évocateur au niveau des variations.
 	A la fin du compteur, on réalise une dérivée, puis une amplification des valeurs obtenues. On observe alors les variations qu'on obtient et ont conclu alors sur la présence ou non d'un humain.
 	\\
 	\\
@@ -91,7 +96,7 @@ Les données ainsi récoltées sont au format de l'espace de couleur \href{http:
 		\end{figure}
 	\\
 	\\
-	L'application sous OpenCV permet de faire une FFT et un système de Trigger, en croisant les résultats donnés par ces deux systèmes nous obtenons un meilleur résultat que s'il n'y avait que le Trigger.  
+	L'application sous OpenCV permet de faire une FFT et un système de Trigger, en croisant les résultats donnés par ces deux systèmes nous obtenons un meilleur résultat que s'il n'y avait que le Trigger.
 
 \subsection{Développement C++}
 
@@ -123,20 +128,20 @@ Les données ainsi récoltées sont au format de l'espace de couleur \href{http:
 \subsection{Limitation des sessions à l'ENSICAEN}
 
 Lors du projet, nous avons rencontré de nombreux problèmes. L'un des plus embêtants est la limite des sessions à l'Ensicaen. En effet, nos sessions disposent d'une taille limitée, nous pouvons uniquement travailler sous Windows (car
-c'est seulement sous cet environnement que sont installés les outils Android) hors nous disposons d'uniquement 150 Mo, or rien qu'avec Firefox, si nous ne nettoyons pas régulièrement l'historique, la session se retrouve 
-complète. Nous avons malheureusement expérimenté le souci et perdu ainsi, une après-midi de travail. 
+c'est seulement sous cet environnement que sont installés les outils Android) hors nous disposons d'uniquement 150 Mo, or rien qu'avec Firefox, si nous ne nettoyons pas régulièrement l'historique, la session se retrouve
+complète. Nous avons malheureusement expérimenté le souci et perdu ainsi, une après-midi de travail.
 
 \subsection{Problèmes rencontrés lors du développement Android}
 
 Nous avons eu un problème de rotation, les coordonnées que l'on converser se révélaient mauvaise. Afin d'éviter cela, nous avons décidé de forcer le mode portrait.
 
-La première version de notre application était capable d'enregistrer 15 frames par seconde, or au final on obtenait seulement une trentaine de valeurs, cela était dû à la conversion du format YUV au format RGB que l'on 
+La première version de notre application était capable d'enregistrer 15 frames par seconde, or au final on obtenait seulement une trentaine de valeurs, cela était dû à la conversion du format YUV au format RGB que l'on
 effectuer à chaque fois que nous rentrons dans la fonction onPreviewFrame, comme la conversion est coûteuse O(n\up{2}), on perdait des valeurs. Pour optimiser, le nombre de valeurs nous effectuons maintenant la conversion
-une fois le timer fini. On réalise alors dans la boucle une simple sauvegarde des données brutes. 
+une fois le timer fini. On réalise alors dans la boucle une simple sauvegarde des données brutes.
 Toutefois cette méthode, nous a causé pas mal de soucis, notamment des out of memory, c'est-à-dire, que nous réalisions une allocation trop grande par rapport à la mémoire disponible \ldots{}
 \\
 Même si l'algorithme fonctionnait avec des vidéos, ceci ne voulait pas dire qu'il fonctionnerait sous Android.
-En effet lorsque avec la caméra on se prend en vidéo on bouge légèrement, ce qui pose de nombreux problèmes de stabilité. 
+En effet lorsque avec la caméra on se prend en vidéo on bouge légèrement, ce qui pose de nombreux problèmes de stabilité.
 Les variations que nous obtenons alors ne seraient plus celle de la pulsation mais celles du mouvement régulier de la main.
 
 % L'incompétence des chercheurs
