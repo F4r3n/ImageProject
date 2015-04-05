@@ -35,12 +35,21 @@ personne.
 \\
 De plus le sang monte jusqu'à la tête puis descend, le fait que notre tête bouge imperceptiblement, ses différents changements peuvent être capturés avec un téléphone portable.
 \\
-Mais comment obtenir ces changements ? Comment savoir où se situe le visage ?\\
+Mais comment obtenir ces changements? Comment savoir où se situe le visage?\\
 
- Dans un premier temps nous devons détecter si quelque chose ayant un visage humain se tenait devant l'appareil, ceci se fait très bien par l'api de Google sur Android et même par OpenCV.
+ Dans un premier temps nous devons détecter si quelque chose ayant un visage humain se tenait devant l'appareil, ceci se fait très bien par l'api de Google sur Android et même par OpenCV\@.
  Après détection de la personne nous pouvons obtenir des coordonnées nous disant où se situe le visage.\\
- Maintenant que nous savons où se situe le visage, nous nous demandons comment reconnaître une fréquence ?\\
- Nous avons choisi l'espace de couleur RGB car c'est dans cet espace de couleur que nous détectons le plus de variations, les autres modes tels que HSL ou HUV nous donnaient des valeurs plus faibles.
+ Maintenant que nous savons où se situe le visage, nous nous demandons comment reconnaître une fréquence?\\
+
+ \subsection{Choix de l'espace de couleur}
+ Le choix de l'espace de couleur est primordial.
+ C'est en fonction de celui-ci que nous obtiendrons des résultats cohérents ou non.\\
+ Un des points important à prendre en compte fut le changement de luminosité, donc en prenant que les canaux Hue et Saturation de HSV (ou HSL), nous pensions obtenir des résultats ne dépendant pas de la luminosité. Sauf que les résultats obtenus par ces espaces de couleur n'étaient pas cohérents.\\\\
+ Le second espace de couleur choisit fut RGB, en effet même si celui-ci dépend fortement de la luminosité, nos résultats étaient meilleurs. Nous pouvions visualiser plus efficacement les changements de variation avec une dérivée.
+ Après le choix de cet espace de couleur nous devions voir quel canal permetterait d'obtenir des variations les plus fortes. Pour ce faire nous avons visualisé les résultats de notre algorithme sur des personnes ayant des couleurs de peau différente et avec les différents canaux (Red, Green, Blue). Nous remarquions que les résultats étaient meilleurs si nous utilisions seulement le canal Green.
+
+
+ \subsection{Obtention des données}
  Nous avons donc fait une moyenne du canal vert (c'est le canal vert qui varie le plus) pour chaque pixel se situant dans un rectangle (en l’occurrence le rectangle délimitant le visage).
  Et ceci pour chaque frame que l'on capturait, nous obtenions une certaine valeur.
  Après obtention de ces valeurs nous pouvions les traiter.
