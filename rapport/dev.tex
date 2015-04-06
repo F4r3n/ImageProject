@@ -42,10 +42,13 @@ Mais comment obtenir ces changements? Comment savoir où se situe le visage?\\
  Maintenant que nous savons où se situe le visage, nous nous demandons comment reconnaître une fréquence?\\
 
  \subsection{Choix de l'espace de couleur}
- Le choix de l'espace de couleur est primordial.
- C'est en fonction de celui-ci que nous obtiendrons des résultats cohérents ou non.\\
- Un des points important à prendre en compte fut le changement de luminosité, donc en prenant que les canaux Hue et Saturation de HSV (ou HSL), nous pensions obtenir des résultats ne dépendant pas de la luminosité. Sauf que les résultats obtenus par ces espaces de couleur n'étaient pas cohérents.\\\\
- Le second espace de couleur choisit fut RGB, en effet même si celui-ci dépend fortement de la luminosité, nos résultats étaient meilleurs. Nous pouvions visualiser plus efficacement les changements de variation avec une dérivée.
+ Le choix de l'espace de couleur est primordial. C'est en fonction de celui-ci que nous obtiendrons des résultats cohérents ou non.\\
+ Un des points important à prendre en compte fut le changement de luminosité, en se placant dans les espaces HSV, HSL ou YUV et en ne sélectionnant que les canaux Hue et Saturation par exemple pour HSV. Nous
+  pensions obtenir des résultats ne dépendant pas de la luminosité. Sauf que les résultats obtenus par ces espaces de couleur n'étaient pas cohérents.\\
+ \\
+ Le second espace de couleur choisit fut RGB, en effet même si celui-ci dépend fortement de la luminosité, nos résultats étaient meilleurs. Nous pouvions visualiser plus efficacement les changements de
+ variation avec une dérivée.\\
+ \\
  Après le choix de cet espace de couleur nous devions voir quel canal permetterait d'obtenir des variations les plus fortes. Pour ce faire nous avons visualisé les résultats de notre algorithme sur des personnes ayant des couleurs de peau différente et avec les différents canaux (Red, Green, Blue). Nous remarquions que les résultats étaient meilleurs si nous utilisions seulement le canal Green.
 
 
@@ -147,11 +150,10 @@ Nous avons eu un problème de rotation, les coordonnées que l'on converser se r
 La première version de notre application était capable d'enregistrer 15 frames par seconde, or au final on obtenait seulement une trentaine de valeurs, cela était dû à la conversion du format YUV au format RGB que l'on
 effectuer à chaque fois que nous rentrons dans la fonction onPreviewFrame, comme la conversion est coûteuse O(n\up{2}), on perdait des valeurs. Pour optimiser, le nombre de valeurs nous effectuons maintenant la conversion
 une fois le timer fini. On réalise alors dans la boucle une simple sauvegarde des données brutes.
-Toutefois cette méthode, nous a causé pas mal de soucis, notamment des out of memory, c'est-à-dire, que nous réalisions une allocation trop grande par rapport à la mémoire disponible \ldots{}
+Toutefois cette méthode, nous a causé pas mal de soucis, notamment des out of memory, c'est-à-dire, que nous réalisions une allocation trop grande par rapport à la mémoire disponible \ldots{}\\
 \\
-Même si l'algorithme fonctionnait avec des vidéos, ceci ne voulait pas dire qu'il fonctionnerait sous Android.
-En effet lorsque avec la caméra on se prend en vidéo on bouge légèrement, ce qui pose de nombreux problèmes de stabilité.
-Les variations que nous obtenons alors ne seraient plus celle de la pulsation mais celles du mouvement régulier de la main.
+Même si l'algorithme fonctionnait avec des vidéos, ceci ne voulait pas dire qu'il fonctionnerait sous Android. En effet lorsque avec la caméra on se prend en vidéo on bouge légèrement, ce qui pose de nombreux
+ problèmes de stabilité. Les variations que nous obtenons alors ne seraient plus celle de la pulsation mais celles du mouvement régulier de la main.
 
 % L'incompétence des chercheurs
 
