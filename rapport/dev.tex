@@ -3,7 +3,7 @@
 Afin de mener à bien notre projet, nous avons utilisé différents outils de gestion de projets :
 
 \begin{itemize}
-	\item Pour permettre le suivi du projet, nous avons mis en ligne un site web, ce dernier utilise le CMS Wordpress : \url{http://www.ecole.ensicaen.fr/~lvimont/}
+	\item Pour permettre le suivi du projet, nous avons mis en ligne un site web, ce dernier utilise le CMS\footnote{Content Management System (ou système de gestion de contenu)} Wordpress : \url{http://www.ecole.ensicaen.fr/~lvimont/}
 
 		\begin{figure}[h!]
 			\centering
@@ -23,8 +23,8 @@ Afin de mener à bien notre projet, nous avons utilisé différents outils de ge
 
 \begin{itemize}[label=\textbullet]
 	\item Qt : Nous avons utilisé la librairie Qt pour pouvoir créer notre application qui permettait de tester les algorithmes.
-	\item Android : La programmation sous Android s'est faite en utilisant le Java et de l'XML.
-	\item OpenCV : Utilisation de la webcam et application utilisant la caméra gérée par OpenCV
+	\item Android : La programmation sous Android s'est faite en utilisant le Java et de l'XML\footnote{Extensible Markup Language}.
+	\item OpenCV : Utilisation de la webcam et application utilisant la caméra gérée par OpenCV\footnote{Open Computer Vision}
 	\item Python : Traitement des données pour création d'un graphique et permet une meilleure vérification des résultats
 \end{itemize}
 
@@ -32,7 +32,7 @@ Afin de mener à bien notre projet, nous avons utilisé différents outils de ge
 
 L’\oe il humain est limité, en effet il est incapable de voir les subtils changements temporels. Alors qu'au contraire en effectuant des traitements sur une vidéo, on est capable de
  révéler ces changements comme par exemple, la circulation du sang. Le sang parcourt notre corps de haut en bas de manière perpetuelle, ce mouvement imperceptible pour un oeil humain peut
- être capturée par notre téléphone portable. En travaillant sur ces infimes changements, on peut même grâce à ça réussir à connaître le pouls d'une personne. Mais comment obtenir ces*
+ être capturée par notre téléphone portable. En travaillant sur ces infimes changements, on peut même grâce à ça réussir à connaître le pouls d'une personne. Mais comment obtenir ces
   changements ? Comment savoir où se situe le visage ?\\
 
 Dans un premier temps, nous devons arriver à détecter la présence d'un visage humain devant l'appareil, en utilisant l'api de Google et même la libraire d'OpenCV, cela se fait bien.
@@ -42,10 +42,10 @@ Maintenant que nous savons où se situe le visage, nous nous demandons comment r
 
  \subsection{Choix de l'espace de couleur}
  Le choix de l'espace de couleur est primordial. C'est en fonction de celui-ci que nous obtiendrons des résultats cohérents ou non.\\
- Un des points important à prendre en compte fut le changement de luminosité, en se placant dans les espaces HSV, HSL ou YUV et en ne sélectionnant que les canaux Hue et Saturation par exemple pour HSV. Nous
+ Un des points important à prendre en compte fut le changement de luminosité, en se placant dans les espaces HSV\footnote{Hue Saturation Value}, HSL\footnote{Hue Saturation Lightness} ou YUV et en ne sélectionnant que les canaux Hue et Saturation par exemple pour HSV. Nous
   pensions obtenir des résultats ne dépendant pas de la luminosité. Sauf que les résultats obtenus par ces espaces de couleur n'étaient pas cohérents.\\
  \\
- Le second espace de couleur choisit fut RGB, en effet même si celui-ci dépend fortement de la luminosité, nos résultats étaient meilleurs. Nous pouvions visualiser plus efficacement les changements de
+ Le second espace de couleur choisit fut RGB\footnote{Red Green Blue}, en effet même si celui-ci dépend fortement de la luminosité, nos résultats étaient meilleurs. Nous pouvions visualiser plus efficacement les changements de
  variation avec une dérivée.\\
  \\
  Après le choix de cet espace de couleur nous devions voir quel canal permetterait d'obtenir des variations les plus fortes. Pour ce faire nous avons visualisé les résultats de notre algorithme sur des personnes ayant des couleurs de peau différentes et avec les différents canaux (Red, Green, Blue). Nous remarquions que les résultats étaient meilleurs si nous utilisions seulement le canal Green.
@@ -57,7 +57,7 @@ Maintenant que nous savons où se situe le visage, nous nous demandons comment r
  Après obtention de ces valeurs, nous pouvions les traiter.
  La variation des valeurs étant très grande, nous avons dans un premier temps fait une moyenne glissante. Puis, pour amplifier les variations nous avons avons fait une dérivée de Taylor.
  Nos valeurs étant prêtes à être analysées, nous les avons traitées de deux façons différentes.
- La première, la plus simple fut le Trigger, qui nous permettait d'avoir une fourchette de pulsation.\\ La deuxième plus longue, une FFT, nécessitait des étapes de calcul supplémentaires telles qu'un fenêtrage de Hamming ou encore un padding, mais donnait des résultats plus précis.
+ La première, la plus simple fut le Trigger, qui nous permettait d'avoir une fourchette de pulsation.\\ La deuxième plus longue, une FFT\footnote{Fast Fourier Transform}, nécessitait des étapes de calcul supplémentaires telles qu'un fenêtrage de Hamming ou encore un padding, mais donnait des résultats plus précis.
  \\
  Ces deux analyses nous ont permis d'avoir le pouls de notre utilisateur (dans le cas idéal, c'est à dire lorsque la caméra et l'utilisateur ne bougeaient presque pas).
  \\
@@ -80,7 +80,7 @@ permis d'utiliser la webcam.
 
 \subsection{Développement Android}
 
-Notre application Android est capable d'utiliser la caméra frontale de n'importe quel smartphone. L'api d'Android propose une classe appelée FaceDetectionListener qui va permettre de
+Notre application Android est capable d'utiliser la caméra frontale de n'importe quel smartphone. L'api d'Android propose une classe appelée \href{http://developer.android.com/reference/android/hardware/Camera.FaceDetectionListener.html}{FaceDetectionListener} qui va permettre de
  capter, les visages présent devant une caméra, grâce à ce système il est possible de dessiner un Rect (c'est à dire un rectangle) autour du visage de la personne. C'est notre classe
   DisplayedFace qui se charge de ce travail.
 Une fois la reconnaissance mis en place, nous avons utilisé la fonction
@@ -99,7 +99,7 @@ A la fin du compteur, on réalise une dérivée, puis une amplification des vale
 \\
 L'api de Google est très rapide pour détecter un visage et pour nous fournir ces coordonnées en faisant très peu de calculs. Mais celle-ci ne suit pas les petits changements de position, par exemple lorsque l'utilisateur prend une vidéo il bouge légèrement ce qui peut changer le résultat final.\\
 \\
-Pour résoudre ce manque nous avons codé une application fonctionnant avec OpenCV, celle-ci suit parfaitement le visage lorsqu'il bouge. Mais le temps de traitement d'une image par OpenCV est beaucoup plus lent que l'api de Google. Nous tournons à environ 7 FPS en utilisant la back-caméra et 2 FPS en utilisant la front-caméra, ce qui n'est pas idéal.
+Pour résoudre ce manque nous avons codé une application fonctionnant avec OpenCV, celle-ci suit parfaitement le visage lorsqu'il bouge. Mais le temps de traitement d'une image par OpenCV est beaucoup plus lent que l'api de Google. Nous tournons à environ 7 FPS\footnote{Frame Per Second} en utilisant la back-caméra et 2 FPS en utilisant la front-caméra, ce qui n'est pas idéal.
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.8\textwidth]{data/opencv.png}
@@ -118,7 +118,7 @@ Après avoir découpé la vidéo en images nous faisons une analyse sur ces imag
 Cette analyse se découpe en plusieurs étapes.\\
 
 Dans un premier temps nous dessinons un rectangle autour d'un visage (si la fonction du rectangle automatique n'est pas enclenchée).
-Puis nous choisissons le type d'analyse à effectuer, il y en a deux types:\\
+Puis nous choisissons le type d'analyse à effectuer, il y en a deux types:
 \begin{itemize}
 	\item L'une fait la moyenne de tous les pixels qui se situe dans le carré
 	\item La seconde découpe le rectangle en plusieurs zones de 5*5 puis amplifie les variations et fait une moyenne des valeurs
