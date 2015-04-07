@@ -53,14 +53,16 @@ Maintenant que nous savons où se situe le visage, nous nous demandons comment r
 
  \subsection{Obtention des données}
  Nous avons donc fait une moyenne du canal vert (c'est le canal vert qui varie le plus) pour chaque pixel se situant dans un rectangle (en l’occurrence le rectangle délimitant le visage).
- Et ceci pour chaque frame que l'on capturait, nous obtenions une certaine valeur.
- Après obtention de ces valeurs, nous pouvions les traiter.
- La variation des valeurs étant très grande, nous avons dans un premier temps fait une moyenne glissante. Puis, pour amplifier les variations nous avons avons fait une dérivée de Taylor.
- Nos valeurs étant prêtes à être analysées, nous les avons traitées de deux façons différentes.
- La première, la plus simple fut le Trigger, qui nous permettait d'avoir une fourchette de pulsation.\\ La deuxième plus longue, une FFT\footnote{Fast Fourier Transform}, nécessitait des étapes de calcul supplémentaires telles qu'un fenêtrage de Hamming ou encore un padding, mais donnait des résultats plus précis.
+ Et ceci pour chaque frame que l'on capturait, nous obtenions une certaine valeur.\\
+ Après obtention de ces valeurs, nous pouvions les traiter.\\\\
+ La variation des valeurs étant très grande, nous avons dans un premier temps fait une moyenne glissante. Puis, pour amplifier les variations nous avons avons fait une dérivée de Taylor. \\Enfin nous filtrons les données grâce à un filtre passe-bas, pour diminuer le bruit en basse fréquence.
+ Nos valeurs étant prêtes à être analysées, nous les avons traitées de deux façons différentes.\\
+ La première, la plus simple fut le Trigger, qui nous permettait d'avoir une fourchette de pulsation.
+ Le Trigger est une méthode permettant de connaître le nombre de fois qu'une fonction passe dans une bande de valeurs. Dans notre cas nous regardions combien de fois nous passions par 0 pour la dérivée.
+ \\ La deuxième plus longue, une FFT\footnote{Fast Fourier Transform}, nécessitait des étapes de calcul supplémentaires telles qu'un fenêtrage de Hamming ou encore un padding, mais donnait des résultats plus précis.
  \\
  Ces deux analyses nous ont permis d'avoir le pouls de notre utilisateur (dans le cas idéal, c'est à dire lorsque la caméra et l'utilisateur ne bougeaient presque pas).
- \\
+ \\\\
 
 Nous avons remarqué que la collecte des données n'accentuait pas assez les variations, nous avons donc créé une deuxième méthode qui en restant basé sur le même principe que la première technique, nous découpions notre image
 par zone de petits carrés de pixels. Par exemple une zone serait d'une taille de 5*5. On réalise ainsi une moyenne de chaque zone, puis par la suite une moyenne de ces moyennes. Enfin on rapplique les mêmes fonctions citées précédemment.
@@ -75,13 +77,13 @@ par zone de petits carrés de pixels. Par exemple une zone serait d'une taille d
 \section{Solutions mis en place}
 
 Durant le projet nous avons développé plusieurs outils pour répondre au besoin. Une application Android qui permettrait d'utiliser le moyen d'authentification désiré et ainsi déverrouiller le smartphone d'une
-personne. Un logiciel C++ utilisant la librairie Qt a également été mis en place, afin de pouvoir tester plus facilement les algorithmes que nous voulions développer. Dans la suite du projet, il a également
+personne. \\Un logiciel C++ utilisant la librairie Qt a également été mis en place, afin de pouvoir tester plus facilement les algorithmes que nous voulions développer. Dans la suite du projet, il a également
 permis d'utiliser la webcam.
 
 \subsection{Développement Android}
 
-Notre application Android est capable d'utiliser la caméra frontale de n'importe quel smartphone. L'api d'Android propose une classe appelée \href{http://developer.android.com/reference/android/hardware/Camera.FaceDetectionListener.html}{FaceDetectionListener} qui va permettre de
- capter, les visages présent devant une caméra, grâce à ce système il est possible de dessiner un Rect (c'est à dire un rectangle) autour du visage de la personne. C'est notre classe
+Notre application Android est capable d'utiliser la caméra frontale de n'importe quel smartphone. \\\\L'api d'Android propose une classe appelée \href{http://developer.android.com/reference/android/hardware/Camera.FaceDetectionListener.html}{FaceDetectionListener} qui va permettre de
+ capter, les visages présent devant une caméra, grâce à ce système il est possible de dessiner un Rect (c'est à dire un rectangle) autour du visage de la personne.\\\\ C'est notre classe
   DisplayedFace qui se charge de ce travail.
 Une fois la reconnaissance mis en place, nous avons utilisé la fonction
 \href{http://developer.android.com/reference/android/hardware/Camera.PreviewCallback.html#onPreviewFrame\%28byte\%5B\%5D,\%20android.hardware.Camera\%29}{onPreviewFrame}. Cette dernière permet d'enregistrer
@@ -93,7 +95,7 @@ en temps réel, les données. On lance un compteur quand la première reconnaiss
 	\caption{Aperçu de l'application Android}
 \end{figure}
 
-Les données ainsi récoltées sont au format de l'espace de couleur \href{http://fr.wikipedia.org/wiki/YUV}{YUV}. Nous devons donc convertir ces données au format RGB qui se révèle plus évocateur au niveau des variations.
+Les données ainsi récoltées sont au format de l'espace de couleur \href{http://fr.wikipedia.org/wiki/YUV}{YUV}. Nous devons donc convertir ces données au format RGB qui se révèle plus évocateur au niveau des variations.\\\\
 
 A la fin du compteur, on réalise une dérivée, puis une amplification des valeurs obtenues. On observe alors les variations qu'on obtient et on conclut alors sur la présence ou non d'un humain.\\
 \\
@@ -115,7 +117,7 @@ Nous avons créé un logiciel C++ nous permettant de tester nos algorithmes avan
 Ce logiciel a de nombreuses fonctionnalités, notamment le découpage d'une vidéo en images pour permettre une analyse plus poussée.
 Nous utilisons Avconv qui permet de découper une vidéo de n'importe quelle taille en une multitude d'images. (15 images * taille de la vidéo)
 Après avoir découpé la vidéo en images nous faisons une analyse sur ces images.
-Cette analyse se découpe en plusieurs étapes.\\
+Cette analyse se découpe en plusieurs étapes.\\\\
 
 Dans un premier temps nous dessinons un rectangle autour d'un visage (si la fonction du rectangle automatique n'est pas enclenchée).
 Puis nous choisissons le type d'analyse à effectuer, il y en a deux types:
@@ -123,19 +125,19 @@ Puis nous choisissons le type d'analyse à effectuer, il y en a deux types:
 	\item L'une fait la moyenne de tous les pixels qui se situe dans le carré
 	\item La seconde découpe le rectangle en plusieurs zones de 5*5 puis amplifie les variations et fait une moyenne des valeurs
 \end{itemize}
-Après avoir lancé l'analyse, nous affichons les courbes ainsi obtenues par notre application.\\
+Après avoir lancé l'analyse, nous affichons les courbes ainsi obtenues par notre application.\\\\
 
 Nous pouvons voir la FFT, l'amplification, la dérivée ou une combinaison de plusieurs méthodes.
 L'amplification utilise la dérivée de Taylor du premier degré.
 La FFT utilise un filtre passe-bas combiné avec une fenêtre de Hamming et un padding.
 La FFT permet de connaître le rythme cardiaque d'une personne de manière précise si l'image est assez stable.
-Nous avons créé un Trigger qui permet aussi de connaître la fréquence cardiaque d'une personne, mais de manière moins précise, le Trigger nous donne une fourchette de valeurs.\\
+Nous avons créé un Trigger qui permet aussi de connaître la fréquence cardiaque d'une personne, mais de manière moins précise, le Trigger nous donne une fourchette de valeurs.\\\\
 
 Si l'espace de couleur que nous avons choisi ne donne pas des résultats corrects nous pouvons en choisir un autre.
-Nous avons différents espaces de couleur disponibles dont RGB, HSL, HUV et nous pouvons lancer une analyse avec un espace de couleur différent de RGB.\\
+Nous avons différents espaces de couleur disponibles dont RGB, HSL, HUV et nous pouvons lancer une analyse avec un espace de couleur différent de RGB.\\\\
 
 Les analyses avec des vidéos classiques n'étant pas suffisantes pour nos tests, nous avons dû faire une analyse avec des vidéos de la webcam.
-La webcam est configurée et lancée via la librairie OpenCV et nous enregistrons les images de la webcam avec une fréquence de 15 frames pas seconde.\\
+La webcam est configurée et lancée via la librairie OpenCV et nous enregistrons les images de la webcam avec une fréquence de 15 frames pas seconde.\\\\
 
 \section{Problèmes rencontrés}
 
@@ -147,13 +149,13 @@ Lors du projet, nous avons rencontré de nombreux problèmes. L'un des plus emb�
 
 \subsection{Problèmes rencontrés lors du développement Android}
 
-Nous avons eu un problème de rotation, les coordonnées que l'on converser se révélaient mauvaise. Afin d'éviter cela, nous avons décidé de forcer le mode portrait.
+Nous avons eu un problème de rotation, les coordonnées que l'on conversaient se révélaient mauvaise. Afin d'éviter cela, nous avons décidé de forcer le mode portrait.
 
 La première version de notre application était capable d'enregistrer 15 frames par seconde, or au final on obtenait seulement une trentaine de valeurs, cela était dû à la conversion du
- format YUV au format RGB que l'on effectuer à chaque fois que nous rentrons dans la fonction onPreviewFrame, comme la conversion est coûteuse O(n\up{2}), on perdait des valeurs. Pour
+ format YUV au format RGB que l'on effectuait à chaque fois que nous rentrions dans la fonction onPreviewFrame, comme la conversion est coûteuse O(n\up{2}), on perdait des valeurs. Pour
   optimiser, le nombre de valeurs nous effectuons maintenant la conversion une fois le timer fini. On réalise alors dans la boucle une simple sauvegarde des données brutes.
-Toutefois cette méthode, nous a causé pas mal de soucis, notamment des out of memory, c'est-à-dire, que nous réalisions une allocation trop grande par rapport à la mémoire disponible
+Toutefois cette méthode, nous a causé pas mal de soucis, notamment des out of memory, c'est-à-dire, que nous réalisions une allocation trop importante par rapport à la mémoire disponible
 \ldots{}\\
 \\
 Même si l'algorithme fonctionnait avec des vidéos, ceci ne voulait pas dire qu'il fonctionnerait sous Android. En effet lorsque avec la caméra on se prend en vidéo on bouge légèrement,
-ce qui pose de nombreux problèmes de stabilité. Les variations que nous obtenons alors ne seraient plus celle de la pulsation mais celles du mouvement régulier de la main.
+ce qui pose de nombreux problèmes de stabilité. Les variations que nous obtenions alors ne seraient plus celle de la pulsation mais celles du mouvement régulier de la main.
