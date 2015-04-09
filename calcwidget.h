@@ -23,23 +23,68 @@ class CalcWidget : public QWidget
 public:
     explicit CalcWidget(LabelImage *label);
     void setImages(std::vector<QImage> *img);
+    /*!
+     * \brief Permet de faire la dérivée d'un Vector
+     * \param y
+     * \return
+     */
     Vector<double> derived(const Vector<double> &y) const;
+    /*!
+     * \brief afficheles données dans l'afficheur pour l'algorithme 1
+     */
     void displayData();
+    /*!
+     * \brief choisi l'espace de couleur
+     * \param type
+     */
     void setType(int type);
+    /*!
+     * \brief Permet de faire une moyenne glissante d'une fonction
+     * \param z
+     */
     void movingAverage(Vector<double> &z) const;
+    /*!
+     * \brief Affiche les données pour l'algorithme 2
+     */
     void displayDataColor();
+    /*!
+     * \brief Permet de faire une dérivée de Taylor, utilisé pour l'algorithme 2
+     */
     void amplified();
 
 signals:
     void clicked(QImage img);
 
 public slots:
-    bool calculus();
+    /*!
+     * \brief Calcul avec l' algorithme 1
+     * \return
+     */
+    bool calculus(); /*!
+     * \brief Calcul avec l' algorithme 2
+     * \return
+     */
     bool calculusColor();
+    /*!
+     * \brief Permet de voir la frame suivante
+     */
     void nextImage();
+    /*!
+     * \brief Permet de voir la frame précédente
+     */
     void previousImage();
+    /*!
+     * \brief Permet de lancer l'analyse avec un algorithme choisit
+     */
     void analyzeImages();
+    /*!
+     * \brief Permet de remettre les images au début
+     */
     void rewindImages();
+    /*!
+     * \brief Permet le choix de l'algoritme a utiliser
+     * \param btnChecked
+     */
     void optionCalc(int btnChecked);
     void redirectCalculus();
 

@@ -22,9 +22,22 @@ class CameraWidget : public QDialog
 public:
     CameraWidget(QWidget *parent = 0);
     ~CameraWidget(void);
+    /*!
+     * \brief Permet une conversion de IplImage vers QPixmap
+     * \return
+     */
     QPixmap toPixmap(IplImage *);
     void putFrame(cv::Mat );
+    /*!
+     * \brief Permet une conversion d'une image au format cv::Mat vers une QImage
+     * \param src
+     * \return
+     */
     static QImage Mat2QImage(cv::Mat const& src);
+    /*!
+     * \brief Permet d'obtenir le steam de la vidéo
+     * \return
+     */
     cv::VideoCapture getStream();
     QLabel *getLabel();
     void setLabel(QLabel *l);

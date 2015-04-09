@@ -19,6 +19,9 @@ public:
     void mouseMoveEvent(QMouseEvent *event);
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *);
+    /*!
+     * \brief Permet de dessiner le label courant dans le cadre associé
+     */
     void drawImage();
     void paintEvent(QPaintEvent *p);
     void setImage(QImage *img);
@@ -29,6 +32,9 @@ public:
     QPoint getPos();
     QRgb getRgb();
     QImage getImg();
+    /*!
+     * \brief Fonction permettant la création d'un rectangle
+     */
     void createRect();
 
 signals:
