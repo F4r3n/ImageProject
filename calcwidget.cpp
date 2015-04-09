@@ -117,8 +117,7 @@ void CalcWidget::analyzeImages() {
     if(analyseColor) {
         yg = y;
     }
-    //  result->verticalScrollBar()->setSliderPosition(
-    //  result->verticalScrollBar()->maximum());
+
     Vector<double> cy(y);
     Vector<double> cyr(yr);
     Vector<double> cyb(yb);
@@ -127,16 +126,12 @@ void CalcWidget::analyzeImages() {
 
     if(averageBox->isChecked()) {
         PlotingWidget *p = new PlotingWidget(x,cyg,size,QString("Average"),this);
-        //      p->addGraph(x, cyr, QString("Red average"),QPen(Qt::red),true);
-        //    p->addGraph(x, cyb, QString("Blue average"),QPen(Qt::blue),true);
-        //  p->addGraph(x, cyg, QString("Green average"),QPen(Qt::darkGreen),true);
+
         p->show();
     }
     if(derivedBox->isChecked()) {
         PlotingWidget *p = new PlotingWidget(x,derived(cyg),size,QString("Derived"),this);
-        //p->addGraph(x, derived(cyr), QString("Red average"),QPen(Qt::red),true);
-        // p->addGraph(x, derived(cyb), QString("Blue average"),QPen(Qt::blue),true);
-        //p->addGraph(x, derived(cyg), QString("Green average"),QPen(Qt::darkGreen),true);
+
         p->show();
     }
     if(amplificationBox->isChecked()) {
@@ -175,13 +170,10 @@ void CalcWidget::analyzeImages() {
             de.push_back(0);
             n++;
         }
-       // movingAverage(de);
 
 
         Vector<double> d = s->execute(x,de);
-        // d = s->filter(d.size());
-        // d = s->execute(x,d);
-        //   for(int i=0;i<c;i++) x[i] = i/0.1;
+
         PlotingWidget *pl = new PlotingWidget(x,d,1024,QString("FFT"),this);
         pl->show();
     }
@@ -227,7 +219,7 @@ void CalcWidget::setType(int type) {
 bool CalcWidget::calculus() {
     QRect *r = lab->getRect();
     if(!r) {
-        result->setText(QString("No rect"));
+        result->setText(QString("No rectangle"));
         return false;
     }
     float average = 0, red_average = 0, blue_average = 0, green_average = 0;
@@ -296,7 +288,7 @@ void CalcWidget::optionCalc(int btnChecked) {
 bool CalcWidget::calculusColor() {
     QRect *r = lab->getRect();
     if(!r) {
-        result->setText(QString("No rect"));
+        result->setText(QString("No rectangle"));
         return false;
     }
 

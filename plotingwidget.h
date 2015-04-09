@@ -26,11 +26,11 @@ public:
     int minX();
     double maximaLocal(int deb, int end);
     double frequencyTFD();
-	void addGraph(Vector<double> x, Vector<double> y, QString name, QPen pen, bool rescale);
+    void addGraph(Vector<double> x, Vector<double> y, QString name, QPen pen, bool rescale);
 
 
 private:
-	short nbGraph = 0;
+    short nbGraph = 0;
     QCustomPlot *plot;
     Vector<double> x,y;
     QPushButton *quit;

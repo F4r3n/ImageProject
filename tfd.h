@@ -15,8 +15,6 @@ public:
     Vector<double> getImg();
     Vector<double> getRe();
     Vector<double> filter(int N);
-    void highPassFilter(double *re,double *im, int N);
-    void bandPassFilter(double *re,double *im, int N);
     void lowPassFilter(double *re,double *im, int N);
     Vector<double> inverse(const Vector<double> &ReOutput, const Vector<double> &ImOutput, int N);
     Vector<double> hamming(double n);

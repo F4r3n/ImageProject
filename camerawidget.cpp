@@ -21,7 +21,6 @@ CameraWidget::CameraWidget(QWidget *parent)
 
 
     connect(goButton,SIGNAL(clicked()),this,SLOT(displayWebcam()));
-    //displayWebcam();
 }
 
 QLabel* CameraWidget::getLabel() {
@@ -38,11 +37,10 @@ void CameraWidget::setLabel(QLabel *l) {
 
 QImage CameraWidget::Mat2QImage(cv::Mat const& src)
 {
-    cv::Mat temp; // make the same cv::Mat
-    cvtColor(src, temp,CV_BGR2RGB); // cvtColor Makes a copt, that what i need
+    cv::Mat temp;
+    cvtColor(src, temp,CV_BGR2RGB);
     QImage dest((const uchar *) temp.data, temp.cols, temp.rows, temp.step, QImage::Format_RGB888);
-    dest.bits(); // enforce deep copy, see documentation
-    // of QImage::QImage ( const uchar * data, int width, int height, Format format )
+    dest.bits();
     return dest;
 }
 
@@ -53,13 +51,13 @@ void CameraWidget::aboutToclose() {
 }
 
 void CameraWidget::displayWebcam() {
- goButton->setText("Quitter");
- disconnect(goButton);
- connect(goButton,SIGNAL(clicked()),this,SLOT(aboutToclose()));
+    goButton->setText("Quitter");
+    disconnect(goButton);
+    connect(goButton,SIGNAL(clicked()),this,SLOT(aboutToclose()));
 
     if(!running) {
         stream1 =cv::VideoCapture(0);
-        if (!stream1.isOpened()) { //check if video device has been initialised
+        if (!stream1.isOpened()) {
             std::cout << "cannot open camera";
         }
         th = new CameraThread(m_imageLabel,stream1);

@@ -35,10 +35,7 @@ void RenderArea::setType(int type) {
 
 void RenderArea::setImages(std::vector<QImage> *img) {
     images = *img;
-    //for(QImage &i : images) {
-     //   setGray(i);
-      //  setBorderX(i);
-    //}
+
     ModifierWidget *m = optionW->getModif();
     m->saveImage(images[0]);
     labelImage->setImage(&images[0]);

@@ -23,8 +23,8 @@ public:
     CameraWidget(QWidget *parent = 0);
     ~CameraWidget(void);
     QPixmap toPixmap(IplImage *);
-   void putFrame(cv::Mat );
-  static QImage Mat2QImage(cv::Mat const& src);
+    void putFrame(cv::Mat );
+    static QImage Mat2QImage(cv::Mat const& src);
     cv::VideoCapture getStream();
     QLabel *getLabel();
     void setLabel(QLabel *l);

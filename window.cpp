@@ -69,7 +69,6 @@ void Window::loadFile() {
         images.push_back(img);
     }
 
-    //  img.load(str.toUtf8().constData());
     render->setImages(&images);
     if(isRectAuto) {
         render->createRect();
@@ -116,7 +115,7 @@ void Window::handleRect() {
 
 void Window::displayAbout() {
     QMessageBox msgBox;
-     msgBox.setText("This software is based on Qt 5.2 and uses QCustomPlot \n Made by Kotulski Guillaume");
+     msgBox.setText("This software is based on Qt 5.2 and uses QCustomPlot \n Made by Kotulski Guillaume and Vimont ludovic");
      msgBox.exec();
 }
 

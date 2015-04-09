@@ -29,7 +29,6 @@ PlotingWidget::PlotingWidget(Vector<double> x, Vector<double> y , int n, QString
 
     plot->yAxis->setRange(min,m);
     plot->replot();
-    // plot->legend->setVisible(true);
 
     quit = new QPushButton("Quit");
     QString str;
@@ -138,7 +137,6 @@ double PlotingWidget::maximaLocal(int deb,int end) {
 double PlotingWidget::frequencyTFD() {
     int end = 150*x.size()/(PW_FS*PW_H);
     int deb = 50*x.size()/(PW_FS*PW_H);
-    // int pos = 0;
     int pos = maximaLocal(deb,end);
 
     return (double)pos*PW_FS*PW_H/(double)x.size();

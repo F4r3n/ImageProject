@@ -22,16 +22,15 @@ Vector<double> Tfd::execute(const Vector<double> &x,const Vector<double> &in){
     Vector<double> re(size);
     Vector<double> im(size);
 
-    for (unsigned int k = 0; k < size/2; k++) {  /* For each output element */
+    for (unsigned int k = 0; k < size/2; k++) {
         double sumreal = 0;
         double sumimag = 0;
         unsigned int t;
-        for (t = 0; t < size; t++) {  /* For each input element */
+        for (t = 0; t < size; t++) {
             double angle = 2 * M_PI * (t * k) / ((float)size);
             sumreal +=  y[t] * cos(angle);
             sumimag -= y[t] * sin(angle);
         }
-        //qDebug() << sumreal;
         re[k] += fabs(sumreal)/(size/2);
         im[k] += fabs(sumimag)/(size/2);
 
@@ -47,13 +46,7 @@ Vector<double> Tfd::execute(const Vector<double> &x,const Vector<double> &in){
     return re;
 }
 
-void Tfd::highPassFilter(double *re,double *im, int N) {
 
-}
-
-void Tfd::bandPassFilter(double *re,double *im, int N) {
-
-}
 
 void Tfd::lowPassFilter(double *re,double *im, int N) {
     double alpha=50.0;
